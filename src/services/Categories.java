@@ -1,19 +1,23 @@
 package services;
 
+import mappers.CategoryMapper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Categories {
 
-    private void get() {
+    private HashMap<String, Categories> get() {
 
         CsvReader csvReader = new CsvReader();
 
-        csvReader.fetch();
+        ArrayList<String> fetchedData = csvReader.fetch();
 
+        CategoryMapper categoryMapper = new CategoryMapper();
 
+        HashMap<String, Categories> mappedCategories = categoryMapper.map(fetchedData);
 
-        //map to object model (1 file for mapping)
-
-        //return mapped objects
-
+        return mappedCategories;
     }
 
 }

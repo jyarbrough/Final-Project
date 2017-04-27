@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class CategoryMapper {
 
-    private HashMap<String, Categories> map(ArrayList<String> linesFromFile) {
+    public HashMap<String, Categories> map(ArrayList<String> linesFromFile) {
 
         HashMap<String, Categories> categoriesHashMap = new HashMap<>();
 
@@ -18,7 +18,6 @@ public class CategoryMapper {
 
             CategoryModel category = new CategoryModel(id, name);
             categoriesHashMap.put(category.getId(), category);
-
         }
         return categoriesHashMap;
     }

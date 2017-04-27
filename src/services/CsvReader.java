@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class CsvReader {
 
     ArrayList<String> fetch() {
+
             File filePointer = new File("/Users/joeyarbrough/Advanced-Java-Labs/Homework/Final-Project/src/csvFiles/Categories.csv");
             Scanner input = null;
 
@@ -26,7 +27,5 @@ public class CsvReader {
             }
             input.close();
             return lines;
-
     }
-
 }
