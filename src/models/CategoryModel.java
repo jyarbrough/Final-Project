@@ -1,8 +1,8 @@
 package models;
 
-import services.Categories;
+import services.CategoriesService;
 
-public class CategoryModel extends Categories {
+public class CategoryModel extends CategoriesService {
 
     String name;
     String id;

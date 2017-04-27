@@ -1,15 +1,14 @@
 package mappers;
 
 import models.CategoryModel;
-import services.Categories;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CategoryMapper {
 
-    public HashMap<String, Categories> map(ArrayList<String> linesFromFile) {
+    public HashMap<String, CategoryModel> map(ArrayList<String> linesFromFile) {
 
-        HashMap<String, Categories> categoriesHashMap = new HashMap<>();
+        HashMap<String, CategoryModel> categoriesHashMap = new HashMap<>();
 
         for (String line : linesFromFile) {
             String[] categoriesArray = line.split(",");
