@@ -6,6 +6,7 @@
 
 <Pane fx:id="backPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="1279.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Controller">
    <children>
-      <ListView fx:id="categoryListView" layoutX="719.0" layoutY="207.0" prefHeight="335.0" prefWidth="365.0" />
+      <ListView fx:id="categoryListView" layoutX="115.0" layoutY="232.0" prefHeight="335.0" prefWidth="365.0" />
+      <ListView fx:id="foodItemsListView" layoutX="598.0" layoutY="88.0" prefHeight="560.0" prefWidth="582.0" />
    </children>
 </Pane>

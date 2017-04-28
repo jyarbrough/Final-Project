@@ -12,10 +12,11 @@ public class CategoriesService {
         CsvReader csvReader = new CsvReader();
         CategoryMapper categoryMapper = new CategoryMapper();
 
-        ArrayList<String> fetchedData = csvReader.fetch();
+        String categoryPath = "/Users/joeyarbrough/Advanced-Java-Labs/Homework/Final-Project/src/csvFiles/Categories.csv";
+
+        ArrayList<String> fetchedData = csvReader.fetch(categoryPath);
         HashMap<String, CategoryModel> mappedCategories = categoryMapper.map(fetchedData);
 
         return mappedCategories;
     }
-
 }

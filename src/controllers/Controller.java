@@ -8,63 +8,94 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import models.CategoryModel;
+import models.FoodItemModel;
 import services.CategoriesService;
+import services.FoodItemsService;
 
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    ListView categoryListView;
-
-    @FXML
-    Pane backPane;
+    public ListView categoryListView;
+    public ListView foodItemsListView;
+    public Pane backPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        populateListView();
+        CategoriesService categoriesService = new CategoriesService();
+        FoodItemsService foodItemsService = new FoodItemsService();
+        HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
+
+
+        initializeEventListeners(categoryModelHashMap);
 
     }
 
+    private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
 
+        initializeListView(categoryModelHashMap);
+        initializeFoodItems();
+    }
 
-    private void populateListView() {
-        CategoriesService categoriesService = new CategoriesService();
-        HashMap<String, CategoryModel> mappedCategories = categoriesService.get();
+    private void initializeListView(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         categoryListView.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent enterKeyPressed) {
-
                 if (enterKeyPressed.getCode().equals(KeyCode.ENTER)) {
-
-                    initializeListView(mappedCategories);
-
+                    populateCategoriesList(categoryModelHashMap);
                 }
-
             }
         });
     }
 
-
-    private void initializeListView(HashMap<String, CategoryModel> categoriesHashMap) {
+    private void populateCategoriesList(HashMap<String, CategoryModel> categoriesModelHashMap) {
 
         ObservableList<String> observableList = FXCollections.observableArrayList();
-
-        for (CategoryModel categoryModel  : categoriesHashMap.values()) {
+        for (CategoryModel categoryModel  : categoriesModelHashMap.values()) {
             String name = categoryModel.getName();
 
             observableList.add(name);
         }
-
         categoryListView.setItems(observableList);
+    }
+
+    private void initializeFoodItems() {
+
+        categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
+
+                populateFoodItemsListView(categoryName);
+
+            }
+        });
 
     }
 
+    private void populateFoodItemsListView(String categoryName) {
+
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        FoodItemsService foodItemsService = new FoodItemsService();
+
+        HashMap<String, FoodItemModel> mappedFoodItems = foodItemsService.get(categoryName);
+
+        for (FoodItemModel items : mappedFoodItems.values()) {
+            observableList.add(items.getName());
+        }
+        foodItemsListView.setItems(observableList);
+
+    }
 
 }
 

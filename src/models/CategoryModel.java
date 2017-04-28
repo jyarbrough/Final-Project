@@ -2,6 +2,8 @@ package models;
 
 import services.CategoriesService;
 
+import java.util.ArrayList;
+
 public class CategoryModel extends CategoriesService {
 
     String name;
