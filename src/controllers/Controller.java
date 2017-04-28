@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -15,16 +16,19 @@ import models.FoodItemModel;
 import services.CategoriesService;
 import services.FoodItemsService;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private HashMap<String, CategoryModel> categoryModelHashMap;
+
     @FXML
     public ListView categoryListView;
     public ListView foodItemsListView;
+    public TableView receiptTable;
+
     public Pane backPane;
 
     @Override
@@ -32,20 +36,18 @@ public class Controller implements Initializable {
 
         CategoriesService categoriesService = new CategoriesService();
         FoodItemsService foodItemsService = new FoodItemsService();
-        HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
-
+         categoryModelHashMap = categoriesService.get();
 
         initializeEventListeners(categoryModelHashMap);
-
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
 
-        initializeListView(categoryModelHashMap);
-        initializeFoodItems();
+        initializeCategoryView(categoryModelHashMap);
+        initializeFoodView();
     }
 
-    private void initializeListView(HashMap<String, CategoryModel> categoryModelHashMap) {
+    private void initializeCategoryView(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         categoryListView.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -68,7 +70,7 @@ public class Controller implements Initializable {
         categoryListView.setItems(observableList);
     }
 
-    private void initializeFoodItems() {
+    private void initializeFoodView() {
 
         categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -86,15 +88,18 @@ public class Controller implements Initializable {
     private void populateFoodItemsListView(String categoryName) {
 
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        FoodItemsService foodItemsService = new FoodItemsService();
 
-        HashMap<String, FoodItemModel> mappedFoodItems = foodItemsService.get(categoryName);
+        CategoryModel categoryModel = categoryModelHashMap.get(categoryName);
 
-        for (FoodItemModel items : mappedFoodItems.values()) {
-            observableList.add(items.getName());
+        ArrayList<FoodItemModel> foodItemsList = categoryModel.getFoodItemsList();
+
+        for (FoodItemModel foodItemModel : foodItemsList) {
+            String name = foodItemModel.getName();
+
+            observableList.add(name);
         }
-        foodItemsListView.setItems(observableList);
 
+        foodItemsListView.setItems(observableList);
     }
 
 }

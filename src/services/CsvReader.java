@@ -9,22 +9,23 @@ public class CsvReader {
 
     ArrayList<String> fetch(String pathName) {
 
-            File filePointer = new File(pathName);
-            Scanner input = null;
+        File filePointer = new File(pathName);
+        Scanner input = null;
 
-            try {
-                input = new Scanner(filePointer);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+        ArrayList<String> lines = new ArrayList<>();
 
-            ArrayList<String> lines = new ArrayList<>();
+        try {
+            input = new Scanner(filePointer);
 
-            while(input.hasNext()) {
+            while (input.hasNext()) {
                 String line = input.nextLine();
                 lines.add(line);
             }
+
             input.close();
-            return lines;
+        } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+        }
+        return lines;
     }
 }

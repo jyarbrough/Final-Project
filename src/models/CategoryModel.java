@@ -8,6 +8,15 @@ public class CategoryModel extends CategoriesService {
 
     String name;
     String id;
+    ArrayList<FoodItemModel> foodItemsList = null;
+
+    public ArrayList<FoodItemModel> getFoodItemsList() {
+        return foodItemsList;
+    }
+
+    public void setFoodItemsList(ArrayList<FoodItemModel> foodItemsList) {
+        this.foodItemsList = foodItemsList;
+    }
 
     public CategoryModel(String id, String name) {
         this.id = id;

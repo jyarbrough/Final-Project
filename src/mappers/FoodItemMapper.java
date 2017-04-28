@@ -1,17 +1,15 @@
 package mappers;
 
 import models.FoodItemModel;
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class FoodItemMapper extends ArrayList<FoodItemModel> {
 
-    public HashMap<String, FoodItemModel> map(ArrayList<String> linesFromFile) {
+    public ArrayList<FoodItemModel> map(ArrayList<String> linesFromFile) {
 
-        HashMap<String, FoodItemModel> foodItemsHashMap = new HashMap<>();
+        ArrayList<FoodItemModel> foodItemsHashMap = new ArrayList<>();
 
         for (String line : linesFromFile) {
             String[] foodItemsArray = line.split(",");
@@ -21,7 +19,7 @@ public class FoodItemMapper extends ArrayList<FoodItemModel> {
             String price = foodItemsArray[3];
 
             FoodItemModel foodItemModel = new FoodItemModel(id, name, description, price);
-            foodItemsHashMap.put(foodItemModel.getId(), foodItemModel);
+            foodItemsHashMap.add(foodItemModel);
         }
         return foodItemsHashMap;
     }

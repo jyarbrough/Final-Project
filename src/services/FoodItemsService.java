@@ -3,11 +3,10 @@ package services;
 import mappers.FoodItemMapper;
 import models.FoodItemModel;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FoodItemsService {
 
-    public HashMap<String, FoodItemModel> get(String categoryTitle) {
+    public ArrayList<FoodItemModel> get(String categoryTitle) {
 
         CsvReader csvReader = new CsvReader();
         final FoodItemMapper foodItemMapper = new FoodItemMapper();
@@ -15,7 +14,7 @@ public class FoodItemsService {
 
         ArrayList<String> fetchedData = csvReader.fetch(foodItemsPath);
 
-        HashMap<String, FoodItemModel> mappedFoodItems = foodItemMapper.map(fetchedData);
+        ArrayList<FoodItemModel> mappedFoodItems = foodItemMapper.map(fetchedData);
 
         return mappedFoodItems;
     }
