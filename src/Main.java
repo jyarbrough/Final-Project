@@ -12,6 +12,7 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 1500, 900));
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {

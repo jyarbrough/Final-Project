@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 public class CategoryFactory {
 
-    CategoryMapper categoryMapper;
-    FoodItemsService foodItemsService;
+    private CategoryMapper categoryMapper;
+    private FoodItemsService foodItemsService;
 
     public CategoryFactory() {
         this.categoryMapper = new CategoryMapper();

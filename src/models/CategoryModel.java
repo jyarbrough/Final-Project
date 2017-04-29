@@ -18,6 +18,20 @@ public class CategoryModel extends CategoriesService {
         this.foodItemsList = foodItemsList;
     }
 
+    public FoodItemModel find(String searchName) {
+
+        FoodItemModel foundFoodItem = null;
+
+        for (FoodItemModel foodItemModel : foodItemsList) {
+            String name = foodItemModel.getName();
+
+            if (name.equals(searchName)) {
+                foundFoodItem = foodItemModel;
+            }
+        }
+        return foundFoodItem;
+    }
+
     public CategoryModel(String id, String name) {
         this.id = id;
         this.name = name;
