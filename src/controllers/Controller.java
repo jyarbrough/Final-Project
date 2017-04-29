@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +32,8 @@ public class Controller implements Initializable {
     public ListView categoryListView;
     public ListView foodItemsListView;
     public Pane backPane;
+    public TextField totalField;
+    public TextField taxField;
     public TableView<FoodItemModel> receiptTableView;
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
 
