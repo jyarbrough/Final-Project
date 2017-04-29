@@ -126,27 +126,28 @@ public class Controller implements Initializable {
                 String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
                 CategoryModel categoryModel = categoryModelHashMap.get(categoryName);
 
-                ArrayList<FoodItemModel> foodItem = categoryModel.getFoodItemsList();
-                for (FoodItemModel foodItemModel : foodItem) {
-                    if (selectedFoodName.equals(foodItemModel.getName())) {
-
-                        try {
-                            FoodItemModel foodItemsList = categoryModel.find(selectedFoodName);
-                            ObservableList<FoodItemModel> observableFoodItem = FXCollections.observableArrayList();
-                            receiptTableView.setItems(observableFoodItem);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
+                populateReceiptView(selectedFoodName, categoryModel);
             }
         });
     }
 
-    private void populateReceiptView() {
+    private void populateReceiptView(String selectedFoodName, CategoryModel categoryModel) {
+        ArrayList<FoodItemModel> foodItem = categoryModel.getFoodItemsList();
+        for (FoodItemModel foodItemModel : foodItem) {
+            if (selectedFoodName.equals(foodItemModel.getName())) {
 
+                try {
+                    FoodItemModel foodItemsList = categoryModel.find(selectedFoodName);
+                    ObservableList<FoodItemModel> observableFoodItem = FXCollections.observableArrayList();
+                    observableFoodItem.addAll(foodItemsList);
+                    receiptTableView.setItems(observableFoodItem);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 
     private void setupTableColumns() {
