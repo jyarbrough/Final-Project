@@ -38,10 +38,8 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         CategoriesService categoriesService = new CategoriesService();
-        FoodItemsService foodItemsService = new FoodItemsService();
         categoryModelHashMap = categoriesService.get();
         setupTableColumns();
-        initializeReceiptTable();
         initializeEventListeners(categoryModelHashMap);
 
         Scene scene = new Scene(new Group(), 500, 400);
@@ -51,6 +49,7 @@ public class Controller implements Initializable {
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         initializeCategoryView(categoryModelHashMap);
+        initializeReceiptTable();
         initializeFoodView();
     }
 
@@ -70,9 +69,8 @@ public class Controller implements Initializable {
 
         ObservableList<String> observableList = FXCollections.observableArrayList();
         for (CategoryModel categoryModel : categoriesModelHashMap.values()) {
-            String name = categoryModel.getName();
 
-            observableList.add(name);
+            observableList.add(categoryModel.getName());
         }
         categoryListView.setItems(observableList);
     }
@@ -82,13 +80,11 @@ public class Controller implements Initializable {
         categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
                 String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
 
                 populateFoodItemsListView(categoryName);
             }
         });
-
     }
 
     private void populateFoodItemsListView(String categoryName) {
@@ -98,13 +94,10 @@ public class Controller implements Initializable {
         ArrayList<FoodItemModel> foodItemsList = categoryModel.getFoodItemsList();
 
         for (FoodItemModel foodItemModel : foodItemsList) {
-            String name = foodItemModel.getName();
 
-            observableList.add(name);
+            observableList.add(foodItemModel.getName());
         }
         foodItemsListView.setItems(observableList);
-
-
     }
 
     private void initializeReceiptTable() {

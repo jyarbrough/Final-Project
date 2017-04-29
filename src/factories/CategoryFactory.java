@@ -18,17 +18,14 @@ public class CategoryFactory {
         this.categoryMapper = new CategoryMapper();
         this.foodItemsService = new FoodItemsService();
     }
-
     public HashMap<String, CategoryModel> build(ArrayList<String> fetchedData) {
 
         HashMap<String, CategoryModel> mappedCategories = categoryMapper.map(fetchedData);
-
         for (CategoryModel categoryModel : mappedCategories.values()) {
             String categoryTitle = categoryModel.getId();
             ArrayList<FoodItemModel> foodItems = foodItemsService.get(categoryTitle);
             categoryModel.setFoodItemsList(foodItems);
         }
-
         return mappedCategories;
     }
 }
