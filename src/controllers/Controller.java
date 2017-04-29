@@ -1,8 +1,5 @@
 package controllers;
 
-import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -11,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,12 +15,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.util.Callback;
 import models.CategoryModel;
 import models.FoodItemModel;
 import services.CategoriesService;
 import services.FoodItemsService;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,12 +31,8 @@ public class Controller implements Initializable {
     public ListView categoryListView;
     public ListView foodItemsListView;
     public Pane backPane;
-    private ObservableList<FoodItemModel> foodItem = FXCollections.observableArrayList();
-    public TableView<FoodItemModel> receiptTableView = new TableView<>(foodItem);
-
-//    public TableColumn<FoodItemModel, String> numberColumn;
-//    public TableColumn<FoodItemModel, String> nameColumn;
-//    public TableColumn<FoodItemModel, String> priceColumn;
+    public TableView<FoodItemModel> receiptTableView;
+    private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -126,28 +116,17 @@ public class Controller implements Initializable {
                 String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
                 CategoryModel categoryModel = categoryModelHashMap.get(categoryName);
 
-                populateReceiptView(selectedFoodName, categoryModel);
+                ArrayList<FoodItemModel> foodItem = categoryModel.getFoodItemsList();
+                for (FoodItemModel foodItemModel : foodItem) {
+                    if (selectedFoodName.equals(foodItemModel.getName())) {
+
+                        FoodItemModel foodItemsList = categoryModel.find(selectedFoodName);
+                        selectedFoodItemsToDisplay.addAll(foodItemsList);
+                    }
+                }
+                receiptTableView.setItems(selectedFoodItemsToDisplay);
             }
         });
-    }
-
-    private void populateReceiptView(String selectedFoodName, CategoryModel categoryModel) {
-        ArrayList<FoodItemModel> foodItem = categoryModel.getFoodItemsList();
-        for (FoodItemModel foodItemModel : foodItem) {
-            if (selectedFoodName.equals(foodItemModel.getName())) {
-
-                try {
-                    FoodItemModel foodItemsList = categoryModel.find(selectedFoodName);
-                    ObservableList<FoodItemModel> observableFoodItem = FXCollections.observableArrayList();
-                    observableFoodItem.addAll(foodItemsList);
-                    receiptTableView.setItems(observableFoodItem);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
     }
 
     private void setupTableColumns() {
