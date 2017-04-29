@@ -1,0 +1,28 @@
+#categoryListView {
+    -fx-font: 16px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: #CCFF99;
+}
+
+#foodItemsListView {
+    -fx-text-alignment: center;
+    -fx-font: 20px "Sans-Serif";
+    -fx-background-color: blue;
+}
+
+#receiptTableView {
+    -fx-alignment: center;
+    -fx-column-halignment: center;
+}
+
+#numberColumn {
+    -fx-alignment: center;
+}
+
+#descriptionColumn {
+    -fx-alignment: center;
+}
+
+#priceColumn {
+    -fx-alignment: center;
+}

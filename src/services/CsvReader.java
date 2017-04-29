@@ -1,6 +1,5 @@
 package services;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -8,24 +7,25 @@ import java.util.Scanner;
 
 public class CsvReader {
 
-    ArrayList<String> fetch() {
+    ArrayList<String> fetch(String pathName) {
 
-            File filePointer = new File("/Users/joeyarbrough/Advanced-Java-Labs/Homework/Final-Project/src/csvFiles/Categories.csv");
-            Scanner input = null;
+        File filePointer = new File(pathName);
+        Scanner input = null;
 
-            try {
-                input = new Scanner(filePointer);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+        ArrayList<String> lines = new ArrayList<>();
 
-            ArrayList<String> lines = new ArrayList<>();
+        try {
+            input = new Scanner(filePointer);
 
-            while(input.hasNext()) {
+            while (input.hasNext()) {
                 String line = input.nextLine();
                 lines.add(line);
             }
+
             input.close();
-            return lines;
+        } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+        }
+        return lines;
     }
 }

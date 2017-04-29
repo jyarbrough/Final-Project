@@ -16,7 +16,7 @@ public class CategoryMapper {
             String name = categoriesArray[1];
 
             CategoryModel category = new CategoryModel(id, name);
-            categoriesHashMap.put(category.getId(), category);
+            categoriesHashMap.put(category.getName(), category);
         }
         return categoriesHashMap;
     }
