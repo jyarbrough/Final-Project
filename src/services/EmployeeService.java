@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class EmployeeService {
 
-    public HashMap<String, EmployeeModel> get(String logInCode) {
+    public HashMap<String, EmployeeModel> get() {
 
         CsvReader csvReader = new CsvReader();
         final EmployeeMapper employeeMapper = new EmployeeMapper();
