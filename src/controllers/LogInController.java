@@ -150,20 +150,17 @@ public class LogInController implements Initializable {
                 EmployeeService employeeService = new EmployeeService();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
-                HashMap<String, EmployeeModel> employeeModel = employeeService.get(codeEntered);
+                HashMap<String, EmployeeModel> employeeModel = employeeService.get();
 
                 for (EmployeeModel model : employeeModel.values()) {
-//                    model.getEmployeeList();
 
                     if (codeEntered.equals(model.getLogInCode())) {
-
                         alert.setTitle("Information");
                         alert.setHeaderText("Hello " + model.getName());
                         alert.setContentText("Heres the content");
 
                         alert.showAndWait();
                     } else {
-
                         alert.setTitle("Uh Oh!");
                         alert.setHeaderText("Log In Doesn't Exist.");
                         alert.setContentText("Please Try Again.");

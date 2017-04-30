@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="1279.0" stylesheets="@../stylesheets/customerInfoStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerInfoController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="11.0" prefHeight="777.0" prefWidth="1238.0" style="-fx-background-color: #000000;">
+         <children>
+            <AnchorPane layoutX="90.0" layoutY="58.0" prefHeight="675.0" prefWidth="1051.0" styleClass="background">
+               <children>
+                  <TextField fx:id="firstNameField" layoutX="344.0" layoutY="146.0" promptText="First Name" styleClass="customerInfoTextFields" />
+                  <TextField fx:id="lastNameField" layoutX="541.0" layoutY="146.0" promptText="Last Name" styleClass="customerInfoTextFields" />
+                  <TextField fx:id="phoneNumberField" layoutX="443.0" layoutY="196.0" promptText="Phone Number" styleClass="customerInfoTextFields" />
+                  <TextField fx:id="addressOneField" layoutX="403.0" layoutY="245.0" prefHeight="27.0" prefWidth="246.0" promptText="Address 1" styleClass="customerInfoTextFields" />
+                  <TextField fx:id="addressTwoField" layoutX="403.0" layoutY="289.0" prefHeight="27.0" prefWidth="246.0" promptText="Address 2" styleClass="customerInfoTextFields" />
+                  <TextField fx:id="cityField" layoutX="443.0" layoutY="333.0" promptText="City" styleClass="customerInfoTextFields" />
+                  <TextField fx:id="zipCodeField" layoutX="446.0" layoutY="385.0" prefHeight="27.0" prefWidth="74.0" promptText="Zip Code" styleClass="customerInfoTextFields" />
+                  <TextField fx:id="stateField" layoutX="534.0" layoutY="385.0" prefHeight="27.0" prefWidth="74.0" promptText="State" styleClass="customerInfoTextFields" />
+                  <Text layoutX="46.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Employee Icon With Employee Logged In Name" />
+                  <Text layoutX="854.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date and Time" />
+                  <Button fx:id="placeOrderButton" layoutX="539.0" layoutY="453.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="128.0" text="Place Order" />
+                  <Button fx:id="backButton" layoutX="389.0" layoutY="453.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="128.0" text="Back" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+   </children>
+</Pane>
