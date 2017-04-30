@@ -18,8 +18,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import models.CategoryModel;
 import models.FoodItemModel;
+import models.ReceiptModel;
 import services.CategoriesService;
 import services.FoodItemsService;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     private HashMap<String, CategoryModel> categoryModelHashMap;
+    private ReceiptModel receipt = new ReceiptModel();
 
     @FXML
     public ListView categoryListView;
@@ -41,6 +44,7 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         CategoriesService categoriesService = new CategoriesService();
+
         categoryModelHashMap = categoriesService.get();
         setupTableColumns();
         initializeEventListeners(categoryModelHashMap);
@@ -118,12 +122,18 @@ public class Controller implements Initializable {
 
                         FoodItemModel foodItemsList = categoryModel.find(selectedFoodName);
                         selectedFoodItemsToDisplay.addAll(foodItemsList);
+
+                        Double individualItemPrice = Double.valueOf(foodItemModel.getPrice());
+                        receipt.updateTotal(individualItemPrice);
                     }
                 }
+                taxField.setText(String.valueOf(receipt.getTax()));
+                totalField.setText(String.valueOf(receipt.getGrandTotal()));
                 receiptTableView.setItems(selectedFoodItemsToDisplay);
             }
         });
     }
+
 
     private void setupTableColumns() {
         TableColumn<FoodItemModel, String> numberColumn = new TableColumn<>("#");
@@ -143,7 +153,6 @@ public class Controller implements Initializable {
         priceColumn.setCellValueFactory(
                 new PropertyValueFactory<>("Price"));
         priceColumn.setId("priceColumn");
-
 
         receiptTableView.getColumns().addAll(numberColumn, descriptionColumn, priceColumn);
     }
