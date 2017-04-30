@@ -42,7 +42,6 @@ public class LogInController implements Initializable {
         scene.getStylesheets().add("stylesheets/posStyles.css");
         initializeButtons();
         verifyEmployee();
-
     }
 
     public void initializeButtons() {
@@ -130,9 +129,14 @@ public class LogInController implements Initializable {
         clearButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                logInTextField.setText("");
+               clearTextField();
             }
         });
+    }
+
+    public void clearTextField() {
+        enteredDigits = "";
+        logInTextField.clear();
     }
 
     public void verifyEmployee() {
@@ -144,6 +148,7 @@ public class LogInController implements Initializable {
                 String codeEntered = logInTextField.getText();
 
                 EmployeeService employeeService = new EmployeeService();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
                 HashMap<String, EmployeeModel> employeeModel = employeeService.get(codeEntered);
 
@@ -151,28 +156,23 @@ public class LogInController implements Initializable {
 //                    model.getEmployeeList();
 
                     if (codeEntered.equals(model.getLogInCode())) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
                         alert.setTitle("Information");
                         alert.setHeaderText("Hello " + model.getName());
                         alert.setContentText("Heres the content");
 
                         alert.showAndWait();
+                    } else {
+
+                        alert.setTitle("Uh Oh!");
+                        alert.setHeaderText("Log In Doesn't Exist.");
+                        alert.setContentText("Please Try Again.");
+                        clearTextField();
+
+                        alert.show();
                     }
                 }
-//                EmployeeModel employeeModel = new EmployeeModel();
-//
-//                if(logInTextField.getText().equals(employeeModel.getLogInCode())) {
-//
-//                }
-
             }
         });
-        // compare digits entered by user to digits in file
-        // if there is a match send an alert saying "welcome ___ "
-        // send to next page
-        // if there is no match send an alert saying "no match please try again"
-
-
     }
-
 }
