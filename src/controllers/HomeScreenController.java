@@ -1,10 +1,13 @@
 package controllers;
 
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class HomeScreenController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class HomeScreenController implements Initializable {
 
     public Button newOrderButton;
     public Button pickupButton;
@@ -15,5 +18,10 @@ public class HomeScreenController {
     public TextField loggedInTextField;
     public TextField idTextField;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
+
+
+    }
 }
