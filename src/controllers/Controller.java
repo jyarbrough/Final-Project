@@ -20,7 +20,6 @@ import models.CategoryModel;
 import models.FoodItemModel;
 import models.ReceiptModel;
 import services.CategoriesService;
-import services.FoodItemsService;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class Controller implements Initializable {
         initializeEventListeners(categoryModelHashMap);
 
         Scene scene = new Scene(new Group(), 500, 400);
-        scene.getStylesheets().add("./posStyles.css");
+        scene.getStylesheets().add("stylesheets/posStyles.css");
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -108,6 +107,7 @@ public class Controller implements Initializable {
     }
 
     private void initializeReceiptTable() {
+
         foodItemsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -136,6 +136,7 @@ public class Controller implements Initializable {
 
 
     private void setupTableColumns() {
+
         TableColumn<FoodItemModel, String> numberColumn = new TableColumn<>("#");
         numberColumn.setMaxWidth(50);
         numberColumn.setCellValueFactory(

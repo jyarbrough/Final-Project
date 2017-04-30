@@ -1,0 +1,9 @@
+.logInButtons {
+
+    -fx-background-color: #f0f8ff;
+
+}
+
+#logInTextField {
+    -fx-alignment: center;
+}

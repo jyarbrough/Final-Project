@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="backPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="1279.0" stylesheets="@../stylesheets/logInStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LogInController">
+   <children>
+      <Pane layoutX="303.0" layoutY="70.0" prefHeight="660.0" prefWidth="674.0" style="-fx-background-color: #00a0ee;">
+         <children>
+            <Button fx:id="numberOne" layoutX="244.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="1" />
+            <Button fx:id="numberTwo" layoutX="312.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="2" />
+            <Button fx:id="numberThree" layoutX="380.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="3" />
+            <Button fx:id="numberFour" layoutX="244.0" layoutY="274.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="4" />
+            <Button fx:id="numberFive" layoutX="312.0" layoutY="274.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="5" />
+            <Button fx:id="numberSix" layoutX="380.0" layoutY="274.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="6" />
+            <Button fx:id="numberSeven" layoutX="244.0" layoutY="334.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="7" />
+            <Button fx:id="numberEight" layoutX="312.0" layoutY="334.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="8" />
+            <Button fx:id="numberNine" layoutX="380.0" layoutY="334.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="9" />
+            <Button fx:id="numberZero" layoutX="312.0" layoutY="394.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="0" />
+            <TextField fx:id="logInTextField" layoutX="257.0" layoutY="142.0" />
+            <Button fx:id="clearButton" layoutX="232.0" layoutY="464.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0" text="Clear" />
+            <Button fx:id="logInButton" layoutX="342.0" layoutY="464.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0" text="Log-In" />
+         </children>
+      </Pane>
+   </children>
+</Pane>
