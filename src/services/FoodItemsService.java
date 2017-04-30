@@ -14,8 +14,6 @@ public class FoodItemsService {
 
         ArrayList<String> fetchedData = csvReader.fetch(foodItemsPath);
 
-        ArrayList<FoodItemModel> mappedFoodItems = foodItemMapper.map(fetchedData);
-
-        return mappedFoodItems;
+        return foodItemMapper.map(fetchedData);
     }
 }

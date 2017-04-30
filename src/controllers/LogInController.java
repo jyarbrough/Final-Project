@@ -4,11 +4,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import models.EmployeeModel;
+import services.EmployeeService;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LogInController implements Initializable {
@@ -36,6 +41,7 @@ public class LogInController implements Initializable {
         Scene scene = new Scene(new Group(), 500, 400);
         scene.getStylesheets().add("stylesheets/posStyles.css");
         initializeButtons();
+        verifyEmployee();
 
     }
 
@@ -108,7 +114,7 @@ public class LogInController implements Initializable {
         numberNine.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                logInTextField.setText("9");enteredDigits += "2";
+                enteredDigits += "9";
                 logInTextField.setText(enteredDigits);
             }
         });
@@ -120,5 +126,53 @@ public class LogInController implements Initializable {
                 logInTextField.setText(enteredDigits);
             }
         });
+
+        clearButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                logInTextField.setText("");
+            }
+        });
     }
+
+    public void verifyEmployee() {
+
+        logInButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                String codeEntered = logInTextField.getText();
+
+                EmployeeService employeeService = new EmployeeService();
+
+                HashMap<String, EmployeeModel> employeeModel = employeeService.get(codeEntered);
+
+                for (EmployeeModel model : employeeModel.values()) {
+//                    model.getEmployeeList();
+
+                    if (codeEntered.equals(model.getLogInCode())) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information");
+                        alert.setHeaderText("Hello " + model.getName());
+                        alert.setContentText("Heres the content");
+
+                        alert.showAndWait();
+                    }
+                }
+//                EmployeeModel employeeModel = new EmployeeModel();
+//
+//                if(logInTextField.getText().equals(employeeModel.getLogInCode())) {
+//
+//                }
+
+            }
+        });
+        // compare digits entered by user to digits in file
+        // if there is a match send an alert saying "welcome ___ "
+        // send to next page
+        // if there is no match send an alert saying "no match please try again"
+
+
+    }
+
 }
