@@ -2,16 +2,21 @@ package models;
 
 public class ReceiptModel {
 
-    double sumOfPrices = 0;
-    double tax = 0;
-    double grandTotal;
+    private double subTotal = 0;
+    private double tax = 0;
+    private double grandTotal;
+    private double currentTaxRate = 0.08;
+    private double coupon = 0;
+    private String employeeId;
+    private String customerId;
+    private String itemsPurchased = null;
 
     public void updateTotal(Double individualItemPrice) {
-        sumOfPrices += individualItemPrice;
+        subTotal += individualItemPrice;
 
-        tax = sumOfPrices * 0.08;
+        tax = subTotal * currentTaxRate;
 
-        grandTotal = sumOfPrices + tax;
+        grandTotal = subTotal + tax;
 
         setTax(tax);
         setGrandTotal(grandTotal);
@@ -21,7 +26,7 @@ public class ReceiptModel {
         return tax;
     }
 
-    public void setTax(double tax) {
+    private void setTax(double tax) {
         this.tax = tax;
     }
 
@@ -29,7 +34,7 @@ public class ReceiptModel {
         return grandTotal;
     }
 
-    public void setGrandTotal(double grandTotal) {
+    private void setGrandTotal(double grandTotal) {
         this.grandTotal = grandTotal;
     }
 }
