@@ -1,7 +1,9 @@
 package controllers;
 
+import factories.CategoryFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,13 +31,14 @@ public class Controller implements Initializable {
 
     @FXML
     public Pane foodItemsPane;
-    public TilePane tilePane;
+    public TilePane foodItemPane;
     public ListView categoryListView;
     public ListView foodItemsListView;
     public Pane backPane;
     public TextField totalField;
     public TextField taxField;
     public TableView<FoodItemModel> receiptTableView;
+    public TilePane categoryPane;
 
     private ReceiptModel receipt = new ReceiptModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
@@ -54,14 +57,16 @@ public class Controller implements Initializable {
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
-
-        initializeCategoryView(categoryModelHashMap);
-        initializeReceiptTable();
-        initializeFoodView();
+        initializeCategoryPane();
+//        initializeReceiptTable();
+        initializeItemsInterface(categoryModelHashMap);
     }
 
 
-    private void initializeCategoryView(HashMap<String, CategoryModel> categoryModelHashMap) {
+    private void initializeCategoryPane() {
+        CategoriesService categoriesService = new CategoriesService();
+        HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
+
 
         categoryListView.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -73,6 +78,25 @@ public class Controller implements Initializable {
         });
     }
 
+    private void initializeItemsInterface(HashMap<String, CategoryModel> categoryModelHashMap) {
+
+        categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                foodItemPane.getChildren().clear();
+                populateItemsInterface(categoryModelHashMap);
+            }
+        });
+
+//        categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+//                foodItemPane.getChildren().clear();
+//                populateItemsInterface();
+//            }
+//        });
+    }
+
     private void populateCategoriesList(HashMap<String, CategoryModel> categoriesModelHashMap) {
 
         ObservableList<String> observableList = FXCollections.observableArrayList();
@@ -80,24 +104,14 @@ public class Controller implements Initializable {
 
             observableList.add(categoryModel.getName());
         }
+
         categoryListView.setItems(observableList);
     }
 
-    private void initializeFoodView() {
-
-        categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                tilePane.getChildren().clear();
-                String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-                initializeGridButtons(categoryName);
-            }
-        });
-    }
-
-    private void initializeGridButtons(String name) {
+    private void populateItemsInterface(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         FoodItemsService foodItemsService = new FoodItemsService();
+
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
         ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(categoryName);
 
@@ -106,10 +120,41 @@ public class Controller implements Initializable {
             tempButton.setMinHeight(69);
             tempButton.setMinWidth(159);
 
-            tempButton.setId("interfaceButton");
+            foodItemPane.getChildren().addAll(tempButton);
+            tempButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    String selectedItem = tempButton.getText();
 
-            tilePane.getChildren().addAll(tempButton);
+                    addItemToReceipt(selectedItem, categoryName, categoryModelHashMap);
+                }
+            });
         }
+
+
+    }
+
+    private void addItemToReceipt(String selectedItem, String categoryName, HashMap<String, CategoryModel> categoryModelHashMap) {
+
+        FoodItemsService foodItemsService = new FoodItemsService();
+        ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(categoryName);
+        CategoryModel categoryModel = categoryModelHashMap.get(categoryName);
+
+        for (FoodItemModel foodItemModel : foodItemModelArrayList) {
+            if (selectedItem.equals(foodItemModel.getName())) {
+
+                FoodItemModel foodItemsList = categoryModel.find(selectedItem);
+                selectedFoodItemsToDisplay.addAll(foodItemsList);
+
+                Double individualItemPrice = Double.valueOf(foodItemModel.getPrice());
+                receipt.updateTotal(individualItemPrice);
+
+            }
+        }
+
+        taxField.setText(String.valueOf(receipt.getTax()));
+        totalField.setText(String.valueOf(receipt.getGrandTotal()));
+        receiptTableView.setItems(selectedFoodItemsToDisplay);
     }
 
     private void initializeReceiptTable() {
