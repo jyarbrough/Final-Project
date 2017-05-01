@@ -9,7 +9,7 @@ public class FoodItemMapper extends ArrayList<FoodItemModel> {
 
     public ArrayList<FoodItemModel> map(ArrayList<String> linesFromFile) {
 
-        ArrayList<FoodItemModel> foodItemsHashMap = new ArrayList<>();
+        ArrayList<FoodItemModel> foodItemsList = new ArrayList<>();
 
         for (String line : linesFromFile) {
             String[] foodItemsArray = line.split(",");
@@ -19,8 +19,8 @@ public class FoodItemMapper extends ArrayList<FoodItemModel> {
             String price = foodItemsArray[3];
 
             FoodItemModel foodItemModel = new FoodItemModel(id, name, description, price);
-            foodItemsHashMap.add(foodItemModel);
+            foodItemsList.add(foodItemModel);
         }
-        return foodItemsHashMap;
+        return foodItemsList;
     }
 }
