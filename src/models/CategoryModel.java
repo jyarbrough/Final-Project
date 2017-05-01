@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class CategoryModel extends CategoriesService {
 
-    String name;
-    String id;
-    ArrayList<FoodItemModel> foodItemsList = null;
+    private String name;
+    private String id;
+    private ArrayList<FoodItemModel> foodItemsList = null;
 
     public ArrayList<FoodItemModel> getFoodItemsList() {
         return foodItemsList;

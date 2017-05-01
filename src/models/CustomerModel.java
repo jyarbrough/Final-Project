@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class CustomerModel {
 
     private String firstName;
@@ -10,6 +13,28 @@ public class CustomerModel {
     private String state;
     private String zipCode;
     private String city;
+
+    private HashMap<String, CustomerModel> customerProfile;
+
+    public CustomerModel(String firstName, String lastName, String addressOne, String addressTwo, String phoneNumber,
+                         String state, String zipCode, String city) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.addressOne = addressOne;
+        this.addressTwo = addressTwo;
+        this.phoneNumber = phoneNumber;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.city = city;
+
+    }
+
+    public HashMap<String, CustomerModel> getCustomerProfile() {
+        return customerProfile;
+    }
+
+    public void setCustomerProfile(HashMap<String, CustomerModel> customerProfile) { this.customerProfile = customerProfile; }
 
     public String getFirstName() {
         return firstName;
