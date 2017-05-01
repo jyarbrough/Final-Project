@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,10 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.text.Text;
 import models.CategoryModel;
 import models.FoodItemModel;
 import models.ReceiptModel;
@@ -29,14 +26,10 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-//    public GridPane gridPane;
-    public Pane foodItemsPane;
-    public Pane blankPane;
-    public TilePane tilePane;
-    private HashMap<String, CategoryModel> categoryModelHashMap;
-    private ReceiptModel receipt = new ReceiptModel();
 
     @FXML
+    public Pane foodItemsPane;
+    public TilePane tilePane;
     public ListView categoryListView;
     public ListView foodItemsListView;
     public Pane backPane;
@@ -44,8 +37,7 @@ public class Controller implements Initializable {
     public TextField taxField;
     public TableView<FoodItemModel> receiptTableView;
 
-
-
+    private ReceiptModel receipt = new ReceiptModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
 
     @Override
@@ -53,8 +45,8 @@ public class Controller implements Initializable {
 
         CategoriesService categoriesService = new CategoriesService();
 
-        categoryModelHashMap = categoriesService.get();
-        setupTableColumns();
+        HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
+        setupReceiptColumns();
         initializeEventListeners(categoryModelHashMap);
 
         Scene scene = new Scene(new Group(), 500, 400);
@@ -96,7 +88,7 @@ public class Controller implements Initializable {
         categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
+                tilePane.getChildren().clear();
                 String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
                 initializeGridButtons(categoryName);
             }
@@ -109,91 +101,16 @@ public class Controller implements Initializable {
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
         ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(categoryName);
 
-        ArrayList<FoodItemModel> tempArray = new ArrayList<>();
-
         for (FoodItemModel foodItemModel : foodItemModelArrayList) {
             final Button tempButton = new Button(foodItemModel.getName());
             tempButton.setMinHeight(69);
             tempButton.setMinWidth(159);
 
-
             tempButton.setId("interfaceButton");
 
             tilePane.getChildren().addAll(tempButton);
-
-//            for (int i = 0; i < foodItemModelArrayList.size(); i++) {
-//
-//                String buttonTitle = foodItemModel.getName();
-//
-//                if(i <= 5) {
-//
-//                }
-//
-//                if (i > 5 && i <= 11) {
-//
-//                }
-//
-//                if (i > 12 && i <= 18) {
-//
-//                }
-//
-//
-//            }
         }
-
-
-
-
-
-//        while(i <= 5) {
-//
-//
-//
-//            for (int j = 0; j <= 5; j++) {
-//                addButtonColumn0(i, name);
-//            }
-//
-//            for (int k = 6; k <= 11; k++) {
-//
-//                addButtonColumn1(i, name);
-//
-//            }
-//
-//            for (int l = 12; l <= 18; l++) {
-//                addButtonColumn2(i, name);
-//            }
-//
-//
-//
-//        }
-//
-//        gridPane.add(temp, 0, i);
     }
-
-//    private void addButtonColumn1(int i, String name) {
-//
-//    }
-//
-//    private void addButtonColumn2(int i, String name) {
-//
-//    }
-//
-//    private void populateGridPane() {
-//
-//    }
-
-//    private void populateFoodItemsListView(String categoryName) {
-
-//        ObservableList<String> observableList = FXCollections.observableArrayList();
-//        CategoryModel categoryModel = categoryModelHashMap.get(categoryName);
-//        ArrayList<FoodItemModel> foodItemsList = categoryModel.getFoodItemsList();
-//
-//        for (FoodItemModel foodItemModel : foodItemsList) {
-//
-//            observableList.add(foodItemModel.getName());
-//        }
-//        foodItemsListView.setItems(observableList);
-//    }
 
     private void initializeReceiptTable() {
 
@@ -224,7 +141,7 @@ public class Controller implements Initializable {
     }
 
 
-    private void setupTableColumns() {
+    private void setupReceiptColumns() {
 
         TableColumn<FoodItemModel, String> numberColumn = new TableColumn<>("#");
         numberColumn.setMaxWidth(50);
