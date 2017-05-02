@@ -2,20 +2,16 @@ package controllers;
 
 import contexts.EmployeeContext;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import models.EmployeeModel;
 import services.EmployeeService;
-
-import java.io.IOException;
+import stages.HomeScreenStage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -48,7 +44,7 @@ public class LogInController implements Initializable {
         verifyEmployee();
     }
 
-    public void initializeButtons() {
+    private void initializeButtons() {
 
         numberOne.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -138,12 +134,12 @@ public class LogInController implements Initializable {
         });
     }
 
-    public void clearTextField() {
+    private void clearTextField() {
         enteredDigits = "";
         logInTextField.clear();
     }
 
-    public void verifyEmployee() {
+    private void verifyEmployee() {
 
         logInButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -160,38 +156,22 @@ public class LogInController implements Initializable {
 
                     if (codeEntered.equals(model.getLogInCode())) {
 
-//                        alert.setTitle("Information");
-//                        alert.setHeaderText("Hello " + model.getName());
-//                        alert.setContentText("Heres the content");
-//                        alert.showAndWait();
-
                         String employeeName = model.getName();
                         String employeeId = model.getId();
-
-                        Stage stage;
-                        Parent root = null;
-                        stage = (Stage) logInButton.getScene().getWindow();
-
                         EmployeeContext employeeContext = EmployeeContext.getInstance();
                         employeeContext.setEmployeeLoggedInName(employeeName);
                         employeeContext.setEmployeeId(employeeId);
 
-                        try {
-                            root = FXMLLoader.load(getClass().getResource("../views/home-screen.fxml"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Scene scene = new Scene(root, 1300, 900);
-                        stage.setScene(scene);
-                        stage.show();
-                    }
+                        HomeScreenStage homeScreenStage = new HomeScreenStage();
+                        homeScreenStage.stage(logInButton);
 
-                    else {
-                        alert.setTitle("Uh Oh!");
-                        alert.setHeaderText("Log In Doesn't Exist.");
-                        alert.setContentText("Please Try Again.");
-                        clearTextField();
-                        alert.show();
+                    } else {
+
+//                        alert.setTitle("Uh Oh!");
+//                        alert.setHeaderText("Log In Doesn't Exist.");
+//                        alert.setContentText("Please Try Again.");
+//                        clearTextField();
+//                        alert.show();
                     }
                 }
             }

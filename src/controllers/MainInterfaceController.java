@@ -45,14 +45,9 @@ public class MainInterfaceController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         CategoriesService categoriesService = new CategoriesService();
-
-
         HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
         setupReceiptColumns();
         initializeEventListeners(categoryModelHashMap);
-
-//        Scene scene = new Scene(new Group(), 500, 400);
-//        scene.getStylesheets().add("stylesheets/posStyles.css");
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {

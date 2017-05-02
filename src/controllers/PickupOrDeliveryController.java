@@ -4,15 +4,12 @@ import contexts.EmployeeContext;
 import contexts.PickupOrDeliveryContext;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import stages.CustomerInfoStage;
+import stages.HomeScreenStage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +29,8 @@ public class PickupOrDeliveryController implements Initializable {
         EmployeeContext employeeContext = EmployeeContext.getInstance();
         String employeeName = employeeContext.getEmployeeLoggedInName();
         String employeeId = employeeContext.getEmployeeId();
+        CustomerInfoStage customerInfoStage = new CustomerInfoStage();
+        HomeScreenStage homeScreenStage = new HomeScreenStage();
 
         loggedInTextField.setText(employeeName);
         idTextField.setText(employeeId);
@@ -39,22 +38,10 @@ public class PickupOrDeliveryController implements Initializable {
         pickupButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 pickupOrDeliveryContext.setPickup(true);
                 pickupOrDeliveryContext.setDelivery(false);
-
-                Stage stage;
-                Parent root = null;
-
-                stage = (Stage) pickupButton.getScene().getWindow();
-
-                try {
-                    root = FXMLLoader.load(getClass().getResource("../views/customer-info.fxml"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Scene scene = new Scene(root, 1300, 900);
-                stage.setScene(scene);
-                stage.show();
+                customerInfoStage.stage(pickupButton);
             }
         });
 
@@ -63,20 +50,16 @@ public class PickupOrDeliveryController implements Initializable {
             public void handle(ActionEvent event) {
                 pickupOrDeliveryContext.setDelivery(true);
                 pickupOrDeliveryContext.setPickup(false);
+                customerInfoStage.stage(deliveryButton);
+            }
+        });
 
-                Stage stage;
-                Parent root = null;
-
-                stage = (Stage) pickupButton.getScene().getWindow();
-
-                try {
-                    root = FXMLLoader.load(getClass().getResource("../views/customer-info.fxml"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Scene scene = new Scene(root, 1300, 900);
-                stage.setScene(scene);
-                stage.show();
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pickupOrDeliveryContext.setDelivery(false);
+                pickupOrDeliveryContext.setPickup(false);
+                homeScreenStage.stage(backButton);
             }
         });
 

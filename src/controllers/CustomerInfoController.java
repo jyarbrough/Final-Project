@@ -2,13 +2,20 @@ package controllers;
 
 import contexts.EmployeeContext;
 import contexts.PickupOrDeliveryContext;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import models.CustomerModel;
+import stages.PickupDeliveryStage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -34,11 +41,11 @@ public class CustomerInfoController implements Initializable {
 
         displayPickupOrDelivery();
         displayEmployeeName();
-        placeOrderAction();
-
+        placeOrderActionHandler();
+        backButtonAction();
     }
 
-    private void placeOrderAction() {
+    private void placeOrderActionHandler() {
         placeOrderButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -61,6 +68,19 @@ public class CustomerInfoController implements Initializable {
         });
     }
 
+    private void backButtonAction() {
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
+                pickupOrDeliveryContext.setPickup(false);
+                pickupOrDeliveryContext.setDelivery(false);
+                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
+                pickupDeliveryStage.stage(backButton);
+            }
+        });
+    }
+
     private void displayEmployeeName() {
         EmployeeContext employeeContext = EmployeeContext.getInstance();
         String employeeName = employeeContext.getEmployeeLoggedInName();
@@ -72,31 +92,21 @@ public class CustomerInfoController implements Initializable {
         PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
         if (pickupOrDeliveryContext.isPickup()) {
             pickupOrDeliveryField.setText("Pick-Up");
+            disableButtons();
         } else {
             pickupOrDeliveryField.setText("Delivery");
         }
     }
 
     public HashMap<String, CustomerModel> getCustomerInfo(HashMap<String, CustomerModel> customerProfile) {
-
         return customerProfile;
-
     }
 
-//                Stage stage;
-//                Parent root = null;
-//                stage = (Stage) getCustomerInfo.getScene().getWindow();
-//
-//                contexts.EmployeeContext context = contexts.EmployeeContext.getInstance();
-//
-//                context.setCustomerProfile(customerProfile.get());
-//
-//                try {
-//                    root = FXMLLoader.load(getClass().getResource("../Stock-Graph.fxml"));
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                Scene scene = new Scene(root, 1500, 900);
-//                stage.setScene(scene);
-//                stage.show();
+    private void disableButtons() {
+        addressOneField.setDisable(true);
+        addressTwoField.setDisable(true);
+        cityField.setDisable(true);
+        zipCodeField.setDisable(true);
+        stateField.setDisable(true);
+    }
 }

@@ -1,6 +1,7 @@
 package controllers;
 
 import contexts.EmployeeContext;
+import contexts.PickupOrDeliveryContext;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import stages.PickupDeliveryStage;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -26,7 +28,6 @@ public class HomeScreenController implements Initializable {
     public Button openRegisterButton;
     public TextField loggedInTextField;
     public TextField idTextField;
-    public Button backButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,26 +42,9 @@ public class HomeScreenController implements Initializable {
         newOrderButton.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
-                Stage stage;
-                Parent root = null;
-
-                stage = (Stage) newOrderButton.getScene().getWindow();
-
-//                EmployeeContext employeeContext = EmployeeContext.getInstance();
-//                employeeContext.setEmployeeLoggedInName(employeeName);
-//                employeeContext.setEmployeeId(employeeId);
-
-                try {
-                    root = FXMLLoader.load(getClass().getResource("../views/pickup-delivery.fxml"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Scene scene = new Scene(root, 1300, 900);
-                stage.setScene(scene);
-                stage.show();
-
+                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
+                pickupDeliveryStage.stage(newOrderButton);
             }
-
         });
     }
 }
