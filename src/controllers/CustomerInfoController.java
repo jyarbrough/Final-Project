@@ -1,5 +1,7 @@
 package controllers;
 
+import contexts.EmployeeContext;
+import contexts.PickupOrDeliveryContext;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,11 +25,20 @@ public class CustomerInfoController implements Initializable {
     public TextField phoneNumberField;
     public Button placeOrderButton;
     public Button backButton;
+    public TextField employeeNameField;
+    public TextField pickupOrDeliveryField;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        displayPickupOrDelivery();
+        displayEmployeeName();
+        placeOrderAction();
+
+    }
+
+    private void placeOrderAction() {
         placeOrderButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -46,9 +57,24 @@ public class CustomerInfoController implements Initializable {
                 CustomerModel customerModel = new CustomerModel(firstName, lastName, addressOne, addressTwo, phoneNumber, state, zipCode, city);
                 customerProfile.put(customerModel.getLastName(), customerModel);
                 getCustomerInfo(customerProfile);
-//                movingToNextScreen(customerProfile);
             }
         });
+    }
+
+    private void displayEmployeeName() {
+        EmployeeContext employeeContext = EmployeeContext.getInstance();
+        String employeeName = employeeContext.getEmployeeLoggedInName();
+        employeeNameField.setText(employeeName);
+    }
+
+    private void displayPickupOrDelivery() {
+
+        PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
+        if (pickupOrDeliveryContext.isPickup()) {
+            pickupOrDeliveryField.setText("Pick-Up");
+        } else {
+            pickupOrDeliveryField.setText("Delivery");
+        }
     }
 
     public HashMap<String, CustomerModel> getCustomerInfo(HashMap<String, CustomerModel> customerProfile) {
@@ -57,17 +83,11 @@ public class CustomerInfoController implements Initializable {
 
     }
 
-//    private void movingToNextScreen(HashMap<String, CustomerModel> customerProfile) {
-//
-//        getCustomerInfo.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//
 //                Stage stage;
 //                Parent root = null;
 //                stage = (Stage) getCustomerInfo.getScene().getWindow();
 //
-//                Context context = Context.getInstance();
+//                contexts.EmployeeContext context = contexts.EmployeeContext.getInstance();
 //
 //                context.setCustomerProfile(customerProfile.get());
 //
@@ -79,9 +99,4 @@ public class CustomerInfoController implements Initializable {
 //                Scene scene = new Scene(root, 1500, 900);
 //                stage.setScene(scene);
 //                stage.show();
-//
-//            }
-//        });
-//
-//    }
 }

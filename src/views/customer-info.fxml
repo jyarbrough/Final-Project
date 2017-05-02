@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
@@ -20,10 +21,17 @@
                   <TextField fx:id="cityField" layoutX="443.0" layoutY="333.0" promptText="City" styleClass="customerInfoTextFields" />
                   <TextField fx:id="zipCodeField" layoutX="446.0" layoutY="385.0" prefHeight="27.0" prefWidth="74.0" promptText="Zip Code" styleClass="customerInfoTextFields" />
                   <TextField fx:id="stateField" layoutX="534.0" layoutY="385.0" prefHeight="27.0" prefWidth="74.0" promptText="State" styleClass="customerInfoTextFields" />
-                  <Text layoutX="46.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Employee Icon With Employee Logged In Name" />
-                  <Text layoutX="854.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date and Time" />
+                  <Text layoutX="46.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Employee Icon" />
+                  <Text layoutX="858.0" layoutY="622.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date and Time" />
                   <Button fx:id="placeOrderButton" layoutX="539.0" layoutY="453.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="128.0" text="Place Order" />
                   <Button fx:id="backButton" layoutX="389.0" layoutY="453.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="128.0" text="Back" />
+                  <TextField fx:id="employeeNameField" layoutX="191.0" layoutY="36.0" />
+                  <TextField fx:id="pickupOrDeliveryField" layoutX="775.0" layoutY="35.0" />
+                  <Text fill="WHITE" layoutX="582.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placing An Order For:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
          </children></AnchorPane>

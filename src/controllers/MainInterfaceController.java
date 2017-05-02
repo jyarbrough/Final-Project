@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class MainInterfaceController implements Initializable {
 
     @FXML
     public TilePane foodItemPane;
@@ -32,6 +32,11 @@ public class Controller implements Initializable {
     public TextField taxField;
     public TableView<FoodItemModel> receiptTableView;
     public TilePane categoryPane;
+    public TextField employeeIdField;
+    public TextField employeeNameField;
+    public TextField subTotalField;
+    public TextField ticketNumberField;
+    public TextField customerNameField;
 
     private ReceiptModel receipt = new ReceiptModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
@@ -41,12 +46,13 @@ public class Controller implements Initializable {
 
         CategoriesService categoriesService = new CategoriesService();
 
+
         HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
         setupReceiptColumns();
         initializeEventListeners(categoryModelHashMap);
 
-        Scene scene = new Scene(new Group(), 500, 400);
-        scene.getStylesheets().add("stylesheets/posStyles.css");
+//        Scene scene = new Scene(new Group(), 500, 400);
+//        scene.getStylesheets().add("stylesheets/posStyles.css");
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -60,7 +66,6 @@ public class Controller implements Initializable {
         categoryPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
 
                 for (CategoryModel categoryModel : categoryModelHashMap.values()) {
 
