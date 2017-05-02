@@ -27,11 +27,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     @FXML
-    public Pane foodItemsPane;
     public TilePane foodItemPane;
-    public ListView categoryListView;
-    public ListView foodItemsListView;
-    public Pane backPane;
     public TextField totalField;
     public TextField taxField;
     public TableView<FoodItemModel> receiptTableView;
@@ -56,12 +52,10 @@ public class Controller implements Initializable {
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         initializeCategoryPane(categoryModelHashMap);
-//        initializeItemsInterface(categoryModelHashMap);
+
     }
 
     private void initializeCategoryPane(HashMap<String, CategoryModel> categoryModelHashMap) {
-//        CategoriesService categoriesService = new CategoriesService();
-//        HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
 
         categoryPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -92,9 +86,6 @@ public class Controller implements Initializable {
     private void populateItemsInterface(String selectedCategory, HashMap<String, CategoryModel> categoryModelHashMap) {
 
         FoodItemsService foodItemsService = new FoodItemsService();
-//
-//        String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-
         ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(selectedCategory);
 
         for (FoodItemModel foodItemModel : foodItemModelArrayList) {
