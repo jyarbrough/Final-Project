@@ -1,6 +1,5 @@
 package controllers;
 
-import factories.CategoryFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,8 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -57,63 +54,48 @@ public class Controller implements Initializable {
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
-        initializeCategoryPane();
-//        initializeReceiptTable();
-        initializeItemsInterface(categoryModelHashMap);
+
+        initializeCategoryPane(categoryModelHashMap);
+//        initializeItemsInterface(categoryModelHashMap);
     }
 
+    private void initializeCategoryPane(HashMap<String, CategoryModel> categoryModelHashMap) {
+//        CategoriesService categoriesService = new CategoriesService();
+//        HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
 
-    private void initializeCategoryPane() {
-        CategoriesService categoriesService = new CategoriesService();
-        HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
-
-
-        categoryListView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        categoryPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent enterKeyPressed) {
-                if (enterKeyPressed.getCode().equals(KeyCode.ENTER)) {
-                    populateCategoriesList(categoryModelHashMap);
+            public void handle(MouseEvent event) {
+
+
+                for (CategoryModel categoryModel : categoryModelHashMap.values()) {
+
+                    final Button tempButton = new Button(categoryModel.getName());
+                    tempButton.setMinHeight(69);
+                    tempButton.setMinWidth(150);
+
+                    categoryPane.getChildren().addAll(tempButton);
+                    tempButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            String selectedCategory = tempButton.getText();
+
+                            foodItemPane.getChildren().clear();
+                            populateItemsInterface(selectedCategory, categoryModelHashMap);
+                        }
+                    });
                 }
             }
         });
     }
 
-    private void initializeItemsInterface(HashMap<String, CategoryModel> categoryModelHashMap) {
-
-        categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                foodItemPane.getChildren().clear();
-                populateItemsInterface(categoryModelHashMap);
-            }
-        });
-
-//        categoryListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//                foodItemPane.getChildren().clear();
-//                populateItemsInterface();
-//            }
-//        });
-    }
-
-    private void populateCategoriesList(HashMap<String, CategoryModel> categoriesModelHashMap) {
-
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        for (CategoryModel categoryModel : categoriesModelHashMap.values()) {
-
-            observableList.add(categoryModel.getName());
-        }
-
-        categoryListView.setItems(observableList);
-    }
-
-    private void populateItemsInterface(HashMap<String, CategoryModel> categoryModelHashMap) {
+    private void populateItemsInterface(String selectedCategory, HashMap<String, CategoryModel> categoryModelHashMap) {
 
         FoodItemsService foodItemsService = new FoodItemsService();
+//
+//        String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
 
-        String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(categoryName);
+        ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(selectedCategory);
 
         for (FoodItemModel foodItemModel : foodItemModelArrayList) {
             final Button tempButton = new Button(foodItemModel.getName());
@@ -126,12 +108,10 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     String selectedItem = tempButton.getText();
 
-                    addItemToReceipt(selectedItem, categoryName, categoryModelHashMap);
+                    addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
                 }
             });
         }
-
-
     }
 
     private void addItemToReceipt(String selectedItem, String categoryName, HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -148,7 +128,6 @@ public class Controller implements Initializable {
 
                 Double individualItemPrice = Double.valueOf(foodItemModel.getPrice());
                 receipt.updateTotal(individualItemPrice);
-
             }
         }
 
@@ -156,35 +135,6 @@ public class Controller implements Initializable {
         totalField.setText(String.valueOf(receipt.getGrandTotal()));
         receiptTableView.setItems(selectedFoodItemsToDisplay);
     }
-
-    private void initializeReceiptTable() {
-
-//        foodItemsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//
-//                String selectedFoodName = foodItemsListView.getSelectionModel().getSelectedItem().toString();
-//                String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-//                CategoryModel categoryModel = categoryModelHashMap.get(categoryName);
-//
-//                ArrayList<FoodItemModel> foodItem = categoryModel.getFoodItemsList();
-//                for (FoodItemModel foodItemModel : foodItem) {
-//                    if (selectedFoodName.equals(foodItemModel.getName())) {
-//
-//                        FoodItemModel foodItemsList = categoryModel.find(selectedFoodName);
-//                        selectedFoodItemsToDisplay.addAll(foodItemsList);
-//
-//                        Double individualItemPrice = Double.valueOf(foodItemModel.getPrice());
-//                        receipt.updateTotal(individualItemPrice);
-//                    }
-//                }
-//                taxField.setText(String.valueOf(receipt.getTax()));
-//                totalField.setText(String.valueOf(receipt.getGrandTotal()));
-//                receiptTableView.setItems(selectedFoodItemsToDisplay);
-//            }
-//        });
-    }
-
 
     private void setupReceiptColumns() {
 
@@ -194,11 +144,11 @@ public class Controller implements Initializable {
                 new PropertyValueFactory<>("#"));
         numberColumn.setId("numberColumn");
 
-        TableColumn<FoodItemModel, String> descriptionColumn = new TableColumn<>("Name");
-        descriptionColumn.setMinWidth(225);
-        descriptionColumn.setCellValueFactory(
+        TableColumn<FoodItemModel, String> titleColumn = new TableColumn<>("Name");
+        titleColumn.setMinWidth(225);
+        titleColumn.setCellValueFactory(
                 new PropertyValueFactory<>("Name"));
-        descriptionColumn.setId("descriptionColumn");
+        titleColumn.setId("descriptionColumn");
 
         TableColumn<FoodItemModel, String> priceColumn = new TableColumn<>("Price");
         priceColumn.setMinWidth(110);
@@ -206,6 +156,6 @@ public class Controller implements Initializable {
                 new PropertyValueFactory<>("Price"));
         priceColumn.setId("priceColumn");
 
-        receiptTableView.getColumns().addAll(numberColumn, descriptionColumn, priceColumn);
+        receiptTableView.getColumns().addAll(numberColumn, titleColumn, priceColumn);
     }
 }
