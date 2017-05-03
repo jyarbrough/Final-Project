@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="1279.0" stylesheets="@../stylesheets/homeScreenStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OpenOrdersController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="11.0" prefHeight="777.0" prefWidth="1238.0" style="-fx-background-color: #386aff;">
+         <children>
+            <AnchorPane layoutX="89.0" layoutY="58.0" prefHeight="675.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
+               <children>
+                  <Button fx:id="backButton" layoutX="447.0" layoutY="483.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="158.0" />
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="287.0" layoutY="66.0" prefHeight="27.0" prefWidth="142.0" />
+                  <Text layoutX="646.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="Employee ID:" wrappingWidth="97.42578125">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="idTextField" editable="false" layoutX="744.0" layoutY="66.0" prefHeight="27.0" prefWidth="97.0" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="234.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/employee-icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="goBackIcon" fitHeight="35.0" fitWidth="47.0" layoutX="473.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/goback-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="goBackIconTitle" layoutX="522.0" layoutY="519.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Go Back" wrappingWidth="71.09283447265625">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <ListView layoutX="304.0" layoutY="167.0" prefHeight="284.0" prefWidth="599.0" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+   </children>
+</Pane>

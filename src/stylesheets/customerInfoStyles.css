@@ -12,3 +12,7 @@
     -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #00a0ee 0%, #386aff 100%)
 
 }
+
+.timeTextField {
+    -fx-text-fill: #ffffff;
+}

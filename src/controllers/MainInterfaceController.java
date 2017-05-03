@@ -40,6 +40,9 @@ public class MainInterfaceController implements Initializable {
     public TextField subTotalField;
     public TextField ticketNumberField;
     public TextField customerNameField;
+    public Button sendButton;
+    public Button deleteButton;
+    public Button backButton;
 
     private ReceiptModel receipt = new ReceiptModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();

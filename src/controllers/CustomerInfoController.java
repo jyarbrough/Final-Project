@@ -10,10 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import models.CustomerModel;
+import models.TimeModel;
 import stages.MainInterfaceStage;
 import stages.PickupDeliveryStage;
 
@@ -35,7 +37,10 @@ public class CustomerInfoController implements Initializable {
     public Button placeOrderButton;
     public Button backButton;
     public TextField employeeNameField;
-    public TextField pickupOrDeliveryField;
+    public CheckBox deliveryCheckbox;
+    public CheckBox pickupCheckbox;
+    public TextField timeField;
+    public TextField dayOfTheWeekField;
 
 
     @Override
@@ -45,9 +50,11 @@ public class CustomerInfoController implements Initializable {
         displayEmployeeName();
         placeOrderActionHandler();
         backButtonAction();
+        displayDateAndTime();
     }
 
     private void placeOrderActionHandler() {
+
         placeOrderButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -63,19 +70,24 @@ public class CustomerInfoController implements Initializable {
                 String zipCode = zipCodeField.getText();
                 String state = stateField.getText();
                 String phoneNumber = phoneNumberField.getText();
-
                 CustomerModel customerModel = new CustomerModel(firstName, lastName, addressOne, addressTwo, phoneNumber, state, zipCode, city);
                 customerProfile.put(customerModel.getLastName(), customerModel);
                 customerContext.setCustomerModel(customerModel);
-
                 mainInterfaceStage.stage(placeOrderButton);
-
 //                getCustomerInfo(customerProfile);
             }
         });
     }
 
+    private void displayDateAndTime() {
+
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
+    }
+
     private void backButtonAction() {
+
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -89,6 +101,7 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void displayEmployeeName() {
+
         EmployeeContext employeeContext = EmployeeContext.getInstance();
         String employeeName = employeeContext.getEmployeeLoggedInName();
         employeeNameField.setText(employeeName);
@@ -98,18 +111,15 @@ public class CustomerInfoController implements Initializable {
 
         PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
         if (pickupOrDeliveryContext.isPickup()) {
-            pickupOrDeliveryField.setText("Pick-Up");
+            pickupCheckbox.setSelected(true);
             disableButtons();
         } else {
-            pickupOrDeliveryField.setText("Delivery");
+            deliveryCheckbox.setSelected(true);
         }
     }
 
-//    public HashMap<String, CustomerModel> getCustomerInfo(HashMap<String, CustomerModel> customerProfile) {
-//        return customerProfile;
-//    }
-
     private void disableButtons() {
+
         addressOneField.setDisable(true);
         addressTwoField.setDisable(true);
         cityField.setDisable(true);

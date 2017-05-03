@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import models.EmployeeModel;
+import models.TimeModel;
 import services.EmployeeService;
 import stages.HomeScreenStage;
 import java.net.URL;
@@ -46,14 +47,13 @@ public class LogInController implements Initializable {
         scene.getStylesheets().add("stylesheets/posStyles.css");
         initializeButtons();
         verifyEmployee();
+        displayDateAndTime();
+    }
 
-        Date today = new Date();
-        SimpleDateFormat dayFormatter = new SimpleDateFormat("EEE MMM d");
-        SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
-        String dayOfTheWeek = dayFormatter.format(today);
-        String currentTime = timeFormatter.format(today);
-        dayOfTheWeekField.setText(String.valueOf(dayOfTheWeek));
-        timeField.setText(currentTime);
+    private void displayDateAndTime() {
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
     }
 
     private void initializeButtons() {

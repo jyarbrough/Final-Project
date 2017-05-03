@@ -44,17 +44,17 @@
       </AnchorPane>
       <AnchorPane layoutX="485.0" layoutY="5.0" prefHeight="789.0" prefWidth="783.0" style="-fx-background-color: #386aff;">
          <children>
-            <Button alignment="CENTER" layoutX="576.0" layoutY="673.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="168.0" style="-fx-background-color: #99cc66;" text="Send">
+            <Button fx:id="sendButton" alignment="CENTER" layoutX="576.0" layoutY="673.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="168.0" style="-fx-background-color: #99cc66;" text="Send">
                <font>
                   <Font size="36.0" />
                </font>
             </Button>
-            <Button layoutX="378.0" layoutY="673.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="168.0" style="-fx-background-color: #ff4d4d;" text="Delete">
+            <Button fx:id="deleteButton" layoutX="378.0" layoutY="673.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="168.0" style="-fx-background-color: #ff4d4d;" text="Delete">
                <font>
                   <Font size="36.0" />
                </font>
             </Button>
-            <Button layoutX="180.0" layoutY="673.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="168.0" text="Back">
+            <Button fx:id="backButton" layoutX="180.0" layoutY="673.0" mnemonicParsing="false" prefHeight="87.0" prefWidth="168.0" text="Back">
                <font>
                   <Font size="36.0" />
                </font>
@@ -64,8 +64,8 @@
                   <TilePane fx:id="foodItemPane" alignment="CENTER" layoutX="-1.0" layoutY="-3.0" prefHeight="537.0" prefWidth="551.0" />
                </children></Pane>
             <TilePane fx:id="categoryPane" layoutX="9.0" layoutY="103.0" prefHeight="530.0" prefWidth="169.0" />
-            <TextField fx:id="customerNameField" editable="false" layoutX="192.0" layoutY="32.0" />
-            <Text fill="WHITE" layoutX="62.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name:">
+            <TextField fx:id="customerNameField" editable="false" layoutX="192.0" layoutY="12.0" />
+            <Text fill="WHITE" layoutX="62.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name:">
                <font>
                   <Font size="14.0" />
                </font></Text>
