@@ -13,11 +13,15 @@ import models.EmployeeModel;
 import services.EmployeeService;
 import stages.HomeScreenStage;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LogInController implements Initializable {
 
+    public TextField dayOfTheWeekField;
+    public TextField timeField;
     private String enteredDigits = "";
 
     public Button numberOne;
@@ -42,6 +46,14 @@ public class LogInController implements Initializable {
         scene.getStylesheets().add("stylesheets/posStyles.css");
         initializeButtons();
         verifyEmployee();
+
+        Date today = new Date();
+        SimpleDateFormat dayFormatter = new SimpleDateFormat("EEE MMM d");
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+        String dayOfTheWeek = dayFormatter.format(today);
+        String currentTime = timeFormatter.format(today);
+        dayOfTheWeekField.setText(String.valueOf(dayOfTheWeek));
+        timeField.setText(currentTime);
     }
 
     private void initializeButtons() {

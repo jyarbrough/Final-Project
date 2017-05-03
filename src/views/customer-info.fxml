@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import java.lang.*?>
@@ -13,27 +14,61 @@
          <children>
             <AnchorPane layoutX="90.0" layoutY="58.0" prefHeight="675.0" prefWidth="1051.0" styleClass="background">
                <children>
-                  <TextField fx:id="firstNameField" layoutX="344.0" layoutY="146.0" promptText="First Name" styleClass="customerInfoTextFields" />
-                  <TextField fx:id="lastNameField" layoutX="541.0" layoutY="146.0" promptText="Last Name" styleClass="customerInfoTextFields" />
-                  <TextField fx:id="phoneNumberField" layoutX="443.0" layoutY="196.0" promptText="Phone Number" styleClass="customerInfoTextFields" />
-                  <TextField fx:id="addressOneField" layoutX="403.0" layoutY="245.0" prefHeight="27.0" prefWidth="246.0" promptText="Address 1" styleClass="customerInfoTextFields" />
-                  <TextField fx:id="addressTwoField" layoutX="403.0" layoutY="289.0" prefHeight="27.0" prefWidth="246.0" promptText="Address 2" styleClass="customerInfoTextFields" />
-                  <TextField fx:id="cityField" layoutX="443.0" layoutY="333.0" promptText="City" styleClass="customerInfoTextFields" />
-                  <TextField fx:id="zipCodeField" layoutX="446.0" layoutY="385.0" prefHeight="27.0" prefWidth="74.0" promptText="Zip Code" styleClass="customerInfoTextFields" />
-                  <TextField fx:id="stateField" layoutX="534.0" layoutY="385.0" prefHeight="27.0" prefWidth="74.0" promptText="State" styleClass="customerInfoTextFields" />
-                  <Text layoutX="46.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Employee Icon" />
+                  <Pane layoutX="237.0" layoutY="133.0" prefHeight="467.0" prefWidth="556.0" style="-fx-background-color: #000000;">
+                     <children>
+                        <TextField fx:id="firstNameField" layoutX="97.0" layoutY="52.0" promptText="First Name" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="lastNameField" layoutX="294.0" layoutY="52.0" prefHeight="30.0" promptText="Last Name" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="phoneNumberField" layoutX="196.0" layoutY="103.0" promptText="Phone Number" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="addressOneField" layoutX="156.0" layoutY="154.0" prefHeight="30.0" prefWidth="246.0" promptText="Address 1" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="addressTwoField" layoutX="156.0" layoutY="205.0" prefHeight="30.0" prefWidth="246.0" promptText="Address 2" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="cityField" layoutX="196.0" layoutY="256.0" promptText="City" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="stateField" alignment="CENTER" layoutX="191.0" layoutY="307.0" prefHeight="30.0" prefWidth="80.0" promptText="State" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="zipCodeField" alignment="CENTER" layoutX="291.0" layoutY="307.0" prefHeight="30.0" prefWidth="80.0" promptText="Zip-Code" styleClass="customerInfoTextFields" />
+                        <Button fx:id="backButton" layoutX="113.0" layoutY="360.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="158.0" />
+                        <ImageView fx:id="goBackIcon" fitHeight="35.0" fitWidth="47.0" layoutX="134.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/goback-icon.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="goBackIconTitle" layoutX="183.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Go Back" wrappingWidth="71.09283447265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="placeOrderButton" layoutX="291.0" layoutY="360.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="158.0" />
+                        <Text fx:id="takeOrderIconTitle" layoutX="309.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Take-Order" wrappingWidth="94.022705078125">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="59.0" fitWidth="61.0" layoutX="390.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/go-next-icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                   <Text layoutX="858.0" layoutY="622.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date and Time" />
-                  <Button fx:id="placeOrderButton" layoutX="539.0" layoutY="453.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="128.0" text="Place Order" />
-                  <Button fx:id="backButton" layoutX="389.0" layoutY="453.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="128.0" text="Back" />
-                  <TextField fx:id="employeeNameField" layoutX="191.0" layoutY="36.0" />
-                  <TextField fx:id="pickupOrDeliveryField" layoutX="775.0" layoutY="35.0" />
-                  <Text fill="WHITE" layoutX="582.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placing An Order For:">
+                  <TextField fx:id="employeeNameField" editable="false" layoutX="182.0" layoutY="38.0" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="127.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/employee-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="434.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Info">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="24.0" />
                      </font>
                   </Text>
                </children>
             </AnchorPane>
+            <CheckBox fx:id="deliveryCheckbox" indeterminate="true" layoutX="924.0" layoutY="113.0" mnemonicParsing="false" text="Delivery" textFill="WHITE" />
+            <CheckBox fx:id="pickupCheckbox" indeterminate="true" layoutX="924.0" layoutY="82.0" mnemonicParsing="false" text="Pick-Up" textFill="WHITE" />
+            <Text fill="WHITE" layoutX="826.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Is For:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
          </children></AnchorPane>
    </children>
 </Pane>

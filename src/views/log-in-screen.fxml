@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <Pane fx:id="backPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="799.0" prefWidth="1279.0" stylesheets="@../stylesheets/logInStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LogInController">
    <children>
-      <Pane layoutX="303.0" layoutY="70.0" prefHeight="660.0" prefWidth="674.0" style="-fx-background-color: #00a0ee;">
+      <Pane layoutX="303.0" layoutY="70.0" prefHeight="660.0" prefWidth="674.0" style="-fx-background-color: #000000;">
          <children>
-            <Pane layoutX="197.0" layoutY="127.0" prefHeight="406.0" prefWidth="282.0" style="-fx-background-color: #d6d4e0;" />
+            <Pane layoutX="192.0" layoutY="120.0" prefHeight="417.0" prefWidth="301.0" style="-fx-background-color: #00a0ee;" />
             <Button fx:id="numberOne" layoutX="244.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="1" />
             <Button fx:id="numberTwo" layoutX="312.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="2" />
             <Button fx:id="numberThree" layoutX="380.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="3" />
@@ -22,6 +23,21 @@
             <TextField fx:id="logInTextField" layoutX="257.0" layoutY="142.0" />
             <Button fx:id="clearButton" layoutX="232.0" layoutY="464.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0" text="Clear" />
             <Button fx:id="logInButton" layoutX="342.0" layoutY="464.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0" text="Log-In" />
+            <ImageView fitHeight="52.0" fitWidth="58.0" layoutX="463.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" styleClass="dateAndTime">
+               <image>
+                  <Image url="@../icons/date-time-icon.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="514.0" layoutY="29.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" styleClass="timeTextField">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="timeField" editable="false" layoutX="514.0" layoutY="51.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" styleClass="timeTextField">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
          </children>
       </Pane>
    </children>
