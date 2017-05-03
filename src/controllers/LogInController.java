@@ -1,23 +1,28 @@
 package controllers;
 
+import contexts.ApplicationContext;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import models.EmployeeModel;
+import models.TimeModel;
 import services.EmployeeService;
+import stages.HomeScreenStage;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LogInController implements Initializable {
 
+    public TextField dayOfTheWeekField;
+    public TextField timeField;
+    public Button alertButton;
     private String enteredDigits = "";
 
     public Button numberOne;
@@ -42,9 +47,16 @@ public class LogInController implements Initializable {
         scene.getStylesheets().add("stylesheets/posStyles.css");
         initializeButtons();
         verifyEmployee();
+        displayDateAndTime();
     }
 
-    public void initializeButtons() {
+    private void displayDateAndTime() {
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
+    }
+
+    private void initializeButtons() {
 
         numberOne.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -129,45 +141,43 @@ public class LogInController implements Initializable {
         clearButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-               clearTextField();
+                clearTextField();
+            }
+        });
+
+        alertButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                clearTextField();
+                alertButton.setVisible(false);
             }
         });
     }
 
-    public void clearTextField() {
+    private void clearTextField() {
         enteredDigits = "";
         logInTextField.clear();
     }
 
-    public void verifyEmployee() {
+    private void verifyEmployee() {
 
         logInButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 String codeEntered = logInTextField.getText();
-
                 EmployeeService employeeService = new EmployeeService();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                HashMap<String, EmployeeModel> employees = employeeService.get();
+                EmployeeModel foundEmployee = employees.get(codeEntered);
 
-                HashMap<String, EmployeeModel> employeeModel = employeeService.get();
+                if (foundEmployee != null) {
+                    applicationContext.setLoggedInEmployee(foundEmployee);
+                    HomeScreenStage homeScreenStage = new HomeScreenStage();
+                    homeScreenStage.stage(logInButton);
 
-                for (EmployeeModel model : employeeModel.values()) {
-
-                    if (codeEntered.equals(model.getLogInCode())) {
-                        alert.setTitle("Information");
-                        alert.setHeaderText("Hello " + model.getName());
-                        alert.setContentText("Heres the content");
-
-                        alert.showAndWait();
-                    } else {
-                        alert.setTitle("Uh Oh!");
-                        alert.setHeaderText("Log In Doesn't Exist.");
-                        alert.setContentText("Please Try Again.");
-                        clearTextField();
-
-                        alert.show();
-                    }
+                } else {
+                    alertButton.setVisible(true);
                 }
             }
         });

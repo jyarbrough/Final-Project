@@ -1,9 +1,14 @@
 package controllers;
 
+import contexts.ApplicationContext;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
+import models.EmployeeModel;
+import stages.OpenOrdersStage;
+import stages.PickupDeliveryStage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,7 +26,31 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
 
+        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
 
+        if (loggedInEmployee == null) {
+            throw new RuntimeException("null employee was set");
+        }
+
+        loggedInTextField.setText(loggedInEmployee.getName());
+        idTextField.setText(loggedInEmployee.getId());
+
+        newOrderButton.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent event) {
+                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
+                pickupDeliveryStage.stage(newOrderButton);
+            }
+        });
+
+        openOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+                openOrdersStage.stage(openOrdersButton);
+            }
+        });
     }
 }

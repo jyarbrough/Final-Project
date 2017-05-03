@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 public class ReceiptModel {
 
     private double subTotal = 0;
@@ -7,17 +9,52 @@ public class ReceiptModel {
     private double grandTotal;
     private double currentTaxRate = 0.08;
     private double coupon = 0;
-    private String employeeId;
-    private String customerId;
-    private String itemsPurchased = null;
+
+    private Integer ticketNumber = 0;
+    private ArrayList<FoodItemModel> foodItems;
+    private EmployeeModel employee;
+    private CustomerModel customer;
+
+
+    public EmployeeModel getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeModel employee) {
+        this.employee = employee;
+    }
+
+    public CustomerModel getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerModel customer) {
+        this.customer = customer;
+    }
+
+    public Integer getTicketNumber() {
+        return ticketNumber;
+    }
+
+    public void setTicketNumber(Integer ticketNumber) {
+        this.ticketNumber = ticketNumber;
+    }
+
+    public ArrayList<FoodItemModel> getFoodItems() {
+
+        return foodItems;
+    }
+
+    public void setFoodItems(ArrayList<FoodItemModel> foodItems) {
+
+        this.foodItems = foodItems;
+    }
 
     public void updateTotal(Double individualItemPrice) {
+
         subTotal += individualItemPrice;
-
         tax = subTotal * currentTaxRate;
-
         grandTotal = subTotal + tax;
-
         setTax(tax);
         setGrandTotal(grandTotal);
     }

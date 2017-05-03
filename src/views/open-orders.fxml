@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" stylesheets="@../stylesheets/homeScreenStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OpenOrdersController">
+   <children>
+      <AnchorPane layoutX="20.0" layoutY="11.0" prefHeight="676.0" prefWidth="1238.0" style="-fx-background-color: #386aff;">
+         <children>
+            <AnchorPane layoutX="89.0" layoutY="30.0" prefHeight="619.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
+               <children>
+                  <Button fx:id="backButton" layoutX="35.0" layoutY="398.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" />
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="287.0" layoutY="66.0" prefHeight="27.0" prefWidth="142.0" />
+                  <Text layoutX="646.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="Employee ID:" wrappingWidth="97.42578125">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="idTextField" editable="false" layoutX="744.0" layoutY="66.0" prefHeight="27.0" prefWidth="97.0" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="234.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/employee-icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="goBackIcon" fitHeight="35.0" fitWidth="47.0" layoutX="61.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/goback-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="goBackIconTitle" layoutX="110.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Go Back" wrappingWidth="71.09283447265625">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <TableView fx:id="openOrdersTable" layoutX="227.0" layoutY="151.0" prefHeight="386.0" prefWidth="724.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="Ticket #" />
+                        <TableColumn prefWidth="92.0" text="Time Taken" />
+                        <TableColumn prefWidth="141.0" text="Order Type" />
+                      <TableColumn prefWidth="314.0" text="Customer Name" />
+                        <TableColumn prefWidth="101.0" text="Total" />
+                    </columns>
+                  </TableView>
+                  <Button layoutX="35.0" layoutY="218.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Delivers" />
+                  <Button layoutX="35.0" layoutY="308.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Pick-Ups" />
+                  <Text fill="WHITE" layoutX="42.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Open Orders">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+   </children>
+</Pane>
