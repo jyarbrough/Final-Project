@@ -1,12 +1,13 @@
 package controllers;
 
-import contexts.EmployeeContext;
+import contexts.ApplicationContext;
 import contexts.PickupOrDeliveryContext;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import models.EmployeeModel;
 import stages.CustomerInfoStage;
 import stages.HomeScreenStage;
 
@@ -26,14 +27,15 @@ public class PickupOrDeliveryController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
-        EmployeeContext employeeContext = EmployeeContext.getInstance();
-        String employeeName = employeeContext.getEmployeeLoggedInName();
-        String employeeId = employeeContext.getEmployeeId();
+
         CustomerInfoStage customerInfoStage = new CustomerInfoStage();
         HomeScreenStage homeScreenStage = new HomeScreenStage();
 
-        loggedInTextField.setText(employeeName);
-        idTextField.setText(employeeId);
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+
+        loggedInTextField.setText(loggedInEmployee.getName());
+        idTextField.setText(loggedInEmployee.getId());
 
         pickupButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

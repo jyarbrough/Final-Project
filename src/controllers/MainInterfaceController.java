@@ -1,24 +1,17 @@
 package controllers;
 
-import contexts.CustomerContext;
-import contexts.EmployeeContext;
+import contexts.ApplicationContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import models.CategoryModel;
-import models.CustomerModel;
-import models.FoodItemModel;
-import models.ReceiptModel;
+import models.*;
 import services.CategoriesService;
 import services.FoodItemsService;
 
@@ -43,7 +36,9 @@ public class MainInterfaceController implements Initializable {
     public Button sendButton;
     public Button deleteButton;
     public Button backButton;
+    private Integer ticketNumber = 0;
 
+    private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
     private ReceiptModel receipt = new ReceiptModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
 
@@ -52,26 +47,32 @@ public class MainInterfaceController implements Initializable {
 
         CategoriesService categoriesService = new CategoriesService();
         HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
-        setupReceiptColumns();
         initializeEventListeners(categoryModelHashMap);
+        setupReceiptColumns();
+
+        // on initialize set customer to receipt model
+        // set employee to the receipt
+        // set ticket number
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         initializeCategoryPane(categoryModelHashMap);
         setUserDisplays();
+
     }
 
     private void setUserDisplays() {
-        CustomerContext customerContext = CustomerContext.getInstance();
-        EmployeeContext employeeContext = EmployeeContext.getInstance();
-        CustomerModel customerModel = customerContext.getCustomerModel();
-        String employeeName = employeeContext.getEmployeeLoggedInName();
-        String employeeId = employeeContext.getEmployeeId();
+
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+
+        CustomerModel customerModel = applicationContext.getCurrentCustomer();
+        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
 
         customerNameField.setText(customerModel.getFirstName() + " " + customerModel.getLastName());
-        employeeIdField.setText(employeeId);
-        employeeNameField.setText(employeeName);
+        employeeIdField.setText(loggedInEmployee.getId());
+        employeeNameField.setText(loggedInEmployee.getName());
+
     }
 
     private void initializeCategoryPane(HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -81,7 +82,6 @@ public class MainInterfaceController implements Initializable {
             public void handle(MouseEvent event) {
 
                 for (CategoryModel categoryModel : categoryModelHashMap.values()) {
-
                     final Button tempButton = new Button(categoryModel.getName());
                     tempButton.setMinHeight(69);
                     tempButton.setMinWidth(150);
@@ -107,17 +107,20 @@ public class MainInterfaceController implements Initializable {
         ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(selectedCategory);
 
         for (FoodItemModel foodItemModel : foodItemModelArrayList) {
+
             final Button tempButton = new Button(foodItemModel.getName());
             tempButton.setMinHeight(69);
             tempButton.setMinWidth(159);
-
             foodItemPane.getChildren().addAll(tempButton);
+
             tempButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     String selectedItem = tempButton.getText();
 
                     addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
+
+                    itemsOnReceipt.add(foodItemModel);
                 }
             });
         }
@@ -133,16 +136,29 @@ public class MainInterfaceController implements Initializable {
             if (selectedItem.equals(foodItemModel.getName())) {
 
                 FoodItemModel foodItemsList = categoryModel.find(selectedItem);
-                selectedFoodItemsToDisplay.addAll(foodItemsList);
+                selectedFoodItemsToDisplay.add(foodItemsList);
 
                 Double individualItemPrice = Double.valueOf(foodItemModel.getPrice());
                 receipt.updateTotal(individualItemPrice);
             }
         }
 
+        sendOrder();
+
         taxField.setText(String.valueOf(receipt.getTax()));
         totalField.setText(String.valueOf(receipt.getGrandTotal()));
         receiptTableView.setItems(selectedFoodItemsToDisplay);
+    }
+
+    private void sendOrder() {
+        sendButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                receipt.setFoodItems(itemsOnReceipt);
+
+            }
+        });
     }
 
     private void setupReceiptColumns() {

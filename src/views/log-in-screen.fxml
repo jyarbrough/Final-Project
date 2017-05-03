@@ -46,6 +46,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
+            <Button fx:id="alertButton" layoutX="65.0" layoutY="143.0" mnemonicParsing="false" prefHeight="265.0" prefWidth="549.0" text="Button" visible="false" />
          </children>
       </Pane>
    </children>

@@ -1,11 +1,11 @@
 package controllers;
 
-import contexts.EmployeeContext;
+import contexts.ApplicationContext;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -13,9 +13,8 @@ import models.EmployeeModel;
 import models.TimeModel;
 import services.EmployeeService;
 import stages.HomeScreenStage;
+
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -23,6 +22,7 @@ public class LogInController implements Initializable {
 
     public TextField dayOfTheWeekField;
     public TextField timeField;
+    public Button alertButton;
     private String enteredDigits = "";
 
     public Button numberOne;
@@ -144,6 +144,14 @@ public class LogInController implements Initializable {
                 clearTextField();
             }
         });
+
+        alertButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                clearTextField();
+                alertButton.setVisible(false);
+            }
+        });
     }
 
     private void clearTextField() {
@@ -157,34 +165,19 @@ public class LogInController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
 
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 String codeEntered = logInTextField.getText();
-
                 EmployeeService employeeService = new EmployeeService();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                HashMap<String, EmployeeModel> employees = employeeService.get();
+                EmployeeModel foundEmployee = employees.get(codeEntered);
 
-                HashMap<String, EmployeeModel> employeeModel = employeeService.get();
+                if (foundEmployee != null) {
+                    applicationContext.setLoggedInEmployee(foundEmployee);
+                    HomeScreenStage homeScreenStage = new HomeScreenStage();
+                    homeScreenStage.stage(logInButton);
 
-                for (EmployeeModel model : employeeModel.values()) {
-
-                    if (codeEntered.equals(model.getLogInCode())) {
-
-                        String employeeName = model.getName();
-                        String employeeId = model.getId();
-                        EmployeeContext employeeContext = EmployeeContext.getInstance();
-                        employeeContext.setEmployeeLoggedInName(employeeName);
-                        employeeContext.setEmployeeId(employeeId);
-
-                        HomeScreenStage homeScreenStage = new HomeScreenStage();
-                        homeScreenStage.stage(logInButton);
-
-                    } else {
-
-//                        alert.setTitle("Uh Oh!");
-//                        alert.setHeaderText("Log In Doesn't Exist.");
-//                        alert.setContentText("Please Try Again.");
-//                        clearTextField();
-//                        alert.show();
-                    }
+                } else {
+                    alertButton.setVisible(true);
                 }
             }
         });

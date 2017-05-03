@@ -1,25 +1,20 @@
 package controllers;
 
-import contexts.CustomerContext;
-import contexts.EmployeeContext;
+import contexts.ApplicationContext;
 import contexts.PickupOrDeliveryContext;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import models.CustomerModel;
+import models.EmployeeModel;
 import models.TimeModel;
 import stages.MainInterfaceStage;
 import stages.PickupDeliveryStage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -58,7 +53,7 @@ public class CustomerInfoController implements Initializable {
         placeOrderButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                CustomerContext customerContext = CustomerContext.getInstance();
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 MainInterfaceStage mainInterfaceStage = new MainInterfaceStage();
                 HashMap<String, CustomerModel> customerProfile = new HashMap<>();
 
@@ -72,7 +67,7 @@ public class CustomerInfoController implements Initializable {
                 String phoneNumber = phoneNumberField.getText();
                 CustomerModel customerModel = new CustomerModel(firstName, lastName, addressOne, addressTwo, phoneNumber, state, zipCode, city);
                 customerProfile.put(customerModel.getLastName(), customerModel);
-                customerContext.setCustomerModel(customerModel);
+                applicationContext.setCurrentCustomer(customerModel);
                 mainInterfaceStage.stage(placeOrderButton);
 //                getCustomerInfo(customerProfile);
             }
@@ -102,9 +97,9 @@ public class CustomerInfoController implements Initializable {
 
     private void displayEmployeeName() {
 
-        EmployeeContext employeeContext = EmployeeContext.getInstance();
-        String employeeName = employeeContext.getEmployeeLoggedInName();
-        employeeNameField.setText(employeeName);
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        employeeNameField.setText(loggedInEmployee.getName());
     }
 
     private void displayPickupOrDelivery() {
