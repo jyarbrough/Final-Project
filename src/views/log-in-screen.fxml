@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -7,6 +8,7 @@
    <children>
       <Pane layoutX="303.0" layoutY="70.0" prefHeight="660.0" prefWidth="674.0" style="-fx-background-color: #00a0ee;">
          <children>
+            <Pane layoutX="197.0" layoutY="127.0" prefHeight="406.0" prefWidth="282.0" style="-fx-background-color: #d6d4e0;" />
             <Button fx:id="numberOne" layoutX="244.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="1" />
             <Button fx:id="numberTwo" layoutX="312.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="2" />
             <Button fx:id="numberThree" layoutX="380.0" layoutY="214.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="58.0" styleClass="logInButtons" text="3" />

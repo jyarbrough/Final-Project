@@ -1,5 +1,6 @@
 package controllers;
 
+import contexts.CustomerContext;
 import contexts.EmployeeContext;
 import contexts.PickupOrDeliveryContext;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import models.CustomerModel;
+import stages.MainInterfaceStage;
 import stages.PickupDeliveryStage;
 
 import java.io.IOException;
@@ -49,7 +51,8 @@ public class CustomerInfoController implements Initializable {
         placeOrderButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+                CustomerContext customerContext = CustomerContext.getInstance();
+                MainInterfaceStage mainInterfaceStage = new MainInterfaceStage();
                 HashMap<String, CustomerModel> customerProfile = new HashMap<>();
 
                 String firstName = firstNameField.getText();
@@ -63,7 +66,11 @@ public class CustomerInfoController implements Initializable {
 
                 CustomerModel customerModel = new CustomerModel(firstName, lastName, addressOne, addressTwo, phoneNumber, state, zipCode, city);
                 customerProfile.put(customerModel.getLastName(), customerModel);
-                getCustomerInfo(customerProfile);
+                customerContext.setCustomerModel(customerModel);
+
+                mainInterfaceStage.stage(placeOrderButton);
+
+//                getCustomerInfo(customerProfile);
             }
         });
     }
@@ -98,9 +105,9 @@ public class CustomerInfoController implements Initializable {
         }
     }
 
-    public HashMap<String, CustomerModel> getCustomerInfo(HashMap<String, CustomerModel> customerProfile) {
-        return customerProfile;
-    }
+//    public HashMap<String, CustomerModel> getCustomerInfo(HashMap<String, CustomerModel> customerProfile) {
+//        return customerProfile;
+//    }
 
     private void disableButtons() {
         addressOneField.setDisable(true);

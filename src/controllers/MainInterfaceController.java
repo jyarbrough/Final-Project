@@ -1,5 +1,7 @@
 package controllers;
 
+import contexts.CustomerContext;
+import contexts.EmployeeContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import models.CategoryModel;
+import models.CustomerModel;
 import models.FoodItemModel;
 import models.ReceiptModel;
 import services.CategoriesService;
@@ -53,7 +56,19 @@ public class MainInterfaceController implements Initializable {
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         initializeCategoryPane(categoryModelHashMap);
+        setUserDisplays();
+    }
 
+    private void setUserDisplays() {
+        CustomerContext customerContext = CustomerContext.getInstance();
+        EmployeeContext employeeContext = EmployeeContext.getInstance();
+        CustomerModel customerModel = customerContext.getCustomerModel();
+        String employeeName = employeeContext.getEmployeeLoggedInName();
+        String employeeId = employeeContext.getEmployeeId();
+
+        customerNameField.setText(customerModel.getFirstName() + " " + customerModel.getLastName());
+        employeeIdField.setText(employeeId);
+        employeeNameField.setText(employeeName);
     }
 
     private void initializeCategoryPane(HashMap<String, CategoryModel> categoryModelHashMap) {
