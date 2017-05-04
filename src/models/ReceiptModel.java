@@ -10,11 +10,10 @@ public class ReceiptModel {
     private double currentTaxRate = 0.08;
     private double coupon = 0;
 
-    private Integer ticketNumber = 0;
+    private Integer ticketNumber = null;
     private ArrayList<FoodItemModel> foodItems;
     private EmployeeModel employee;
     private CustomerModel customer;
-
 
     public EmployeeModel getEmployee() {
         return employee;
