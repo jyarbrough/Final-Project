@@ -81,12 +81,12 @@ public class CustomerInfoController implements Initializable {
             case DELIVERY:
                 deliveryCheckbox.setSelected(true);
                 pickupCheckbox.setSelected(false);
-                disableButtons(operationMode, applicationContext);
+                disableButtons(applicationContext);
                 break;
             case PICKUP:
                 pickupCheckbox.setSelected(true);
                 deliveryCheckbox.setSelected(false);
-                disableButtons(operationMode, applicationContext);
+                disableButtons(applicationContext);
             default:
                 break;
         }
@@ -133,7 +133,7 @@ public class CustomerInfoController implements Initializable {
         });
     }
 
-    private void disableButtons(OperationMode operationMode, ApplicationContext applicationContext) {
+    private void disableButtons(ApplicationContext applicationContext) {
 
         firstNameField.setFocusTraversable(true);
         lastNameField.setDisable(true);
@@ -149,7 +149,7 @@ public class CustomerInfoController implements Initializable {
 
             disableLastNameField();
             disablePhoneNumberField();
-            sendOrderPickup();
+            sendPickup();
         }
 
         if (applicationContext.getOperationMode() == OperationMode.DELIVERY) {
@@ -160,11 +160,13 @@ public class CustomerInfoController implements Initializable {
             disableCityField();
             disableStateField();
             disableZipCodeField();
-            sendOrderDelivery();
+            disableSendButtonWhenDelivery();
         }
     }
 
+
     private void disableLastNameField() {
+
         firstNameField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -174,6 +176,7 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disablePhoneNumberField() {
+
         lastNameField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -183,55 +186,65 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disableBothAddressFields() {
-        phoneNumberField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                addressOneField.setDisable(false);
-                addressTwoField.setDisable(false);
-            }
-        });
+
+        phoneNumberField.textProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue.length() == 10){
+                        addressOneField.setDisable(false);
+                        addressTwoField.setDisable(false);
+                    }
+                }
+        );
     }
 
     private void disableCityField() {
-        addressOneField.setOnAction(new EventHandler<ActionEvent>() {
+
+        addressOneField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(KeyEvent event) {
                 cityField.setDisable(false);
             }
         });
     }
 
     private void disableStateField() {
-        cityField.setOnAction(new EventHandler<ActionEvent>() {
+
+        cityField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(KeyEvent event) {
                 stateField.setDisable(false);
             }
         });
     }
 
     private void disableZipCodeField() {
-        stateField.setOnAction(new EventHandler<ActionEvent>() {
+
+        stateField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(KeyEvent event) {
                 zipCodeField.setDisable(false);
             }
         });
     }
 
-    private void sendOrderDelivery() {
-        zipCodeField.setOnAction(new EventHandler<ActionEvent>() {
+    private void disableSendButtonWhenDelivery() {
+
+        zipCodeField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(KeyEvent event) {
                 placeOrderButton.setDisable(false);
             }
         });
     }
 
-    private void sendOrderPickup() {
+
+    private void  sendPickup() {
+
         phoneNumberField.textProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    if (newValue.length() == 10) placeOrderButton.setDisable(false);
+                    if (newValue.length() == 10){
+                        placeOrderButton.setDisable(false);
+                    }
                 }
         );
     }
