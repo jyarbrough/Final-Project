@@ -1,7 +1,7 @@
 package controllers;
 
 import contexts.ApplicationContext;
-import contexts.PickupOrDeliveryContext;
+import enums.OperationMode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
@@ -26,8 +26,6 @@ public class PickupOrDeliveryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
-
         CustomerInfoStage customerInfoStage = new CustomerInfoStage();
         HomeScreenStage homeScreenStage = new HomeScreenStage();
 
@@ -40,9 +38,8 @@ public class PickupOrDeliveryController implements Initializable {
         pickupButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                pickupOrDeliveryContext.setPickup(true);
-                pickupOrDeliveryContext.setDelivery(false);
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.PICKUP);
                 customerInfoStage.stage(pickupButton);
             }
         });
@@ -50,8 +47,8 @@ public class PickupOrDeliveryController implements Initializable {
         deliveryButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pickupOrDeliveryContext.setDelivery(true);
-                pickupOrDeliveryContext.setPickup(false);
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.DELIVERY);
                 customerInfoStage.stage(deliveryButton);
             }
         });
@@ -59,8 +56,8 @@ public class PickupOrDeliveryController implements Initializable {
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pickupOrDeliveryContext.setDelivery(false);
-                pickupOrDeliveryContext.setPickup(false);
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
                 homeScreenStage.stage(backButton);
             }
         });

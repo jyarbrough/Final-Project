@@ -74,8 +74,8 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <CheckBox indeterminate="true" layoutX="664.0" layoutY="20.0" mnemonicParsing="false" text="Pick-Up" textFill="WHITE" />
-            <CheckBox indeterminate="true" layoutX="664.0" layoutY="51.0" mnemonicParsing="false" text="Delivery" textFill="WHITE" />
+            <CheckBox fx:id="pickupCheckbox" layoutX="664.0" layoutY="20.0" mnemonicParsing="false" text="Pick-Up" textFill="WHITE" />
+            <CheckBox fx:id="deliveryCheckbox" layoutX="664.0" layoutY="51.0" mnemonicParsing="false" text="Delivery" textFill="WHITE" />
          </children></AnchorPane>
       <TableView fx:id="receiptTableView" layoutX="49.0" layoutY="196.0" prefHeight="396.0" prefWidth="387.0" />
    </children>

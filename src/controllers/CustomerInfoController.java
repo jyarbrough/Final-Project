@@ -1,7 +1,7 @@
 package controllers;
 
 import contexts.ApplicationContext;
-import contexts.PickupOrDeliveryContext;
+import enums.OperationMode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
@@ -18,6 +18,8 @@ import stages.PickupDeliveryStage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import static enums.OperationMode.DELIVERY;
 
 public class CustomerInfoController implements Initializable {
 
@@ -86,9 +88,10 @@ public class CustomerInfoController implements Initializable {
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
-                pickupOrDeliveryContext.setPickup(false);
-                pickupOrDeliveryContext.setDelivery(false);
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+
                 PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
                 pickupDeliveryStage.stage(backButton);
             }
@@ -104,12 +107,20 @@ public class CustomerInfoController implements Initializable {
 
     private void displayPickupOrDelivery() {
 
-        PickupOrDeliveryContext pickupOrDeliveryContext = PickupOrDeliveryContext.getInstance();
-        if (pickupOrDeliveryContext.isPickup()) {
-            pickupCheckbox.setSelected(true);
-            disableButtons();
-        } else {
-            deliveryCheckbox.setSelected(true);
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        OperationMode operationMode = applicationContext.getOperationMode();
+
+        switch (operationMode) {
+
+            case DELIVERY:
+                deliveryCheckbox.setSelected(true);
+                pickupCheckbox.setSelected(false);
+                break;
+            case PICKUP:
+                pickupCheckbox.setSelected(true);
+                deliveryCheckbox.setSelected(false);
+            default:
+                break;
         }
     }
 
