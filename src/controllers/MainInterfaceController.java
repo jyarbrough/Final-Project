@@ -1,6 +1,7 @@
 package controllers;
 
 import contexts.ApplicationContext;
+import enums.OperationMode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,6 +37,8 @@ public class MainInterfaceController implements Initializable {
     public Button sendButton;
     public Button deleteButton;
     public Button backButton;
+    public CheckBox pickupCheckbox;
+    public CheckBox deliveryCheckbox;
     private Integer ticketNumber = 0;
 
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
@@ -49,6 +52,8 @@ public class MainInterfaceController implements Initializable {
         HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
         initializeEventListeners(categoryModelHashMap);
         setupReceiptColumns();
+        initializeOperationModeBoxes();
+
 
         // on initialize set customer to receipt model
         // set employee to the receipt
@@ -60,6 +65,24 @@ public class MainInterfaceController implements Initializable {
         initializeCategoryPane(categoryModelHashMap);
         setUserDisplays();
 
+    }
+
+    private void initializeOperationModeBoxes() {
+
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        OperationMode operationMode = applicationContext.getOperationMode();
+
+        switch (operationMode) {
+            case DELIVERY:
+                deliveryCheckbox.setSelected(true);
+                pickupCheckbox.setSelected(false);
+                break;
+            case PICKUP:
+                pickupCheckbox.setSelected(true);
+                deliveryCheckbox.setSelected(false);
+            default:
+                break;
+        }
     }
 
     private void setUserDisplays() {
