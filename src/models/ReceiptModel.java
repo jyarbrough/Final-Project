@@ -14,7 +14,6 @@ public class ReceiptModel {
     private OperationMode operationMode;
     private Integer ticketNumber = null;
     private Boolean isOpen = true;
-
     private ArrayList<FoodItemModel> foodItems;
     private EmployeeModel employee;
     private CustomerModel customer;
@@ -51,24 +50,9 @@ public class ReceiptModel {
         this.ticketNumber = ticketNumber;
     }
 
-    public ArrayList<FoodItemModel> getFoodItems() {
+    public ArrayList<FoodItemModel> getFoodItems() { return foodItems; }
 
-        return foodItems;
-    }
-
-    public void setFoodItems(ArrayList<FoodItemModel> foodItems) {
-
-        this.foodItems = foodItems;
-    }
-
-    public void updateTotal(Double individualItemPrice) {
-
-        subTotal += individualItemPrice;
-        tax = subTotal * currentTaxRate;
-        grandTotal = subTotal + tax;
-        setTax(tax);
-        setGrandTotal(grandTotal);
-    }
+    public void setFoodItems(ArrayList<FoodItemModel> foodItems) { this.foodItems = foodItems; }
 
     public double getTax() {
         return tax;
@@ -92,5 +76,23 @@ public class ReceiptModel {
 
     public void setOpen(Boolean open) {
         isOpen = open;
+    }
+
+    public void addItems(Double itemPrice) {
+
+        subTotal += itemPrice;
+        tax = subTotal * currentTaxRate;
+        grandTotal = subTotal + tax;
+        setTax(tax);
+        setGrandTotal(grandTotal);
+    }
+
+    public void removeItem(Double itemToDelete) {
+
+        subTotal -= itemToDelete;
+        tax = subTotal * currentTaxRate;
+        grandTotal = subTotal + tax;
+        setTax(tax);
+        setGrandTotal(grandTotal);
     }
 }

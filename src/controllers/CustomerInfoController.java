@@ -69,6 +69,7 @@ public class CustomerInfoController implements Initializable {
                 String phoneNumber = phoneNumberField.getText();
                 CustomerModel customerModel = new CustomerModel(firstName, lastName, addressOne, addressTwo, phoneNumber, state, zipCode, city);
                 customerProfile.put(customerModel.getLastName(), customerModel);
+
                 applicationContext.setCurrentCustomer(customerModel);
                 mainInterfaceStage.stage(placeOrderButton);
 //                getCustomerInfo(customerProfile);
@@ -119,6 +120,7 @@ public class CustomerInfoController implements Initializable {
             case PICKUP:
                 pickupCheckbox.setSelected(true);
                 deliveryCheckbox.setSelected(false);
+                disableButtons();
             default:
                 break;
         }
