@@ -159,7 +159,7 @@ public class OrderInterfaceController implements Initializable {
 
                     addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
                     itemsOnReceipt.add(foodItemModel);
-                    deleteButton.setDisable(false);
+//                    deleteButton.setDisable(false);
                     sendButton.setDisable(false);
                 }
             });
@@ -167,7 +167,6 @@ public class OrderInterfaceController implements Initializable {
     }
 
     private void addItemToReceipt(String selectedItem, String categoryName, HashMap<String, CategoryModel> categoryModelHashMap) {
-
 
         itemCount++;
         itemCounterField.setText(String.valueOf(itemCount));
@@ -190,26 +189,43 @@ public class OrderInterfaceController implements Initializable {
     }
 
     private void removeItemFromReceipt() {
+
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-
                 if (selectedFoodItemsToDisplay.isEmpty()) {
                     deleteButton.setDisable(true);
                     sendButton.setDisable(true);
+
+                    itemCount = 0;
+                    itemCounterField.setText(String.valueOf(itemCount));
                 }
+                else {
 
-                itemCount--;
-                itemCounterField.setText(String.valueOf(itemCount));
 
-                FoodItemModel itemToRemove = receiptTableView.getSelectionModel().getSelectedItem();
-                receiptTableView.getItems().remove(itemToRemove);
-                Double priceOfItemToRemove = Double.valueOf(itemToRemove.getPrice());
-                receipt.removeItem(priceOfItemToRemove);
-                displayTotalsOnReceipt();
+                    itemCount--;
+                    itemCounterField.setText(String.valueOf(itemCount));
+
+                    FoodItemModel itemToRemove = receiptTableView.getSelectionModel().getSelectedItem();
+                    receiptTableView.getItems().remove(itemToRemove);
+                    Double priceOfItemToRemove = Double.valueOf(itemToRemove.getPrice());
+                    receipt.removeItem(priceOfItemToRemove);
+                    displayTotalsOnReceipt();
+                }
             }
         });
+
+
+        receiptTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                deleteButton.setDisable(false);
+            }
+        });
+
+
+
+
     }
 
     private void displayTotalsOnReceipt() {

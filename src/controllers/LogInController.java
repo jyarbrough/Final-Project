@@ -52,6 +52,7 @@ public class LogInController implements Initializable {
     }
 
     private void limitLogInTextField() {
+
         logInTextField.textProperty().addListener(
                 (observable,oldValue,newValue)-> {
                     if(newValue.length() > 4) logInTextField.setText(oldValue);
@@ -60,6 +61,7 @@ public class LogInController implements Initializable {
     }
 
     private void displayDateAndTime() {
+
         TimeModel timeModel = new TimeModel();
         dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
         timeField.setText(timeModel.getCurrentTime());
@@ -164,6 +166,7 @@ public class LogInController implements Initializable {
     }
 
     private void clearTextField() {
+
         enteredDigits = "";
         logInTextField.clear();
     }
