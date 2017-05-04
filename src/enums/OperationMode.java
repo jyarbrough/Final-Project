@@ -6,6 +6,6 @@ package enums;
 public enum OperationMode {
     DELIVERY,
     PICKUP,
-    DINE_IN,
+    MANAGER,
     NONE
 }

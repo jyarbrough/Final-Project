@@ -57,6 +57,7 @@ public class MainInterfaceController implements Initializable {
         initializeTicketNumber();
 
         receipt.setCustomer(ApplicationContext.getInstance().getCurrentCustomer());
+        receipt.setOperationMode(ApplicationContext.getInstance().getOperationMode());
     }
 
     private void initializeTicketNumber() {

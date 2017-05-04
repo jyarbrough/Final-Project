@@ -2,6 +2,7 @@ package controllers;
 
 
 import contexts.ApplicationContext;
+import enums.OperationMode;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,10 +27,7 @@ import models.ReceiptModel;
 import stages.HomeScreenStage;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class OpenOrdersController implements Initializable {
 
@@ -51,7 +49,44 @@ public class OpenOrdersController implements Initializable {
 
         HashMap<Integer, ReceiptModel> receipts = applicationContext.getReceipts();
 
-        receiptsToDisplay.setAll(receipts.values());
+        Collection<ReceiptModel> allReceipts = receipts.values();
+        ArrayList<ReceiptModel> tempReceiptsToDisplay = new ArrayList<>();
+
+        switch (applicationContext.getOperationMode()) {
+            case DELIVERY:
+                for (ReceiptModel receipt : allReceipts) {
+                    if (receipt.getOperationMode() == OperationMode.DELIVERY) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case PICKUP:
+                for (ReceiptModel receipt : allReceipts) {
+                    if (receipt.getOperationMode() == OperationMode.PICKUP) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case NONE:
+                for (ReceiptModel receipt : allReceipts) {
+                    if (receipt.isOpen() == true) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case MANAGER:
+                for (ReceiptModel receiptModel : allReceipts) {
+                    tempReceiptsToDisplay.add(receiptModel);
+                }
+                break;
+            default:
+                break;
+
+        }
+        receiptsToDisplay.setAll(tempReceiptsToDisplay);
 
         openOrdersTable.setItems(receiptsToDisplay);
 

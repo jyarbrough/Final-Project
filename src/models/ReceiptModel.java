@@ -1,5 +1,7 @@
 package models;
 
+import enums.OperationMode;
+
 import java.util.ArrayList;
 
 public class ReceiptModel {
@@ -9,11 +11,21 @@ public class ReceiptModel {
     private double grandTotal;
     private double currentTaxRate = 0.08;
     private double coupon = 0;
-
+    private OperationMode operationMode;
     private Integer ticketNumber = null;
+    private Boolean isOpen = true;
+
     private ArrayList<FoodItemModel> foodItems;
     private EmployeeModel employee;
     private CustomerModel customer;
+
+    public OperationMode getOperationMode() {
+        return operationMode;
+    }
+
+    public void setOperationMode(OperationMode operationMode) {
+        this.operationMode = operationMode;
+    }
 
     public EmployeeModel getEmployee() {
         return employee;
@@ -72,5 +84,13 @@ public class ReceiptModel {
 
     private void setGrandTotal(double grandTotal) {
         this.grandTotal = grandTotal;
+    }
+
+    public Boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(Boolean open) {
+        isOpen = open;
     }
 }
