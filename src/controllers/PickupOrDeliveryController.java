@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 public class PickupOrDeliveryController implements Initializable {
 
-
     public Button pickupButton;
     public Button backButton;
     public TextField loggedInTextField;
