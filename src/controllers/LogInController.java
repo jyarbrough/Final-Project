@@ -45,9 +45,18 @@ public class LogInController implements Initializable {
 
         Scene scene = new Scene(new Group(), 500, 400);
         scene.getStylesheets().add("stylesheets/posStyles.css");
-        initializeButtons();
+        initializeNumberPad();
         verifyEmployee();
         displayDateAndTime();
+        limitLogInTextField();
+    }
+
+    private void limitLogInTextField() {
+        logInTextField.textProperty().addListener(
+                (observable,oldValue,newValue)-> {
+                    if(newValue.length() > 4) logInTextField.setText(oldValue);
+                }
+        );
     }
 
     private void displayDateAndTime() {
@@ -56,7 +65,7 @@ public class LogInController implements Initializable {
         timeField.setText(timeModel.getCurrentTime());
     }
 
-    private void initializeButtons() {
+    private void initializeNumberPad() {
 
         numberOne.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
