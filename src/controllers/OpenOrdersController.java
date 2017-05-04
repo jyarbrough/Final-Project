@@ -14,10 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -37,6 +34,12 @@ public class OpenOrdersController implements Initializable {
     public ImageView goBackIcon;
     public Text goBackIconTitle;
 
+    public Button checkOutButton;
+    public RadioButton deliveriesRadioButton;
+    public RadioButton pickupRadioButton;
+    public TextField timeField;
+    public TextField dayOfTheWeekField;
+
     @FXML
     TableView<ReceiptModel> openOrdersTable = new TableView<>();
 
@@ -44,11 +47,8 @@ public class OpenOrdersController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         ApplicationContext applicationContext = ApplicationContext.getInstance();
-
         ObservableList<ReceiptModel> receiptsToDisplay = FXCollections.observableArrayList();
-
         HashMap<Integer, ReceiptModel> receipts = applicationContext.getReceipts();
-
         Collection<ReceiptModel> allReceipts = receipts.values();
         ArrayList<ReceiptModel> tempReceiptsToDisplay = new ArrayList<>();
 
@@ -86,12 +86,20 @@ public class OpenOrdersController implements Initializable {
                 break;
 
         }
+
+
+        checkOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                openOrdersTable.getItems().remove(openOrdersTable.getSelectionModel().getSelectedItem());
+
+            }
+        });
+
         receiptsToDisplay.setAll(tempReceiptsToDisplay);
-
         openOrdersTable.setItems(receiptsToDisplay);
-
         setupTableColumns();
-
         backButtonHandler();
     }
 
