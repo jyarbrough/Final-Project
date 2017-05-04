@@ -60,6 +60,9 @@ public class OrderInterfaceController implements Initializable {
         removeItemFromReceipt();
         sendOrder();
 
+        deleteButton.setDisable(true);
+        sendButton.setDisable(true);
+
         receipt.setCustomer(ApplicationContext.getInstance().getCurrentCustomer());
         receipt.setOperationMode(ApplicationContext.getInstance().getOperationMode());
     }
@@ -156,12 +159,15 @@ public class OrderInterfaceController implements Initializable {
 
                     addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
                     itemsOnReceipt.add(foodItemModel);
+                    deleteButton.setDisable(false);
+                    sendButton.setDisable(false);
                 }
             });
         }
     }
 
     private void addItemToReceipt(String selectedItem, String categoryName, HashMap<String, CategoryModel> categoryModelHashMap) {
+
 
         itemCount++;
         itemCounterField.setText(String.valueOf(itemCount));
@@ -187,6 +193,12 @@ public class OrderInterfaceController implements Initializable {
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+
+                if (selectedFoodItemsToDisplay.isEmpty()) {
+                    deleteButton.setDisable(true);
+                    sendButton.setDisable(true);
+                }
 
                 itemCount--;
                 itemCounterField.setText(String.valueOf(itemCount));
