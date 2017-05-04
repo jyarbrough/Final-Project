@@ -11,8 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import models.EmployeeModel;
-import stages.CustomerInfoStage;
-import stages.HomeScreenStage;
 import stages.SetAllStages;
 
 import java.net.URL;

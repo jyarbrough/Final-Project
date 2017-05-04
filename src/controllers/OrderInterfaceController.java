@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class MainInterfaceController implements Initializable {
+public class OrderInterfaceController implements Initializable {
 
     @FXML
     public TilePane foodItemPane;
@@ -40,7 +40,9 @@ public class MainInterfaceController implements Initializable {
     public Button backButton;
     public CheckBox pickupCheckbox;
     public CheckBox deliveryCheckbox;
+    public TextField itemCounterField;
 
+    private Integer itemCount = 0;
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
     private ReceiptModel receipt = new ReceiptModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
@@ -55,6 +57,8 @@ public class MainInterfaceController implements Initializable {
         setupReceiptColumns();
         initializeOperationModeBoxes();
         initializeTicketNumber();
+        removeItemFromReceipt();
+        sendOrder();
 
         receipt.setCustomer(ApplicationContext.getInstance().getCurrentCustomer());
         receipt.setOperationMode(ApplicationContext.getInstance().getOperationMode());
@@ -151,7 +155,6 @@ public class MainInterfaceController implements Initializable {
                     String selectedItem = tempButton.getText();
 
                     addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
-
                     itemsOnReceipt.add(foodItemModel);
                 }
             });
@@ -159,6 +162,9 @@ public class MainInterfaceController implements Initializable {
     }
 
     private void addItemToReceipt(String selectedItem, String categoryName, HashMap<String, CategoryModel> categoryModelHashMap) {
+
+        itemCount++;
+        itemCounterField.setText(String.valueOf(itemCount));
 
         FoodItemsService foodItemsService = new FoodItemsService();
         ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(categoryName);
@@ -171,12 +177,30 @@ public class MainInterfaceController implements Initializable {
                 selectedFoodItemsToDisplay.add(foodItemsList);
 
                 Double individualItemPrice = Double.valueOf(foodItemModel.getPrice());
-                receipt.updateTotal(individualItemPrice);
+                receipt.addItems(individualItemPrice);
             }
         }
+        displayTotalsOnReceipt();
+    }
 
-        sendOrder();
+    private void removeItemFromReceipt() {
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
+                itemCount--;
+                itemCounterField.setText(String.valueOf(itemCount));
+
+                FoodItemModel itemToRemove = receiptTableView.getSelectionModel().getSelectedItem();
+                receiptTableView.getItems().remove(itemToRemove);
+                Double priceOfItemToRemove = Double.valueOf(itemToRemove.getPrice());
+                receipt.removeItem(priceOfItemToRemove);
+                displayTotalsOnReceipt();
+            }
+        });
+    }
+
+    private void displayTotalsOnReceipt() {
         taxField.setText(String.valueOf(receipt.getTax()));
         totalField.setText(String.valueOf(receipt.getGrandTotal()));
         receiptTableView.setItems(selectedFoodItemsToDisplay);
@@ -194,7 +218,6 @@ public class MainInterfaceController implements Initializable {
 
                 HomeScreenStage homeScreenStage = new HomeScreenStage();
                 homeScreenStage.stage(sendButton);
-
             }
         });
     }
