@@ -15,6 +15,7 @@ import javafx.scene.layout.TilePane;
 import models.*;
 import services.CategoriesService;
 import services.FoodItemsService;
+import stages.HomeScreenStage;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,7 +40,6 @@ public class MainInterfaceController implements Initializable {
     public Button backButton;
     public CheckBox pickupCheckbox;
     public CheckBox deliveryCheckbox;
-    private Integer ticketNumber = 0;
 
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
     private ReceiptModel receipt = new ReceiptModel();
@@ -49,22 +49,31 @@ public class MainInterfaceController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         CategoriesService categoriesService = new CategoriesService();
+
         HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
         initializeEventListeners(categoryModelHashMap);
         setupReceiptColumns();
         initializeOperationModeBoxes();
+        initializeTicketNumber();
 
+        receipt.setCustomer(ApplicationContext.getInstance().getCurrentCustomer());
+        receipt.setOperationMode(ApplicationContext.getInstance().getOperationMode());
+    }
 
-        // on initialize set customer to receipt model
-        // set employee to the receipt
-        // set ticket number
+    private void initializeTicketNumber() {
+
+        if (receipt.getTicketNumber() == null) {
+            ApplicationContext applicationContext = ApplicationContext.getInstance();
+            int ticketNumber = applicationContext.getReceipts().size() + 1;
+            receipt.setTicketNumber(ticketNumber);
+        }
+        ticketNumberField.setText(String.valueOf(receipt.getTicketNumber()));
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
 
         initializeCategoryPane(categoryModelHashMap);
         setUserDisplays();
-
     }
 
     private void initializeOperationModeBoxes() {
@@ -179,6 +188,12 @@ public class MainInterfaceController implements Initializable {
             public void handle(ActionEvent event) {
 
                 receipt.setFoodItems(itemsOnReceipt);
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.saveReceipt(receipt);
+
+                HomeScreenStage homeScreenStage = new HomeScreenStage();
+                homeScreenStage.stage(sendButton);
 
             }
         });

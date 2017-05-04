@@ -36,15 +36,7 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TableView fx:id="openOrdersTable" layoutX="227.0" layoutY="151.0" prefHeight="386.0" prefWidth="724.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Ticket #" />
-                        <TableColumn prefWidth="92.0" text="Time Taken" />
-                        <TableColumn prefWidth="141.0" text="Order Type" />
-                      <TableColumn prefWidth="314.0" text="Customer Name" />
-                        <TableColumn prefWidth="101.0" text="Total" />
-                    </columns>
-                  </TableView>
+                  <TableView fx:id="openOrdersTable" layoutX="227.0" layoutY="151.0" prefHeight="386.0" prefWidth="724.0" />
                   <Button layoutX="35.0" layoutY="218.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Delivers" />
                   <Button layoutX="35.0" layoutY="308.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" text="Pick-Ups" />
                   <Text fill="WHITE" layoutX="42.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Open Orders">
