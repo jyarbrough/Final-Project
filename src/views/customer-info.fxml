@@ -16,12 +16,12 @@
                <children>
                   <Pane layoutX="209.0" layoutY="97.0" prefHeight="546.0" prefWidth="610.0" style="-fx-background-color: #000000;">
                      <children>
-                        <TextField fx:id="firstNameField" layoutX="120.0" layoutY="128.0" promptText="First Name" styleClass="customerInfoTextFields" />
-                        <TextField fx:id="lastNameField" layoutX="317.0" layoutY="128.0" prefHeight="30.0" promptText="Last Name" styleClass="customerInfoTextFields" />
-                        <TextField fx:id="phoneNumberField" layoutX="219.0" layoutY="179.0" promptText="Phone Number" styleClass="customerInfoTextFields" />
-                        <TextField fx:id="addressOneField" layoutX="179.0" layoutY="230.0" prefHeight="30.0" prefWidth="246.0" promptText="Address 1" styleClass="customerInfoTextFields" />
-                        <TextField fx:id="addressTwoField" layoutX="179.0" layoutY="281.0" prefHeight="30.0" prefWidth="246.0" promptText="Address 2" styleClass="customerInfoTextFields" />
-                        <TextField fx:id="cityField" layoutX="219.0" layoutY="332.0" promptText="City" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="firstNameField" alignment="CENTER" layoutX="120.0" layoutY="128.0" promptText="First Name" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="lastNameField" alignment="CENTER" layoutX="317.0" layoutY="128.0" prefHeight="30.0" promptText="Last Name" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="phoneNumberField" alignment="CENTER" layoutX="219.0" layoutY="179.0" promptText="Phone Number" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="addressOneField" alignment="CENTER" layoutX="179.0" layoutY="230.0" prefHeight="30.0" prefWidth="246.0" promptText="Address 1" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="addressTwoField" alignment="CENTER" layoutX="179.0" layoutY="281.0" prefHeight="30.0" prefWidth="246.0" promptText="Address 2" styleClass="customerInfoTextFields" />
+                        <TextField fx:id="cityField" alignment="CENTER" layoutX="219.0" layoutY="332.0" promptText="City" styleClass="customerInfoTextFields" />
                         <TextField fx:id="stateField" alignment="CENTER" layoutX="214.0" layoutY="383.0" prefHeight="30.0" prefWidth="80.0" promptText="State" styleClass="customerInfoTextFields" />
                         <TextField fx:id="zipCodeField" alignment="CENTER" layoutX="314.0" layoutY="383.0" prefHeight="30.0" prefWidth="80.0" promptText="Zip-Code" styleClass="customerInfoTextFields" />
                         <Button fx:id="backButton" layoutX="136.0" layoutY="436.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="158.0" />

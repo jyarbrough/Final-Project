@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import models.CustomerModel;
 import models.EmployeeModel;
@@ -18,8 +19,6 @@ import stages.PickupDeliveryStage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import static enums.OperationMode.DELIVERY;
 
 public class CustomerInfoController implements Initializable {
 
@@ -42,11 +41,55 @@ public class CustomerInfoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        displayPickupOrDelivery();
         displayEmployeeName();
+        displayDateAndTime();
+        limitPhoneFieldInput();
+        displayPickupOrDelivery();
         placeOrderActionHandler();
         backButtonAction();
-        displayDateAndTime();
+    }
+
+    private void displayEmployeeName() {
+
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        employeeNameField.setText(loggedInEmployee.getName());
+    }
+
+    private void displayDateAndTime() {
+
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
+    }
+
+    private void limitPhoneFieldInput() {
+        phoneNumberField.textProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue.length() > 10) phoneNumberField.setText(oldValue);
+                }
+        );
+    }
+
+    private void displayPickupOrDelivery() {
+
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        OperationMode operationMode = applicationContext.getOperationMode();
+
+        switch (operationMode) {
+
+            case DELIVERY:
+                deliveryCheckbox.setSelected(true);
+                pickupCheckbox.setSelected(false);
+                disableButtons(operationMode, applicationContext);
+                break;
+            case PICKUP:
+                pickupCheckbox.setSelected(true);
+                deliveryCheckbox.setSelected(false);
+                disableButtons(operationMode, applicationContext);
+            default:
+                break;
+        }
     }
 
     private void placeOrderActionHandler() {
@@ -71,16 +114,8 @@ public class CustomerInfoController implements Initializable {
 
                 applicationContext.setCurrentCustomer(customerModel);
                 mainInterfaceStage.stage(placeOrderButton);
-//                getCustomerInfo(customerProfile);
             }
         });
-    }
-
-    private void displayDateAndTime() {
-
-        TimeModel timeModel = new TimeModel();
-        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
-        timeField.setText(timeModel.getCurrentTime());
     }
 
     private void backButtonAction() {
@@ -98,39 +133,106 @@ public class CustomerInfoController implements Initializable {
         });
     }
 
-    private void displayEmployeeName() {
+    private void disableButtons(OperationMode operationMode, ApplicationContext applicationContext) {
 
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
-        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
-        employeeNameField.setText(loggedInEmployee.getName());
-    }
-
-    private void displayPickupOrDelivery() {
-
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
-        OperationMode operationMode = applicationContext.getOperationMode();
-
-        switch (operationMode) {
-
-            case DELIVERY:
-                deliveryCheckbox.setSelected(true);
-                pickupCheckbox.setSelected(false);
-                break;
-            case PICKUP:
-                pickupCheckbox.setSelected(true);
-                deliveryCheckbox.setSelected(false);
-                disableButtons();
-            default:
-                break;
-        }
-    }
-
-    private void disableButtons() {
-
+        firstNameField.setFocusTraversable(true);
+        lastNameField.setDisable(true);
+        phoneNumberField.setDisable(true);
         addressOneField.setDisable(true);
         addressTwoField.setDisable(true);
         cityField.setDisable(true);
         zipCodeField.setDisable(true);
         stateField.setDisable(true);
+        placeOrderButton.setDisable(true);
+
+        if (applicationContext.getOperationMode() == OperationMode.PICKUP) {
+
+            disableLastNameField();
+            disablePhoneNumberField();
+            sendOrderPickup();
+        }
+
+        if (applicationContext.getOperationMode() == OperationMode.DELIVERY) {
+
+            disableLastNameField();
+            disablePhoneNumberField();
+            disableBothAddressFields();
+            disableCityField();
+            disableStateField();
+            disableZipCodeField();
+            sendOrderDelivery();
+        }
+    }
+
+    private void disableLastNameField() {
+        firstNameField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                lastNameField.setDisable(false);
+            }
+        });
+    }
+
+    private void disablePhoneNumberField() {
+        lastNameField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                phoneNumberField.setDisable(false);
+            }
+        });
+    }
+
+    private void disableBothAddressFields() {
+        phoneNumberField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                addressOneField.setDisable(false);
+                addressTwoField.setDisable(false);
+            }
+        });
+    }
+
+    private void disableCityField() {
+        addressOneField.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                cityField.setDisable(false);
+            }
+        });
+    }
+
+    private void disableStateField() {
+        cityField.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stateField.setDisable(false);
+            }
+        });
+    }
+
+    private void disableZipCodeField() {
+        stateField.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                zipCodeField.setDisable(false);
+            }
+        });
+    }
+
+    private void sendOrderDelivery() {
+        zipCodeField.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                placeOrderButton.setDisable(false);
+            }
+        });
+    }
+
+    private void sendOrderPickup() {
+        phoneNumberField.textProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue.length() == 10) placeOrderButton.setDisable(false);
+                }
+        );
     }
 }
