@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -37,17 +38,18 @@
                      </font>
                   </Button>
                   <Button fx:id="openRegisterButton" layoutX="438.0" layoutY="495.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="157.0" text="Open Register" />
-                  <Text layoutX="148.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="Employee Logged In:" wrappingWidth="150.42578125">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Text>
-                  <TextField fx:id="loggedInTextField" editable="false" layoutX="302.0" layoutY="66.0" />
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="287.0" layoutY="66.0" prefHeight="27.0" prefWidth="142.0" />
                   <Text layoutX="626.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="Employee ID:" wrappingWidth="97.42578125">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
                   <TextField fx:id="idTextField" editable="false" layoutX="744.0" layoutY="66.0" prefHeight="27.0" prefWidth="97.0" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="234.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/employee-icon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children></AnchorPane>

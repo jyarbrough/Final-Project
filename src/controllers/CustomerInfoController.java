@@ -39,7 +39,6 @@ public class CustomerInfoController implements Initializable {
     public TextField timeField;
     public TextField dayOfTheWeekField;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
