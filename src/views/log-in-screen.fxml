@@ -36,12 +36,12 @@
                   <Image url="@../icons/date-time-icon.png" />
                </image>
             </ImageView>
-            <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="514.0" layoutY="29.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" styleClass="timeTextField">
+            <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="513.0" layoutY="29.0" prefHeight="28.0" prefWidth="100.0" promptText="Date" styleClass="dateAndTimeFieldStyles">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="timeField" editable="false" layoutX="514.0" layoutY="51.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" styleClass="timeTextField">
+            <TextField fx:id="timeField" editable="false" layoutX="514.0" layoutY="51.0" prefHeight="28.0" prefWidth="82.0" promptText="Time" styleClass="dateAndTimeFieldStyles">
                <font>
                   <Font size="14.0" />
                </font>

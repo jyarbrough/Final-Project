@@ -46,12 +46,12 @@
                               <Image url="@../icons/go-next-icon.png" />
                            </image>
                         </ImageView>
-                        <TextField fx:id="timeField" alignment="CENTER_RIGHT" editable="false" layoutX="467.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" style="-fx-background-color: #000000;" styleClass="timeTextField">
+                        <TextField fx:id="timeField" alignment="CENTER_RIGHT" editable="false" layoutX="467.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" style="-fx-background-color: #000000;" styleClass="dateAndTimeFieldStyles">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="31.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" style="-fx-background-color: #000000;" styleClass="timeTextField">
+                        <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="31.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" style="-fx-background-color: #000000;" styleClass="dateAndTimeFieldStyles">
                            <font>
                               <Font size="14.0" />
                            </font>

@@ -24,6 +24,8 @@ public class HomeScreenController implements Initializable {
     public TextField loggedInTextField;
     public TextField idTextField;
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
