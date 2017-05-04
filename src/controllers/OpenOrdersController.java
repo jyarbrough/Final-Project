@@ -30,7 +30,6 @@ public class OpenOrdersController implements Initializable {
 
     public Button backButton;
     public TextField loggedInTextField;
-    public TextField idTextField;
     public ImageView goBackIcon;
     public Text goBackIconTitle;
 
@@ -39,6 +38,7 @@ public class OpenOrdersController implements Initializable {
     public RadioButton pickupRadioButton;
     public TextField timeField;
     public TextField dayOfTheWeekField;
+    public ToggleGroup pickUpOrDeliveryRadioGroup;
 
     @FXML
     TableView<ReceiptModel> openOrdersTable = new TableView<>();

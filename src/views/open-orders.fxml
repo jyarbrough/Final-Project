@@ -42,8 +42,11 @@
                      </font>
                   </Text>
                   <Button fx:id="checkOutButton" layoutX="35.0" layoutY="253.0" mnemonicParsing="false" prefHeight="147.0" prefWidth="160.0" text="Check-Out" />
-                  <RadioButton fx:id="pickupRadioButton" layoutX="109.0" layoutY="173.0" mnemonicParsing="false" text="Pick-Ups" textFill="WHITE" />
-                  <RadioButton fx:id="deliveriesRadioButton" layoutX="109.0" layoutY="203.0" mnemonicParsing="false" text="Deliveries" textFill="WHITE" />
+                  <RadioButton fx:id="pickupRadioButton" layoutX="109.0" layoutY="173.0" mnemonicParsing="false" text="Pick-Ups" textFill="WHITE">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="pickUpOrDeliveryRadioGroup" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="deliveriesRadioButton" layoutX="109.0" layoutY="203.0" mnemonicParsing="false" text="Deliveries" textFill="WHITE" toggleGroup="$pickUpOrDeliveryRadioGroup" />
                   <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="809.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true" styleClass="dateAndTime">
                      <image>
                         <Image url="@../icons/date-time-icon.png" />
