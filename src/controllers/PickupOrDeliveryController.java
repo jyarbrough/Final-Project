@@ -7,9 +7,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import models.EmployeeModel;
 import stages.CustomerInfoStage;
 import stages.HomeScreenStage;
+import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,45 +25,118 @@ public class PickupOrDeliveryController implements Initializable {
     public TextField loggedInTextField;
     public TextField idTextField;
     public Button deliveryButton;
+    public Text deliveryIconTitle;
+    public Text pickupIconTitle;
+    public Text goBackIconTitle;
+    public ImageView deliveryIcon;
+    public ImageView pickupIcon;
+    public ImageView goBackIcon;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        CustomerInfoStage customerInfoStage = new CustomerInfoStage();
-        HomeScreenStage homeScreenStage = new HomeScreenStage();
-
+        SetAllStages setAllStages = new SetAllStages();
         ApplicationContext applicationContext = ApplicationContext.getInstance();
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
-
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
 
+        iconClickHandlers(setAllStages, applicationContext);
+
+        buttonHandlers(setAllStages, applicationContext);
+    }
+
+    private void iconClickHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {
+        deliveryIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.DELIVERY);
+                setAllStages.stageByButton(deliveryButton, "customer-info");
+            }
+        });
+
+        deliveryIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.DELIVERY);
+                setAllStages.stageByButton(deliveryButton, "customer-info");
+            }
+        });
+
+        pickupIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.PICKUP);
+                setAllStages.stageByButton(pickupButton, "customer-info");
+            }
+        });
+
+        pickupIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.PICKUP);
+                setAllStages.stageByButton(pickupButton, "customer-info");
+            }
+        });
+
+        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+
+        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+    }
+
+    private void buttonHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {
         pickupButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.PICKUP);
-                customerInfoStage.stage(pickupButton);
+                setAllStages.stageByButton(pickupButton, "customer-info");
             }
         });
 
         deliveryButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.DELIVERY);
-                customerInfoStage.stage(deliveryButton);
+                setAllStages.stageByButton(deliveryButton, "customer-info");
             }
         });
 
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
-                homeScreenStage.stage(backButton);
+                setAllStages.stageByButton(backButton, "home-screen");
             }
         });
-
     }
 }
