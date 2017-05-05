@@ -58,8 +58,8 @@
                         </TextField>
                      </children>
                   </Pane>
-                  <TextField fx:id="employeeNameField" editable="false" layoutX="182.0" layoutY="38.0" />
-                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="127.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                  <TextField fx:id="employeeNameField" editable="false" layoutX="260.0" layoutY="42.0" prefHeight="27.0" prefWidth="125.0" style="-fx-background-color: #00a0ee;" styleClass="whiteText" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="207.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/employee-icon.png" />
                      </image>
@@ -69,15 +69,21 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
+                  <CheckBox fx:id="deliveryCheckbox" layoutX="745.0" layoutY="61.0" mnemonicParsing="false" text="Delivery" textFill="WHITE" />
+                  <CheckBox fx:id="pickupCheckbox" layoutX="745.0" layoutY="30.0" mnemonicParsing="false" text="Pick-Up" textFill="WHITE" />
+                  <Text fill="WHITE" layoutX="647.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Is For:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
-            <CheckBox fx:id="deliveryCheckbox" layoutX="924.0" layoutY="76.0" mnemonicParsing="false" text="Delivery" textFill="WHITE" />
-            <CheckBox fx:id="pickupCheckbox" layoutX="924.0" layoutY="45.0" mnemonicParsing="false" text="Pick-Up" textFill="WHITE" />
-            <Text fill="WHITE" layoutX="826.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Is For:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
+            <Button fx:id="logOutButton" layoutX="103.0" layoutY="33.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #00a0ee;" />
+            <ImageView fx:id="logOutIcon" fitHeight="48.0" fitWidth="33.0" layoutX="116.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/logout.png" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
    </children>
 </Pane>

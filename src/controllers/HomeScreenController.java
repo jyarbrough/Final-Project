@@ -7,10 +7,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import models.EmployeeModel;
 import models.TimeModel;
 import stages.OpenOrdersStage;
 import stages.PickupDeliveryStage;
+import stages.SetAllStages;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,6 +30,9 @@ public class HomeScreenController implements Initializable {
     public TextField idTextField;
     public TextField timeField;
     public TextField dayOfTheWeekField;
+    public Button logOutButton;
+
+    public ImageView logOutIcon;
 
 
     @Override
@@ -85,6 +92,24 @@ public class HomeScreenController implements Initializable {
                 ApplicationContext.getInstance().setOperationMode(OperationMode.MANAGER);
                 OpenOrdersStage openOrdersStage = new OpenOrdersStage();
                 openOrdersStage.stage(reviseOrderButton);
+            }
+        });
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+
             }
         });
     }

@@ -11,7 +11,7 @@
    <children>
       <AnchorPane layoutX="20.0" layoutY="11.0" prefHeight="675.0" prefWidth="1238.0" style="-fx-background-color: #386aff;">
          <children>
-            <AnchorPane layoutX="89.0" layoutY="38.0" prefHeight="607.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
+            <AnchorPane layoutX="89.0" layoutY="18.0" prefHeight="640.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
                <children>
                   <Button fx:id="pickupButton" layoutX="266.0" layoutY="249.0" mnemonicParsing="false" prefHeight="160.0" prefWidth="236.0" styleClass="pickupButton">
                      <font>
@@ -19,13 +19,13 @@
                      </font>
                   </Button>
                   <Button fx:id="backButton" layoutX="447.0" layoutY="483.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="158.0" />
-                  <TextField fx:id="loggedInTextField" editable="false" layoutX="287.0" layoutY="66.0" prefHeight="27.0" prefWidth="125.0" />
-                  <Text layoutX="646.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="Employee ID:" wrappingWidth="97.42578125">
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="260.0" layoutY="42.0" prefHeight="27.0" prefWidth="125.0" styleClass="blackTextFields" />
+                  <Text layoutX="232.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="ID:" wrappingWidth="24.42578125">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="idTextField" editable="false" layoutX="744.0" layoutY="66.0" prefHeight="27.0" prefWidth="97.0" />
+                  <TextField fx:id="idTextField" editable="false" layoutX="257.0" layoutY="72.0" prefHeight="27.0" prefWidth="33.0" styleClass="blackTextFields" />
                   <Button fx:id="deliveryButton" layoutX="556.0" layoutY="249.0" mnemonicParsing="false" prefHeight="160.0" prefWidth="236.0" styleClass="deliveryButton" textAlignment="CENTER">
                      <font>
                         <Font size="36.0" />
@@ -56,7 +56,7 @@
                         <Image url="@../icons/pickup-icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="234.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="207.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/employee-icon.png" />
                      </image>
@@ -71,6 +71,27 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="749.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" styleClass="dateAndTime">
+                     <image>
+                        <Image url="@../icons/date-time-icon.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="798.0" layoutY="37.0" prefHeight="28.0" prefWidth="100.0" promptText="Date" styleClass="dateAndTimeFieldStyles">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="timeField" editable="false" layoutX="798.0" layoutY="59.0" prefHeight="28.0" prefWidth="82.0" promptText="Time" styleClass="dateAndTimeFieldStyles">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="logOutButton" layoutX="2.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #000000;" />
+                  <ImageView fx:id="logOutIcon" fitHeight="48.0" fitWidth="33.0" layoutX="13.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/logout.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children></AnchorPane>

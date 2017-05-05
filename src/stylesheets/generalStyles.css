@@ -16,6 +16,10 @@
 }
 
 
+.whiteText {
+    -fx-text-fill: #ffffff;
+}
+
 
 /*Log In Styles*/
 

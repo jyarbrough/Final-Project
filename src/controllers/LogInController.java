@@ -8,7 +8,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
+import javafx.util.converter.DoubleStringConverter;
 import models.EmployeeModel;
 import models.TimeModel;
 import services.EmployeeService;
@@ -17,6 +20,7 @@ import stages.HomeScreenStage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class LogInController implements Initializable {
 
@@ -49,6 +53,7 @@ public class LogInController implements Initializable {
         verifyEmployee();
         displayDateAndTime();
         limitLogInTextField();
+        initializeBackGroundAlert();
     }
 
     private void limitLogInTextField() {
@@ -156,6 +161,10 @@ public class LogInController implements Initializable {
             }
         });
 
+
+    }
+
+    private void initializeBackGroundAlert() {
         alertButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
