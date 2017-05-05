@@ -17,6 +17,7 @@ import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class HomeScreenController implements Initializable {
 
@@ -45,9 +46,9 @@ public class HomeScreenController implements Initializable {
 
         displayDateAndTime();
 
-        if (loggedInEmployee == null) {
-            throw new RuntimeException("null employee was set");
-        }
+//        if (loggedInEmployee == null) {
+//            throw new RuntimeException("null employee was set");
+//        }
 
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
@@ -111,6 +112,15 @@ public class HomeScreenController implements Initializable {
                 SetAllStages setAllStages = new SetAllStages();
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
 
+            }
+        });
+
+        openRegisterButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(openRegisterButton, "cash-register");
             }
         });
     }

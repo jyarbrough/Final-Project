@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" stylesheets="@../stylesheets/generalStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OpenOrdersController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" stylesheets="@../stylesheets/generalStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
    <children>
       <AnchorPane fx:id="mainPage" layoutX="20.0" layoutY="11.0" prefHeight="676.0" prefWidth="1238.0" style="-fx-background-color: #386aff;">
          <children>
@@ -35,7 +35,7 @@
                         <Font size="48.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="379.0" layoutY="191.0" prefHeight="191.0" prefWidth="294.0" />
+                  <TextField fx:id="totalField" layoutX="379.0" layoutY="191.0" prefHeight="191.0" prefWidth="294.0" />
                </children>
             </AnchorPane>
          </children></AnchorPane>

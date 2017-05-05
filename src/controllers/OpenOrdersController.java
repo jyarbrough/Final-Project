@@ -64,17 +64,52 @@ public class OpenOrdersController implements Initializable {
         HashMap<Integer, ReceiptModel> receipts = applicationContext.getReceipts();
         Collection<ReceiptModel> allReceipts = receipts.values();
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        setupTableColumns();
         ArrayList<ReceiptModel> tempReceiptsToDisplay = new ArrayList<>();
         loggedInTextField.setText(loggedInEmployee.getName());
         receiptsToDisplay.setAll(tempReceiptsToDisplay);
         openOrdersTable.setItems(receiptsToDisplay);
 
-        setupTableColumns();
+        switch (applicationContext.getOperationMode()) {
+            case DELIVERY:
+                for (ReceiptModel receipt : allReceipts) {
+                    if (receipt.getOperationMode() == OperationMode.DELIVERY) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case PICKUP:
+                for (ReceiptModel receipt : allReceipts) {
+                    if (receipt.getOperationMode() == OperationMode.PICKUP) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case NONE:
+                for (ReceiptModel receipt : allReceipts) {
+                    if (receipt.isOpen()) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case MANAGER:
+                for (ReceiptModel receiptModel : allReceipts) {
+                    tempReceiptsToDisplay.add(receiptModel);
+                }
+                break;
+            default:
+                break;
+
+        }
+
+
         backButtonHandler();
         displayDateAndTime();
         logOutHandler();
         checkOutButtonHandler();
-        switchStatement(applicationContext, allReceipts, tempReceiptsToDisplay);
     }
 
 
@@ -132,44 +167,6 @@ public class OpenOrdersController implements Initializable {
 
             }
         });
-    }
-
-    private void switchStatement(ApplicationContext applicationContext, Collection<ReceiptModel> allReceipts, ArrayList<ReceiptModel> tempReceiptsToDisplay) {
-
-        switch (applicationContext.getOperationMode()) {
-            case DELIVERY:
-                for (ReceiptModel receipt : allReceipts) {
-                    if (receipt.getOperationMode() == OperationMode.DELIVERY) {
-                        tempReceiptsToDisplay.add(receipt);
-                    }
-                }
-                break;
-
-            case PICKUP:
-                for (ReceiptModel receipt : allReceipts) {
-                    if (receipt.getOperationMode() == OperationMode.PICKUP) {
-                        tempReceiptsToDisplay.add(receipt);
-                    }
-                }
-                break;
-
-            case NONE:
-                for (ReceiptModel receipt : allReceipts) {
-                    if (receipt.isOpen() == true) {
-                        tempReceiptsToDisplay.add(receipt);
-                    }
-                }
-                break;
-
-            case MANAGER:
-                for (ReceiptModel receiptModel : allReceipts) {
-                    tempReceiptsToDisplay.add(receiptModel);
-                }
-                break;
-            default:
-                break;
-
-        }
     }
 
     private void displayDateAndTime() {
