@@ -121,13 +121,6 @@ public class OpenOrdersController implements Initializable {
         });
     }
 
-    private void removeAlertMessage() {
-
-        alertPane.setVisible(false);
-                mainPage.setOpacity(1);
-
-    }
-
 
     private void checkOutButtonHandler() {
 
