@@ -38,14 +38,14 @@
                      </font>
                   </Button>
                   <Button fx:id="openRegisterButton" layoutX="438.0" layoutY="523.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="157.0" />
-                  <TextField fx:id="loggedInTextField" editable="false" layoutX="287.0" layoutY="66.0" prefHeight="27.0" prefWidth="125.0" />
-                  <Text layoutX="626.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="Employee ID:" wrappingWidth="97.42578125">
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="227.0" layoutY="36.0" prefHeight="27.0" prefWidth="125.0" styleClass="blackTextFields" />
+                  <Text layoutX="199.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="ID:" wrappingWidth="24.42578125">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="idTextField" editable="false" layoutX="744.0" layoutY="66.0" prefHeight="27.0" prefWidth="97.0" promptText="Date" styleClass="dateAndTimeFieldStyles" />
-                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="234.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                  <TextField fx:id="idTextField" editable="false" layoutX="224.0" layoutY="66.0" prefHeight="27.0" prefWidth="97.0" promptText="Id#" styleClass="dateAndTimeFieldStyles" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="174.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/employee-icon.png" />
                      </image>
@@ -65,7 +65,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text fx:id="newOrderTitleText" layoutX="308.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Order" textAlignment="CENTER" wrappingWidth="109.0634765625">
+                  <Text fx:id="newOrderTitleText" layoutX="307.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Order" textAlignment="CENTER" wrappingWidth="109.0634765625">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -108,6 +108,21 @@
                   <ImageView fx:id="newOrderIcon" fitHeight="140.0" fitWidth="134.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/new-order.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="timeField" editable="false" layoutX="813.0" layoutY="52.0" prefHeight="28.0" prefWidth="82.0" promptText="Time" styleClass="dateAndTimeFieldStyles">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="813.0" layoutY="30.0" prefHeight="28.0" prefWidth="100.0" promptText="Date" styleClass="dateAndTimeFieldStyles">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="764.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" styleClass="dateAndTime">
+                     <image>
+                        <Image url="@../icons/date-time-icon.png" />
                      </image>
                   </ImageView>
                </children>

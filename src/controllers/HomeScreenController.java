@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import models.EmployeeModel;
+import models.TimeModel;
 import stages.OpenOrdersStage;
 import stages.PickupDeliveryStage;
 import java.net.URL;
@@ -23,7 +24,8 @@ public class HomeScreenController implements Initializable {
     public Button openRegisterButton;
     public TextField loggedInTextField;
     public TextField idTextField;
-
+    public TextField timeField;
+    public TextField dayOfTheWeekField;
 
 
     @Override
@@ -32,6 +34,8 @@ public class HomeScreenController implements Initializable {
         ApplicationContext applicationContext = ApplicationContext.getInstance();
 
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+
+        displayDateAndTime();
 
         if (loggedInEmployee == null) {
             throw new RuntimeException("null employee was set");
@@ -83,5 +87,12 @@ public class HomeScreenController implements Initializable {
                 openOrdersStage.stage(reviseOrderButton);
             }
         });
+    }
+
+    private void displayDateAndTime() {
+
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
     }
 }
