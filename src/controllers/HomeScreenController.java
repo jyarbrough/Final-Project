@@ -39,8 +39,9 @@ public class HomeScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         ApplicationContext applicationContext = ApplicationContext.getInstance();
-
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        loggedInTextField.setText(loggedInEmployee.getName());
+        idTextField.setText(loggedInEmployee.getId());
 
         displayDateAndTime();
 

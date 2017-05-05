@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import models.EmployeeModel;
@@ -26,7 +27,9 @@ public class LogInController implements Initializable {
 
     public TextField dayOfTheWeekField;
     public TextField timeField;
-    public Button alertButton;
+    public Pane welcomeBackground;
+    public Button welcomeButton;
+    public Pane numberPane;
     private String enteredDigits = "";
 
     public Button numberOne;
@@ -165,13 +168,13 @@ public class LogInController implements Initializable {
     }
 
     private void initializeBackGroundAlert() {
-        alertButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                clearTextField();
-                alertButton.setVisible(false);
-            }
-        });
+//        alertButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                clearTextField();
+//                alertButton.setVisible(false);
+//            }
+//        });
     }
 
     private void clearTextField() {
@@ -194,11 +197,22 @@ public class LogInController implements Initializable {
 
                 if (foundEmployee != null) {
                     applicationContext.setLoggedInEmployee(foundEmployee);
-                    HomeScreenStage homeScreenStage = new HomeScreenStage();
-                    homeScreenStage.stage(logInButton);
+
+                    welcomeBackground.setVisible(true);
+                    numberPane.setVisible(false);
+
+                    welcomeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            HomeScreenStage homeScreenStage = new HomeScreenStage();
+                            homeScreenStage.stage(welcomeButton);
+                        }
+                    });
+
+
 
                 } else {
-                    alertButton.setVisible(true);
+//                    alertButton.setVisible(true);
                 }
             }
         });

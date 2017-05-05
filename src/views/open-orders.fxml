@@ -14,7 +14,7 @@
             <AnchorPane layoutX="89.0" layoutY="30.0" prefHeight="619.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
                <children>
                   <Button fx:id="backButton" layoutX="35.0" layoutY="430.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" />
-                  <TextField fx:id="loggedInTextField" editable="false" layoutX="858.0" layoutY="41.0" prefHeight="27.0" prefWidth="142.0" promptText="Employee" style="-fx-background-color: #000000;" />
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="858.0" layoutY="41.0" prefHeight="27.0" prefWidth="142.0" promptText="Employee" styleClass="blackTextFields" />
                   <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="804.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/employee-icon.png" />
@@ -64,6 +64,12 @@
                   <Font size="14.0" />
                </font>
             </TextField>
+            <Button fx:id="logOutButton" layoutX="90.0" layoutY="31.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #000000;" />
+            <ImageView fx:id="logOutIcon" fitHeight="48.0" fitWidth="33.0" layoutX="103.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/logout.png" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
    </children>
 </Pane>

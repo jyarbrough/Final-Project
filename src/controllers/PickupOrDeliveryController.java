@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import models.EmployeeModel;
+import models.TimeModel;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -29,6 +30,11 @@ public class PickupOrDeliveryController implements Initializable {
     public ImageView deliveryIcon;
     public ImageView pickupIcon;
     public ImageView goBackIcon;
+    public TextField dayOfTheWeekField;
+    public TextField timeField;
+    public Button logOutButton;
+    public ImageView logOutIcon;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,12 +45,22 @@ public class PickupOrDeliveryController implements Initializable {
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
 
+        displayDateAndTime();
         iconClickHandlers(setAllStages, applicationContext);
-
         buttonHandlers(setAllStages, applicationContext);
+        logOutHandler();
+
+    }
+
+    private void displayDateAndTime() {
+
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
     }
 
     private void iconClickHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {
+
         deliveryIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -106,7 +122,29 @@ public class PickupOrDeliveryController implements Initializable {
         });
     }
 
+    private void logOutHandler() {
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+    }
+
     private void buttonHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {
+
         pickupButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

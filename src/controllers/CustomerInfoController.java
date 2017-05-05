@@ -8,13 +8,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import models.CustomerModel;
 import models.EmployeeModel;
 import models.TimeModel;
 import stages.MainInterfaceStage;
 import stages.PickupDeliveryStage;
+import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -22,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class CustomerInfoController implements Initializable {
 
+    public CheckBox deliveryCheckbox;
+    public CheckBox pickupCheckbox;
     public TextField firstNameField;
     public TextField lastNameField;
     public TextField addressOneField;
@@ -30,13 +35,18 @@ public class CustomerInfoController implements Initializable {
     public TextField zipCodeField;
     public TextField stateField;
     public TextField phoneNumberField;
-    public Button placeOrderButton;
-    public Button backButton;
     public TextField employeeNameField;
-    public CheckBox deliveryCheckbox;
-    public CheckBox pickupCheckbox;
     public TextField timeField;
     public TextField dayOfTheWeekField;
+    public Button placeOrderButton;
+    public Button backButton;
+    public Button logOutButton;
+
+    public ImageView goBackIcon;
+    public ImageView logOutIcon;
+    public ImageView takeOrderIcon;
+    public Text goBackIconTitle;
+    public Text takeOrderIconTitle;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,6 +57,49 @@ public class CustomerInfoController implements Initializable {
         displayPickupOrDelivery();
         placeOrderActionHandler();
         backButtonAction();
+
+        SetAllStages setAllStages = new SetAllStages();
+        iconClickHandlers(setAllStages);
+    }
+
+    private void iconClickHandlers(final SetAllStages setAllStages) {
+        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+
+        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+
+            }
+        });
     }
 
     private void displayEmployeeName() {
@@ -94,11 +147,11 @@ public class CustomerInfoController implements Initializable {
 
     private void placeOrderActionHandler() {
 
-        placeOrderButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        placeOrderButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
+            public void handle(ActionEvent event) {
                 MainInterfaceStage mainInterfaceStage = new MainInterfaceStage();
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 HashMap<String, CustomerModel> customerProfile = new HashMap<>();
 
                 String firstName = firstNameField.getText();
@@ -116,6 +169,22 @@ public class CustomerInfoController implements Initializable {
                 mainInterfaceStage.stage(placeOrderButton);
             }
         });
+
+//        takeOrderIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                SetAllStages setAllStages = new SetAllStages();
+//                setAllStages.stageByButton(placeOrderButton, "main-interface");
+//            }
+//        });
+//
+//        takeOrderIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                MainInterfaceStage mainInterfaceStage = new MainInterfaceStage();
+//                mainInterfaceStage.stage(placeOrderButton);
+//            }
+//        });
     }
 
     private void backButtonAction() {
