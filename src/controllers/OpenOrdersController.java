@@ -18,6 +18,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import models.EmployeeModel;
@@ -45,6 +47,11 @@ public class OpenOrdersController implements Initializable {
     public ToggleGroup pickUpOrDeliveryRadioGroup;
     public Button logOutButton;
     public ImageView logOutIcon;
+    public AnchorPane alertPane;
+    public Button yesButton;
+    public Button noButton;
+    public Pane alertBackground;
+    public AnchorPane mainPage;
 
     @FXML
     TableView<ReceiptModel> openOrdersTable = new TableView<>();
@@ -69,6 +76,58 @@ public class OpenOrdersController implements Initializable {
         checkOutButtonHandler();
         switchStatement(applicationContext, allReceipts, tempReceiptsToDisplay);
     }
+
+
+
+
+    private void logOutHandler() {
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                logOutAlertMessage();
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                logOutAlertMessage();
+
+            }
+        });
+    }
+
+    private void logOutAlertMessage() {
+        alertBackground.setVisible(true);
+        mainPage.setOpacity(0.30);
+
+        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "open-orders");
+            }
+        });
+    }
+
+    private void removeAlertMessage() {
+
+        alertPane.setVisible(false);
+                mainPage.setOpacity(1);
+
+    }
+
 
     private void checkOutButtonHandler() {
 
@@ -127,26 +186,7 @@ public class OpenOrdersController implements Initializable {
         timeField.setText(timeModel.getCurrentTime());
     }
 
-    private void logOutHandler() {
 
-        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-            }
-        });
-
-        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-
-            }
-        });
-    }
 
     private void backButtonHandler() {
 

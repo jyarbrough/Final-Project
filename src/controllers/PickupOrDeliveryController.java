@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.EmployeeModel;
 import models.TimeModel;
@@ -34,6 +36,10 @@ public class PickupOrDeliveryController implements Initializable {
     public TextField timeField;
     public Button logOutButton;
     public ImageView logOutIcon;
+    public Pane alertPane;
+    public Pane mainPane;
+    public Button noButton;
+    public Button yesButton;
 
 
     @Override
@@ -128,8 +134,25 @@ public class PickupOrDeliveryController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
+                alertPane.setVisible(true);
+//                mainPane.setOpacity(40);
+//                yesButton.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//                        SetAllStages setAllStages = new SetAllStages();
+//                        setAllStages.stageByButton(logOutButton, "log-in-screen");
+//                    }
+//                });
+
+                noButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        alertPane.setVisible(false);
+
+                    }
+                });
+
+
             }
         });
 
@@ -137,10 +160,33 @@ public class PickupOrDeliveryController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
 
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
+                alertPane.setVisible(true);
+//                mainPane.setOpacity(40);
+//                yesButton.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//                        SetAllStages setAllStages = new SetAllStages();
+//                        setAllStages.stageByButton(logOutButton, "log-in-screen");
+//                    }
+//                });
+
+                noButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        alertPane.setVisible(false);
+//                        mainPane.setOpacity(0);
+                    }
+                });
+
+
             }
         });
+    }
+
+    private void logOutAlertHandler() {
+
+
+
     }
 
     private void buttonHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {
