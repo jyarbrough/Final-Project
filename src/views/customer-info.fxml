@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" stylesheets="@../stylesheets/customerInfoStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerInfoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" stylesheets="@../stylesheets/generalStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerInfoController">
    <children>
       <AnchorPane prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;">
          <children>
@@ -41,43 +41,54 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <ImageView fitHeight="59.0" fitWidth="61.0" layoutX="413.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="takeOrderIcon" fitHeight="59.0" fitWidth="61.0" layoutX="413.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../icons/go-next-icon.png" />
                            </image>
                         </ImageView>
-                        <TextField fx:id="timeField" alignment="CENTER_RIGHT" editable="false" layoutX="467.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" style="-fx-background-color: #000000;" styleClass="timeTextField">
+                        <TextField fx:id="timeField" alignment="CENTER_RIGHT" editable="false" layoutX="467.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" style="-fx-background-color: #000000;" styleClass="dateAndTimeFieldStyles">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="31.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" style="-fx-background-color: #000000;" styleClass="timeTextField">
+                        <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="31.0" layoutY="16.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" style="-fx-background-color: #000000;" styleClass="dateAndTimeFieldStyles">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
+                        <ImageView fitHeight="47.0" fitWidth="48.0" layoutX="200.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/user-plus.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </Pane>
-                  <TextField fx:id="employeeNameField" editable="false" layoutX="182.0" layoutY="38.0" />
-                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="127.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                  <TextField fx:id="employeeNameField" editable="false" layoutX="260.0" layoutY="42.0" prefHeight="27.0" prefWidth="125.0" style="-fx-background-color: #00a0ee;" styleClass="whiteText" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="207.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/employee-icon.png" />
                      </image>
                   </ImageView>
-                  <Text fill="WHITE" layoutX="434.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Info">
+                  <Text fill="WHITE" layoutX="454.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Info">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Text>
+                  <CheckBox fx:id="deliveryCheckbox" layoutX="745.0" layoutY="61.0" mnemonicParsing="false" text="Delivery" textFill="WHITE" />
+                  <CheckBox fx:id="pickupCheckbox" layoutX="745.0" layoutY="30.0" mnemonicParsing="false" text="Pick-Up" textFill="WHITE" />
+                  <Text fill="WHITE" layoutX="647.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Is For:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
-            <CheckBox fx:id="deliveryCheckbox" layoutX="924.0" layoutY="76.0" mnemonicParsing="false" text="Delivery" textFill="WHITE" />
-            <CheckBox fx:id="pickupCheckbox" layoutX="924.0" layoutY="45.0" mnemonicParsing="false" text="Pick-Up" textFill="WHITE" />
-            <Text fill="WHITE" layoutX="826.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Is For:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
+            <Button fx:id="logOutButton" layoutX="103.0" layoutY="33.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #00a0ee;" />
+            <ImageView fx:id="logOutIcon" fitHeight="48.0" fitWidth="33.0" layoutX="116.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/logout.png" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
    </children>
 </Pane>

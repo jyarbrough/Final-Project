@@ -6,48 +6,129 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" stylesheets="@../stylesheets/homeScreenStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeScreenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" stylesheets="@../stylesheets/generalStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeScreenController">
    <children>
       <AnchorPane layoutX="20.0" layoutY="16.0" prefHeight="668.0" prefWidth="1238.0" style="-fx-background-color: #386aff;">
          <children>
-            <AnchorPane layoutX="87.0" layoutY="14.0" prefHeight="620.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
+            <AnchorPane layoutX="87.0" layoutY="14.0" prefHeight="640.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
                <children>
-                  <Button fx:id="newOrderButton" layoutX="227.0" layoutY="135.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="265.0" text="New Order">
+                  <Button fx:id="newOrderButton" layoutX="227.0" layoutY="135.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="265.0">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="pickupButton" alignment="CENTER" layoutX="541.0" layoutY="135.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="265.0" text="Customer Pickup" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="pickupButton" alignment="CENTER" layoutX="541.0" layoutY="135.0" mnemonicParsing="false" prefHeight="230.0" prefWidth="265.0" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Button>
-                  <Button fx:id="deliveryButton" layoutX="234.0" layoutY="396.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="175.0" text="Deliveries">
+                  <Button fx:id="deliveryButton" layoutX="264.0" layoutY="397.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="155.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="openOrdersButton" layoutX="429.0" layoutY="396.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="175.0" text="Open Orders">
+                  <Button fx:id="openOrdersButton" layoutX="439.0" layoutY="397.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="155.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="reviseOrderButton" layoutX="624.0" layoutY="396.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="175.0" text="Revise Order">
+                  <Button fx:id="reviseOrderButton" layoutX="614.0" layoutY="397.0" mnemonicParsing="false" prefHeight="101.0" prefWidth="155.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="openRegisterButton" layoutX="438.0" layoutY="495.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="157.0" text="Open Register" />
-                  <TextField fx:id="loggedInTextField" editable="false" layoutX="287.0" layoutY="66.0" prefHeight="27.0" prefWidth="142.0" />
-                  <Text layoutX="626.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="Employee ID:" wrappingWidth="97.42578125">
+                  <Button fx:id="openRegisterButton" layoutX="438.0" layoutY="523.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="157.0" />
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="260.0" layoutY="42.0" prefHeight="27.0" prefWidth="125.0" styleClass="blackTextFields" />
+                  <Text layoutX="232.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="homeScreenLabels" text="ID:" wrappingWidth="24.42578125">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="idTextField" editable="false" layoutX="744.0" layoutY="66.0" prefHeight="27.0" prefWidth="97.0" />
-                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="234.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                  <TextField fx:id="idTextField" editable="false" layoutX="257.0" layoutY="72.0" prefHeight="27.0" prefWidth="33.0" promptText="Id#" styleClass="dateAndTimeFieldStyles" />
+                  <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="207.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/employee-icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="deliveryIcon" fitHeight="58.0" fitWidth="108.0" layoutX="312.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/delivery-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="deliveriesTitleText" layoutX="299.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deliveries">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="openOrdersTitleText" layoutX="461.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Open Orders">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="newOrderTitleText" layoutX="307.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Order" textAlignment="CENTER" wrappingWidth="109.0634765625">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="openOrdersIcon" fitHeight="58.0" fitWidth="58.0" layoutX="487.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/open-orders.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="customerPickupIcon" fitHeight="132.0" fitWidth="157.0" layoutX="609.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/pickup-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="customerPickupTitleText" layoutX="588.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Pick-Up" textAlignment="CENTER" wrappingWidth="175.0">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="473.0" layoutY="584.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Open Register">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="49.0" fitWidth="48.0" layoutX="493.0" layoutY="531.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/register-icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="662.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/lookup.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="636.0" layoutY="482.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Revise Order">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="newOrderIcon" fitHeight="140.0" fitWidth="134.0" layoutX="300.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/new-order.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="timeField" editable="false" layoutX="798.0" layoutY="59.0" prefHeight="28.0" prefWidth="82.0" promptText="Time" styleClass="dateAndTimeFieldStyles">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="798.0" layoutY="37.0" prefHeight="28.0" prefWidth="100.0" promptText="Date" styleClass="dateAndTimeFieldStyles">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="749.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" styleClass="dateAndTime">
+                     <image>
+                        <Image url="@../icons/date-time-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="logOutButton" layoutX="16.0" layoutY="14.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #000000;" />
+                  <ImageView fx:id="logOutIcon" fitHeight="48.0" fitWidth="33.0" layoutX="29.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/logout.png" />
                      </image>
                   </ImageView>
                </children>

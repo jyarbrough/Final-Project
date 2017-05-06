@@ -17,11 +17,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import models.EmployeeModel;
 import models.FoodItemModel;
 import models.ReceiptModel;
+import models.TimeModel;
 import stages.HomeScreenStage;
+import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.*;
@@ -39,6 +45,13 @@ public class OpenOrdersController implements Initializable {
     public TextField timeField;
     public TextField dayOfTheWeekField;
     public ToggleGroup pickUpOrDeliveryRadioGroup;
+    public Button logOutButton;
+    public ImageView logOutIcon;
+    public AnchorPane alertPane;
+    public Button yesButton;
+    public Button noButton;
+    public Pane alertBackground;
+    public AnchorPane mainPage;
 
     @FXML
     TableView<ReceiptModel> openOrdersTable = new TableView<>();
@@ -50,7 +63,12 @@ public class OpenOrdersController implements Initializable {
         ObservableList<ReceiptModel> receiptsToDisplay = FXCollections.observableArrayList();
         HashMap<Integer, ReceiptModel> receipts = applicationContext.getReceipts();
         Collection<ReceiptModel> allReceipts = receipts.values();
+        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+
         ArrayList<ReceiptModel> tempReceiptsToDisplay = new ArrayList<>();
+        loggedInTextField.setText(loggedInEmployee.getName());
+        receiptsToDisplay.setAll(tempReceiptsToDisplay);
+        openOrdersTable.setItems(receiptsToDisplay);
 
         switch (applicationContext.getOperationMode()) {
             case DELIVERY:
@@ -71,7 +89,7 @@ public class OpenOrdersController implements Initializable {
 
             case NONE:
                 for (ReceiptModel receipt : allReceipts) {
-                    if (receipt.isOpen() == true) {
+                    if (receipt.isOpen()) {
                         tempReceiptsToDisplay.add(receipt);
                     }
                 }
@@ -87,6 +105,61 @@ public class OpenOrdersController implements Initializable {
 
         }
 
+        receiptsToDisplay.setAll(tempReceiptsToDisplay);
+        openOrdersTable.setItems(receiptsToDisplay);
+        setupTableColumns();
+        backButtonHandler();
+        displayDateAndTime();
+        logOutHandler();
+        checkOutButtonHandler();
+    }
+
+
+
+
+    private void logOutHandler() {
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                logOutAlertMessage();
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                logOutAlertMessage();
+
+            }
+        });
+    }
+
+    private void logOutAlertMessage() {
+        alertBackground.setVisible(true);
+        mainPage.setOpacity(0.30);
+
+        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "open-orders");
+            }
+        });
+    }
+
+
+    private void checkOutButtonHandler() {
 
         checkOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -96,14 +169,20 @@ public class OpenOrdersController implements Initializable {
 
             }
         });
-
-        receiptsToDisplay.setAll(tempReceiptsToDisplay);
-        openOrdersTable.setItems(receiptsToDisplay);
-        setupTableColumns();
-        backButtonHandler();
     }
 
+    private void displayDateAndTime() {
+
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
+    }
+
+
+
     private void backButtonHandler() {
+
+        SetAllStages setAllStages = new SetAllStages();
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -111,9 +190,30 @@ public class OpenOrdersController implements Initializable {
                 homeScreenStage.stage(backButton);
             }
         });
+
+        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+
+        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
     }
 
     private void setupTableColumns() {
+
         TableColumn ticketNumberColumn = new TableColumn("Ticket #");
         ticketNumberColumn.setMinWidth(75);
         ticketNumberColumn.setCellValueFactory(

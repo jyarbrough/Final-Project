@@ -41,6 +41,8 @@ public class OrderInterfaceController implements Initializable {
     public CheckBox pickupCheckbox;
     public CheckBox deliveryCheckbox;
     public TextField itemCounterField;
+    public TextField dayOfTheWeekField;
+    public TextField timeField;
 
     private Integer itemCount = 0;
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
@@ -65,6 +67,8 @@ public class OrderInterfaceController implements Initializable {
 
         receipt.setCustomer(ApplicationContext.getInstance().getCurrentCustomer());
         receipt.setOperationMode(ApplicationContext.getInstance().getOperationMode());
+
+        displayDateAndTime();
     }
 
     private void initializeTicketNumber() {
@@ -75,6 +79,13 @@ public class OrderInterfaceController implements Initializable {
             receipt.setTicketNumber(ticketNumber);
         }
         ticketNumberField.setText(String.valueOf(receipt.getTicketNumber()));
+    }
+
+    private void displayDateAndTime() {
+
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
     }
 
     private void initializeEventListeners(HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -148,8 +159,9 @@ public class OrderInterfaceController implements Initializable {
         for (FoodItemModel foodItemModel : foodItemModelArrayList) {
 
             final Button tempButton = new Button(foodItemModel.getName());
-            tempButton.setMinHeight(69);
-            tempButton.setMinWidth(159);
+            tempButton.setMinHeight(60);
+            tempButton.setMinWidth(140);
+            tempButton.setWrapText(true);
             foodItemPane.getChildren().addAll(tempButton);
 
             tempButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -214,18 +226,12 @@ public class OrderInterfaceController implements Initializable {
                 }
             }
         });
-
-
         receiptTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 deleteButton.setDisable(false);
             }
         });
-
-
-
-
     }
 
     private void displayTotalsOnReceipt() {

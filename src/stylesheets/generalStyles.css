@@ -1,0 +1,78 @@
+.dateAndTimeFieldStyles {
+
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+
+}
+
+.blackTextFields {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #000000;
+}
+
+
+.homeScreenLabels {
+    -fx-fill: white;
+}
+
+
+.whiteText {
+    -fx-text-fill: #ffffff;
+}
+
+
+/*--------------------  Log In Styles  --------------------*/
+
+#logInTextField {
+    -fx-alignment: center;
+}
+
+.logInNumberPad {
+
+    -fx-background-color: #f0f8ff;
+
+}
+
+.dateAndTimeFieldStyles {
+
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+
+
+}
+
+
+
+/*--------------------  Order Interface Styles  --------------------*/
+
+#interfaceButton {
+    -fx-start-margin: 10%;
+}
+
+.gradientBackground {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #00a0ee 0%, #386aff 100%)
+}
+
+/*--------------------  Customer Info Styles  --------------------*/
+
+.dateAndTimeFieldStyles {
+    -fx-text-fill: #ffffff;
+}
+
+.whiteText {
+    -fx-text-fill: #ffffff;
+}
+
+.customerInfoTextFields {
+    -fx-background-color:  #386aff;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+}
+
+.background {
+    -fx-background-color: #00a0ee;
+}
+
+#interfaceButton {
+    -fx-start-margin: 10%;
+}

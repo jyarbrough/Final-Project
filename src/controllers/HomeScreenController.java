@@ -7,11 +7,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import models.EmployeeModel;
+import models.TimeModel;
 import stages.OpenOrdersStage;
 import stages.PickupDeliveryStage;
+import stages.SetAllStages;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class HomeScreenController implements Initializable {
 
@@ -23,17 +29,26 @@ public class HomeScreenController implements Initializable {
     public Button openRegisterButton;
     public TextField loggedInTextField;
     public TextField idTextField;
+    public TextField timeField;
+    public TextField dayOfTheWeekField;
+    public Button logOutButton;
+
+    public ImageView logOutIcon;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         ApplicationContext applicationContext = ApplicationContext.getInstance();
-
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        loggedInTextField.setText(loggedInEmployee.getName());
+        idTextField.setText(loggedInEmployee.getId());
 
-        if (loggedInEmployee == null) {
-            throw new RuntimeException("null employee was set");
-        }
+        displayDateAndTime();
+
+//        if (loggedInEmployee == null) {
+//            throw new RuntimeException("null employee was set");
+//        }
 
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
@@ -81,5 +96,39 @@ public class HomeScreenController implements Initializable {
                 openOrdersStage.stage(reviseOrderButton);
             }
         });
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+
+            }
+        });
+
+        openRegisterButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(openRegisterButton, "cash-register");
+            }
+        });
+    }
+
+    private void displayDateAndTime() {
+
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
     }
 }

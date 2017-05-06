@@ -7,14 +7,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" stylesheets="@../stylesheets/homeScreenStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OpenOrdersController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;" stylesheets="@../stylesheets/generalStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OpenOrdersController">
    <children>
-      <AnchorPane layoutX="20.0" layoutY="11.0" prefHeight="676.0" prefWidth="1238.0" style="-fx-background-color: #386aff;">
+      <AnchorPane fx:id="mainPage" layoutX="20.0" layoutY="11.0" prefHeight="676.0" prefWidth="1238.0" style="-fx-background-color: #386aff;">
          <children>
             <AnchorPane layoutX="89.0" layoutY="30.0" prefHeight="619.0" prefWidth="1051.0" style="-fx-background-color: #000000;">
                <children>
                   <Button fx:id="backButton" layoutX="35.0" layoutY="430.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" />
-                  <TextField fx:id="loggedInTextField" editable="false" layoutX="858.0" layoutY="41.0" prefHeight="27.0" prefWidth="142.0" promptText="Employee" style="-fx-background-color: #000000;" />
+                  <TextField fx:id="loggedInTextField" editable="false" layoutX="858.0" layoutY="41.0" prefHeight="27.0" prefWidth="142.0" promptText="Employee" styleClass="blackTextFields" />
                   <ImageView fitHeight="41.0" fitWidth="48.0" layoutX="804.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icons/employee-icon.png" />
@@ -54,16 +54,38 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <TextField fx:id="timeField" editable="false" layoutX="946.0" layoutY="131.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" style="-fx-background-color: #000000;" styleClass="timeTextField">
+            <TextField fx:id="timeField" editable="false" layoutX="946.0" layoutY="131.0" prefHeight="28.0" prefWidth="112.0" promptText="Time" style="-fx-background-color: #000000;" styleClass="dateAndTimeFieldStyles">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="946.0" layoutY="109.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" style="-fx-background-color: #000000;" styleClass="timeTextField">
+            <TextField fx:id="dayOfTheWeekField" editable="false" layoutX="946.0" layoutY="109.0" prefHeight="28.0" prefWidth="112.0" promptText="Date" style="-fx-background-color: #000000;" styleClass="dateAndTimeFieldStyles">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
+            <Button fx:id="logOutButton" layoutX="90.0" layoutY="31.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #000000;" />
+            <ImageView fx:id="logOutIcon" fitHeight="48.0" fitWidth="33.0" layoutX="103.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/logout.png" />
+               </image>
+            </ImageView>
          </children></AnchorPane>
+      <Pane fx:id="alertBackground" layoutX="268.0" layoutY="155.0" prefHeight="341.0" prefWidth="793.0" style="-fx-background-color: #ffffff;" visible="false">
+         <children>
+            <Text fx:id="alertTitleMessage" layoutX="257.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure?">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Button fx:id="yesButton" layoutX="422.0" layoutY="185.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, Log me out." />
+            <Button fx:id="noButton" layoutX="184.0" layoutY="185.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page" />
+            <ImageView fx:id="alertIcon" fitHeight="150.0" fitWidth="200.0" layoutX="295.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/alert-icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>
