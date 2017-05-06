@@ -88,11 +88,8 @@
          </children>
       </Pane>
 
-
       <Pane fx:id="checkoutAlertPane" layoutX="207.0" layoutY="93.0" prefHeight="523.0" prefWidth="861.0" styleClass="gradientBackground" visible="false">
          <children>
-
-
             <TextField fx:id="amountReceived" layoutX="618.0" layoutY="165.0" prefHeight="44.0" prefWidth="152.0">
                <font>
                   <Font size="24.0" />
