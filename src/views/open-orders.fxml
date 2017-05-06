@@ -87,12 +87,88 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane fx:id="checkoutAlertPane" layoutX="218.0" layoutY="155.0" prefHeight="341.0" prefWidth="793.0" style="-fx-background-color: #ffffff;" visible="false">
+
+
+      <Pane fx:id="checkoutAlertPane" layoutX="207.0" layoutY="93.0" prefHeight="523.0" prefWidth="861.0" styleClass="gradientBackground" visible="false">
          <children>
-            <TextField fx:id="amountReceived" layoutX="313.0" layoutY="95.0" />
-            <Label fx:id="amountDueLabel" layoutX="357.0" layoutY="31.0" prefHeight="29.0" prefWidth="81.0" />
-            <Label fx:id="changeDue" layoutX="346.0" layoutY="178.0" prefHeight="43.0" prefWidth="91.0" />
-            <Button fx:id="closeOrder" layoutX="627.0" layoutY="234.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="113.0" text="Close Order" />
+
+
+            <TextField fx:id="amountReceived" layoutX="618.0" layoutY="165.0" prefHeight="44.0" prefWidth="152.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </TextField>
+            <Label fx:id="amountDueLabel" layoutX="617.0" layoutY="84.0" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #000000;">
+            <font>
+            <Font size="24.0" />
+            </font>
+            </Label>
+            <Label fx:id="changeDue" layoutX="617.0" layoutY="231.0" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #000000;" />
+            <Button fx:id="closeOrder" layoutX="653.0" layoutY="438.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="113.0" text="Close Order" />
+            <Text layoutX="467.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount Due:" wrappingWidth="166.50885009765625">
+            <font>
+            <Font size="24.0" />
+            </font>
+            </Text>
+            <Text layoutX="504.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Received:" textAlignment="CENTER" wrappingWidth="114.1953125">
+            <font>
+            <Font size="24.0" />
+            </font>
+            </Text>
+            <Text layoutX="521.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change:">
+            <font>
+            <Font size="24.0" />
+            </font>
+            </Text>
+            <Button fx:id="cancelButton" layoutX="510.0" layoutY="438.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="113.0" text="Cancel" />
+            <TableView fx:id="checkoutReceiptListing" layoutX="39.0" layoutY="120.0" prefHeight="346.0" prefWidth="339.0">
+            <columns>
+            <TableColumn prefWidth="75.0" text="#" />
+            <TableColumn prefWidth="155.76620483398438" text="Items" />
+            <TableColumn prefWidth="107.2337646484375" text="Price" />
+            </columns>
+            </TableView>
+            <Label fx:id="checkoutTicketNumber" layoutX="249.0" layoutY="12.0" prefHeight="51.0" prefWidth="64.0">
+            <font>
+            <Font size="14.0" />
+            </font>
+            </Label>
+            <Text layoutX="252.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:">
+            <font>
+            <Font size="18.0" />
+            </font>
+            </Text>
+            <Label fx:id="checkoutReviewTotal" layoutX="301.0" layoutY="468.0" prefHeight="36.0" prefWidth="76.0">
+            <font>
+            <Font size="18.0" />
+            </font>
+            </Label>
+            <Label fx:id="checkoutItemQuantity" layoutX="43.0" layoutY="474.0" prefHeight="27.0" prefWidth="34.0">
+            <font>
+            <Font size="18.0" />
+            </font>
+            </Label>
+            <Text layoutX="82.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item/s" wrappingWidth="68.6806640625">
+            <font>
+            <Font size="18.0" />
+            </font>
+            </Text>
+            <Text layoutX="69.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Review Order #">
+            <font>
+            <Font size="24.0" />
+            </font>
+            </Text>
+            <ImageView fitHeight="35.0" fitWidth="43.0" layoutX="122.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+            <Image url="@../../../testButtons/src/icons/user-male.png" />
+            </image>
+            </ImageView>
+            <Label fx:id="checkoutCustomerField" layoutX="170.0" layoutY="76.0" prefHeight="23.0" prefWidth="121.0">
+            <font>
+            <Font size="18.0" />
+            </font>
+            </Label>
+
          </children></Pane>
    </children>
 </Pane>
