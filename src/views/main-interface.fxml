@@ -91,5 +91,21 @@
       <TableView fx:id="receiptTableView" layoutX="32.0" layoutY="152.0" prefHeight="334.0" prefWidth="411.0" />
       <TilePane fx:id="pizzaSizesPane" disable="true" layoutX="677.0" layoutY="107.0" prefHeight="77.0" prefWidth="543.0" visible="false" />
       <TilePane fx:id="pizzaItemsPane" disable="true" layoutX="720.0" layoutY="194.0" prefHeight="359.0" prefWidth="459.0" visible="false" />
+      <Pane fx:id="sendOrderAlertPane" layoutX="218.0" layoutY="195.0" prefHeight="341.0" prefWidth="793.0" style="-fx-background-color: #ffffff;" visible="false">
+         <children>
+            <Text fx:id="alertTitleMessage" layoutX="281.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure?">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Button fx:id="yesButton" layoutX="472.0" layoutY="195.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, place the order." />
+            <Button fx:id="noButton" layoutX="194.0" layoutY="195.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page." />
+            <ImageView fx:id="alertIcon" fitHeight="150.0" fitWidth="200.0" layoutX="322.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/check_out_cart-512.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>

@@ -36,7 +36,6 @@ public class OpenOrdersController implements Initializable {
     public TextField loggedInTextField;
     public ImageView goBackIcon;
     public Text goBackIconTitle;
-
     public Button checkOutButton;
     public RadioButton deliveriesRadioButton;
     public RadioButton pickupRadioButton;
@@ -45,17 +44,14 @@ public class OpenOrdersController implements Initializable {
     public ToggleGroup pickUpOrDeliveryRadioGroup;
     public Button logOutButton;
     public ImageView logOutIcon;
-    public AnchorPane alertPane;
     public Button yesButton;
     public Button noButton;
     public Pane alertBackground;
     public AnchorPane mainPage;
-
     public TextField amountReceived;
     public Label amountDueLabel;
     public Label changeDue;
     public Pane checkoutAlertPane;
-
     public Button closeOrder;
 
     @FXML
@@ -162,7 +158,6 @@ public class OpenOrdersController implements Initializable {
         });
     }
 
-
     private void checkOutButtonHandler() {
         checkOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -175,7 +170,6 @@ public class OpenOrdersController implements Initializable {
 
                 checkoutAlertPane.setVisible(true);
             }
-
         });
 
         amountReceived.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -203,14 +197,12 @@ public class OpenOrdersController implements Initializable {
         });
     }
 
-
     private void displayDateAndTime() {
 
         TimeModel timeModel = new TimeModel();
         dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
         timeField.setText(timeModel.getCurrentTime());
     }
-
 
     private void backButtonHandler() {
 
@@ -248,13 +240,25 @@ public class OpenOrdersController implements Initializable {
 
         TableColumn ticketNumberColumn = new TableColumn("Ticket #");
         ticketNumberColumn.setMinWidth(75);
-        ticketNumberColumn.setCellValueFactory(
-                new PropertyValueFactory<OrderModel, String>("ticketNumber"));
+        ticketNumberColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                                   @Override
+                                                   public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                       OrderModel receipt = (OrderModel) r.getValue();
+                                                       return new SimpleStringProperty(receipt.getTicketNumber().toString());
+                                                   }
+                                               }
+        );
 
         TableColumn orderTypeColumn = new TableColumn("Order Type");
         orderTypeColumn.setMinWidth(141);
-        orderTypeColumn.setCellValueFactory(
-                new PropertyValueFactory<OrderModel, String>("type"));
+        orderTypeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                                @Override
+                                                public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                    OrderModel receipt = (OrderModel) r.getValue();
+                                                    return new SimpleStringProperty(receipt.getOperationMode().toString());
+                                                }
+                                            }
+        );
 
         TableColumn customerNameColumn = new TableColumn("Customer Name");
         customerNameColumn.setMinWidth(314);
@@ -269,9 +273,15 @@ public class OpenOrdersController implements Initializable {
 
         TableColumn totalColumn = new TableColumn("Total");
         totalColumn.setMinWidth(101);
-        totalColumn.setCellValueFactory(
-                new PropertyValueFactory<OrderModel, StringJoiner>("total"));
+        totalColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                            @Override
+                                            public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                OrderModel receipt = (OrderModel) r.getValue();
+                                                return new SimpleStringProperty(receipt.getGrandTotal().toString());
+                                            }
+                                        }
+        );
 
-        openOrdersTable.getColumns().addAll(ticketNumberColumn, orderTypeColumn, customerNameColumn);
+        openOrdersTable.getColumns().addAll(ticketNumberColumn, orderTypeColumn, customerNameColumn, totalColumn);
     }
 }

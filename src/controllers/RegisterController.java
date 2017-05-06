@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.OrderModel;
@@ -31,6 +32,7 @@ public class RegisterController implements Initializable {
     public Pane alertBackground;
     public Button yesButton;
     public Button noButton;
+    public AnchorPane mainPage;
 
 
     @Override
@@ -51,6 +53,8 @@ public class RegisterController implements Initializable {
         }
 
         totalField.setText(String.valueOf(totalToDisplay));
+
+        logOutHandler();
 
         backButtonHandler();
 
@@ -84,6 +88,47 @@ public class RegisterController implements Initializable {
                 ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+    }
+
+    private void logOutHandler() {
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                logOutAlertMessage();
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                logOutAlertMessage();
+
+            }
+        });
+    }
+
+    private void logOutAlertMessage() {
+        alertBackground.setVisible(true);
+        mainPage.setOpacity(0.30);
+
+        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "cash-register");
             }
         });
     }

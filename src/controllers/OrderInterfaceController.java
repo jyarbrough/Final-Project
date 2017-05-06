@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import models.*;
 import services.CategoriesService;
@@ -47,6 +48,9 @@ public class OrderInterfaceController implements Initializable {
 
     public TilePane pizzaSizesPane;
     public TilePane pizzaItemsPane;
+    public Pane sendOrderAlertPane;
+    public Button yesButton;
+    public Button noButton;
 
     private Integer itemCount = 0;
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();

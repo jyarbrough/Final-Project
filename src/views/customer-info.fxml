@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1280.0" stylesheets="@../stylesheets/generalStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerInfoController">
    <children>
-      <AnchorPane prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;">
+      <AnchorPane fx:id="customerInfoAnchor" prefHeight="700.0" prefWidth="1280.0" style="-fx-background-color: #000000;">
          <children>
             <AnchorPane layoutX="90.0" layoutY="21.0" prefHeight="658.0" prefWidth="1051.0" styleClass="background">
                <children>
@@ -90,5 +90,21 @@
                </image>
             </ImageView>
          </children></AnchorPane>
+      <Pane fx:id="alertBackground" layoutX="198.0" layoutY="175.0" prefHeight="341.0" prefWidth="793.0" style="-fx-background-color: #ffffff;" visible="false">
+         <children>
+            <Text fx:id="alertTitleMessage" layoutX="281.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure?">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Button fx:id="yesButton" layoutX="472.0" layoutY="195.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, Log me out." />
+            <Button fx:id="noButton" layoutX="194.0" layoutY="195.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page" />
+            <ImageView fx:id="alertIcon" fitHeight="150.0" fitWidth="200.0" layoutX="322.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/alert-icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>
