@@ -45,6 +45,9 @@ public class OrderInterfaceController implements Initializable {
     public TextField dayOfTheWeekField;
     public TextField timeField;
 
+    public TilePane pizzaSizesPane;
+    public TilePane pizzaItemsPane;
+
     private Integer itemCount = 0;
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
     private OrderModel receipt = new OrderModel();
@@ -145,6 +148,14 @@ public class OrderInterfaceController implements Initializable {
         }
     }
 
+    private void switchStage(ArrayList<FoodItemModel> foodItemModelArrayList) {
+
+
+
+
+
+    }
+
     private void populateItemsInterface(String selectedCategory, HashMap<String, CategoryModel> categoryModelHashMap) {
 
         FoodItemsService foodItemsService = new FoodItemsService();
@@ -158,24 +169,35 @@ public class OrderInterfaceController implements Initializable {
             tempButton.setMaxWidth(140);
             tempButton.setMinWidth(140);
             tempButton.setWrapText(true);
-
-
-
             tempButton.setAlignment(Pos.CENTER);
-            foodItemPane.getChildren().addAll(tempButton);
 
-            tempButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    String selectedItem = tempButton.getText();
+            if (selectedCategory.equals("Pizza")) {
+                pizzaItemsPane.setDisable(false);
+                pizzaItemsPane.setVisible(true);
+                pizzaSizesPane.setDisable(false);
+                pizzaSizesPane.setVisible(true);
+                pizzaSizesPane.getChildren().addAll(tempButton);
+            } else {
 
-                    addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
-                    itemsOnReceipt.add(foodItemModel);
-//                    deleteButton.setDisable(false);
-                    sendButton.setDisable(false);
-                }
-            });
+                foodItemPane.getChildren().addAll(tempButton);
+            }
+            tempButtonAction(selectedCategory, categoryModelHashMap, foodItemModel, tempButton);
         }
+
+    }
+
+    private void tempButtonAction(final String selectedCategory, final HashMap<String, CategoryModel> categoryModelHashMap, final FoodItemModel foodItemModel, final Button tempButton) {
+        tempButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String selectedItem = tempButton.getText();
+
+                addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
+                itemsOnReceipt.add(foodItemModel);
+//                    deleteButton.setDisable(false);
+                sendButton.setDisable(false);
+            }
+        });
     }
 
     private void addItemToReceipt(String selectedItem, String categoryName, HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -211,8 +233,7 @@ public class OrderInterfaceController implements Initializable {
 
                     itemCount = 0;
                     itemCounterField.setText(String.valueOf(itemCount));
-                }
-                else {
+                } else {
 
 
                     itemCount--;
