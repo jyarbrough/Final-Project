@@ -76,3 +76,9 @@
 #interfaceButton {
     -fx-start-margin: 10%;
 }
+
+/*--------------------  Open Orders Style  --------------------*/
+
+.openOrdersTable {
+    -fx-alignment: CENTER;
+}

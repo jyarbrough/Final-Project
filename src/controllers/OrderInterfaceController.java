@@ -159,8 +159,6 @@ public class OrderInterfaceController implements Initializable {
             tempButton.setMinWidth(140);
             tempButton.setWrapText(true);
 
-
-
             tempButton.setAlignment(Pos.CENTER);
             foodItemPane.getChildren().addAll(tempButton);
 
@@ -213,8 +211,6 @@ public class OrderInterfaceController implements Initializable {
                     itemCounterField.setText(String.valueOf(itemCount));
                 }
                 else {
-
-
                     itemCount--;
                     itemCounterField.setText(String.valueOf(itemCount));
 

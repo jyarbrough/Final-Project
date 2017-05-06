@@ -2,6 +2,7 @@ package models;
 
 import enums.OperationMode;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class OrderModel {
@@ -17,6 +18,7 @@ public class OrderModel {
     private ArrayList<FoodItemModel> foodItems;
     private EmployeeModel employee;
     private CustomerModel customer;
+
 
     public OperationMode getOperationMode() {
         return operationMode;
@@ -63,6 +65,8 @@ public class OrderModel {
     }
 
     public Double getGrandTotal() {
+        DecimalFormat df = new DecimalFormat("###.##");
+        df.format(grandTotal);
         return grandTotal;
     }
 

@@ -60,7 +60,6 @@ public class LogInController implements Initializable {
         verifyEmployee();
         displayDateAndTime();
         limitLogInTextField();
-        initializeBackGroundAlert();
     }
 
     private void limitLogInTextField() {
@@ -169,16 +168,6 @@ public class LogInController implements Initializable {
         });
 
 
-    }
-
-    private void initializeBackGroundAlert() {
-//        alertButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                clearTextField();
-//                alertButton.setVisible(false);
-//            }
-//        });
     }
 
     private void clearTextField() {
