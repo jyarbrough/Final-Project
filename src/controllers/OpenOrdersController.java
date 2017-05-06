@@ -3,10 +3,7 @@ package controllers;
 
 import contexts.ApplicationContext;
 import enums.OperationMode;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +14,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import models.EmployeeModel;
-import models.FoodItemModel;
-import models.ReceiptModel;
+import models.OrderModel;
 import models.TimeModel;
 import stages.HomeScreenStage;
 import stages.SetAllStages;
@@ -53,60 +51,23 @@ public class OpenOrdersController implements Initializable {
     public Pane alertBackground;
     public AnchorPane mainPage;
 
+    public TextField amountReceived;
+    public Label amountDueLabel;
+    public Label changeDue;
+    public Pane checkoutAlertPane;
+
+    public Button closeOrder;
+
     @FXML
-    TableView<ReceiptModel> openOrdersTable = new TableView<>();
+    TableView<OrderModel> openOrdersTable = new TableView<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
-        ObservableList<ReceiptModel> receiptsToDisplay = FXCollections.observableArrayList();
-        HashMap<Integer, ReceiptModel> receipts = applicationContext.getReceipts();
-        Collection<ReceiptModel> allReceipts = receipts.values();
-        EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        loggedInTextField.setText(ApplicationContext.getInstance().getLoggedInEmployee().getName());
 
-        ArrayList<ReceiptModel> tempReceiptsToDisplay = new ArrayList<>();
-        loggedInTextField.setText(loggedInEmployee.getName());
-        receiptsToDisplay.setAll(tempReceiptsToDisplay);
-        openOrdersTable.setItems(receiptsToDisplay);
+        openOrdersTable.setItems(fetchLatestOpenOrders());
 
-        switch (applicationContext.getOperationMode()) {
-            case DELIVERY:
-                for (ReceiptModel receipt : allReceipts) {
-                    if (receipt.getOperationMode() == OperationMode.DELIVERY) {
-                        tempReceiptsToDisplay.add(receipt);
-                    }
-                }
-                break;
-
-            case PICKUP:
-                for (ReceiptModel receipt : allReceipts) {
-                    if (receipt.getOperationMode() == OperationMode.PICKUP) {
-                        tempReceiptsToDisplay.add(receipt);
-                    }
-                }
-                break;
-
-            case NONE:
-                for (ReceiptModel receipt : allReceipts) {
-                    if (receipt.isOpen()) {
-                        tempReceiptsToDisplay.add(receipt);
-                    }
-                }
-                break;
-
-            case MANAGER:
-                for (ReceiptModel receiptModel : allReceipts) {
-                    tempReceiptsToDisplay.add(receiptModel);
-                }
-                break;
-            default:
-                break;
-
-        }
-
-        receiptsToDisplay.setAll(tempReceiptsToDisplay);
-        openOrdersTable.setItems(receiptsToDisplay);
         setupTableColumns();
         backButtonHandler();
         displayDateAndTime();
@@ -114,7 +75,50 @@ public class OpenOrdersController implements Initializable {
         checkOutButtonHandler();
     }
 
+    private ObservableList<OrderModel> fetchLatestOpenOrders() {
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        Collection<OrderModel> allReceipts = applicationContext.getReceipts().values();
+        ArrayList<OrderModel> tempReceiptsToDisplay = new ArrayList<>();
 
+        switch (applicationContext.getOperationMode()) {
+            case DELIVERY:
+                for (OrderModel receipt : allReceipts) {
+                    if (receipt.isOpen() && receipt.getOperationMode() == OperationMode.DELIVERY) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case PICKUP:
+                for (OrderModel receipt : allReceipts) {
+                    if (receipt.isOpen() && receipt.getOperationMode() == OperationMode.PICKUP) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case NONE:
+                for (OrderModel receipt : allReceipts) {
+                    if (receipt.isOpen()) {
+                        tempReceiptsToDisplay.add(receipt);
+                    }
+                }
+                break;
+
+            case MANAGER:
+                for (OrderModel orderModel : allReceipts) {
+                    tempReceiptsToDisplay.add(orderModel);
+                }
+                break;
+
+            default:
+                break;
+
+        }
+
+        ObservableList<OrderModel> receiptsToDisplay = FXCollections.observableArrayList(tempReceiptsToDisplay);
+        return receiptsToDisplay;
+    }
 
 
     private void logOutHandler() {
@@ -160,16 +164,45 @@ public class OpenOrdersController implements Initializable {
 
 
     private void checkOutButtonHandler() {
-
         checkOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                openOrdersTable.getItems().remove(openOrdersTable.getSelectionModel().getSelectedItem());
+                OrderModel selectedItem = openOrdersTable.getSelectionModel().getSelectedItem();
 
+                Double grandTotal = selectedItem.getGrandTotal();
+                amountDueLabel.setText(grandTotal.toString());
+
+                checkoutAlertPane.setVisible(true);
+            }
+
+        });
+
+        amountReceived.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    OrderModel selectedItem = openOrdersTable.getSelectionModel().getSelectedItem();
+                    Double grandTotal = selectedItem.getGrandTotal();
+
+                    Double received = Double.valueOf(amountReceived.getText());
+                    Double change = received - grandTotal;
+                    changeDue.setText(change.toString());
+                }
+            }
+        });
+
+        closeOrder.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                OrderModel selectedItem = openOrdersTable.getSelectionModel().getSelectedItem();
+                selectedItem.setOpen(false);
+                openOrdersTable.setItems(fetchLatestOpenOrders());
+                checkoutAlertPane.setVisible(false);
             }
         });
     }
+
 
     private void displayDateAndTime() {
 
@@ -177,7 +210,6 @@ public class OpenOrdersController implements Initializable {
         dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
         timeField.setText(timeModel.getCurrentTime());
     }
-
 
 
     private void backButtonHandler() {
@@ -217,19 +249,19 @@ public class OpenOrdersController implements Initializable {
         TableColumn ticketNumberColumn = new TableColumn("Ticket #");
         ticketNumberColumn.setMinWidth(75);
         ticketNumberColumn.setCellValueFactory(
-                new PropertyValueFactory<ReceiptModel, String>("ticketNumber"));
+                new PropertyValueFactory<OrderModel, String>("ticketNumber"));
 
         TableColumn orderTypeColumn = new TableColumn("Order Type");
         orderTypeColumn.setMinWidth(141);
         orderTypeColumn.setCellValueFactory(
-                new PropertyValueFactory<ReceiptModel, String>("type"));
+                new PropertyValueFactory<OrderModel, String>("type"));
 
         TableColumn customerNameColumn = new TableColumn("Customer Name");
         customerNameColumn.setMinWidth(314);
         customerNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
                                                    @Override
                                                    public ObservableValue call(TableColumn.CellDataFeatures r) {
-                                                       ReceiptModel receipt = (ReceiptModel) r.getValue();
+                                                       OrderModel receipt = (OrderModel) r.getValue();
                                                        return new SimpleStringProperty(receipt.getCustomer().getFirstName());
                                                    }
                                                }
@@ -238,7 +270,7 @@ public class OpenOrdersController implements Initializable {
         TableColumn totalColumn = new TableColumn("Total");
         totalColumn.setMinWidth(101);
         totalColumn.setCellValueFactory(
-                new PropertyValueFactory<ReceiptModel, StringJoiner>("total"));
+                new PropertyValueFactory<OrderModel, StringJoiner>("total"));
 
         openOrdersTable.getColumns().addAll(ticketNumberColumn, orderTypeColumn, customerNameColumn);
     }

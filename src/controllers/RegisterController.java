@@ -1,13 +1,19 @@
 package controllers;
 
 import contexts.ApplicationContext;
+import enums.OperationMode;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import models.ReceiptModel;
+import models.OrderModel;
+import stages.HomeScreenStage;
+import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.Collection;
@@ -31,20 +37,55 @@ public class RegisterController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         ApplicationContext applicationContext = ApplicationContext.getInstance();
-        HashMap<Integer, ReceiptModel> receipts = applicationContext.getReceipts();
-        Collection<ReceiptModel> allReceipts = receipts.values();
+        HashMap<Integer, OrderModel> receipts = applicationContext.getReceipts();
+        Collection<OrderModel> allReceipts = receipts.values();
 
         double totalToDisplay = 0;
 
-        for (ReceiptModel receiptModel : receipts.values()) {
-            double grandTotal = receiptModel.getGrandTotal();
+        for (OrderModel orderModel : receipts.values()) {
+
+
+            double grandTotal = orderModel.getGrandTotal();
 
             totalToDisplay += grandTotal;
         }
 
         totalField.setText(String.valueOf(totalToDisplay));
 
+        backButtonHandler();
 
+    }
+
+    private void backButtonHandler() {
+
+        SetAllStages setAllStages = new SetAllStages();
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                HomeScreenStage homeScreenStage = new HomeScreenStage();
+                homeScreenStage.stage(backButton);
+            }
+        });
+
+        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+
+        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                ApplicationContext applicationContext = ApplicationContext.getInstance();
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
     }
 
 }

@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import models.EmployeeModel;
@@ -30,6 +31,9 @@ public class LogInController implements Initializable {
     public Pane welcomeBackground;
     public Button welcomeButton;
     public Pane numberPane;
+    public Pane wrongPasswordPane;
+    public Button wrongPasswordButton;
+    public Text wrongPasswordMessage;
     private String enteredDigits = "";
 
     public Button numberOne;
@@ -208,12 +212,22 @@ public class LogInController implements Initializable {
                             homeScreenStage.stage(welcomeButton);
                         }
                     });
-
-
-
                 } else {
-//                    alertButton.setVisible(true);
+                    wrongPasswordPane.setVisible(true);
+                    numberPane.setVisible(false);
+                    initializeWrongPasswordButton();
                 }
+            }
+        });
+    }
+
+    private void initializeWrongPasswordButton() {
+        wrongPasswordButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clearTextField();
+                wrongPasswordPane.setVisible(false);
+                numberPane.setVisible(true);
             }
         });
     }
