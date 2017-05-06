@@ -142,18 +142,12 @@ public class OrderInterfaceController implements Initializable {
                     String selectedCategory = tempButton.getText();
 
                     foodItemPane.getChildren().clear();
+                    pizzaItemsPane.getChildren().clear();
+                    pizzaSizesPane.getChildren().clear();
                     populateItemsInterface(selectedCategory, categoryModelHashMap);
                 }
             });
         }
-    }
-
-    private void switchStage(ArrayList<FoodItemModel> foodItemModelArrayList) {
-
-
-
-
-
     }
 
     private void populateItemsInterface(String selectedCategory, HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -164,77 +158,84 @@ public class OrderInterfaceController implements Initializable {
         for (FoodItemModel foodItemModel : foodItemModelArrayList) {
 
             if (selectedCategory.equals("Pizza")) {
-
-
-                pizzaItemsPane.setDisable(false);
-                pizzaItemsPane.setVisible(true);
-                pizzaSizesPane.setDisable(false);
-                pizzaSizesPane.setVisible(true);
-
-                final Button pizzaButton = new Button(foodItemModel.getName());
-                pizzaButton.setMinHeight(60);
-                pizzaButton.setMaxHeight(60);
-                pizzaButton.setMaxWidth(100);
-                pizzaButton.setMinWidth(100);
-                pizzaButton.setWrapText(true);
-                pizzaButton.setAlignment(Pos.CENTER);
-
-                pizzaSizesPane.getChildren().addAll(pizzaButton);
-                tempButtonAction(selectedCategory, categoryModelHashMap, foodItemModel, pizzaButton);
+                final Button pizzaSizes = setUpPizzaButtons(foodItemModel);
+                pizzaSizesPane.getChildren().addAll(pizzaSizes);
+                tempButtonAction(selectedCategory, categoryModelHashMap, foodItemModel, pizzaSizes);
             } else {
-                pizzaSizesPane.getChildren().clear();
-                pizzaSizesPane.setVisible(false);
-                pizzaItemsPane.setVisible(false);
-                pizzaItemsPane.setDisable(true);
-                pizzaSizesPane.setDisable(true);
-                final Button tempButton = new Button(foodItemModel.getName());
-                tempButton.setMinHeight(60);
-                tempButton.setMaxHeight(60);
-                tempButton.setMaxWidth(140);
-                tempButton.setMinWidth(140);
-                tempButton.setWrapText(true);
-                tempButton.setAlignment(Pos.CENTER);
-
+                final Button tempButton = setUpItemsInterface(foodItemModel);
                 foodItemPane.getChildren().addAll(tempButton);
                 tempButtonAction(selectedCategory, categoryModelHashMap, foodItemModel, tempButton);
             }
         }
     }
 
+    private Button setUpItemsInterface(FoodItemModel foodItemModel) {
+        final Button tempButton = new Button(foodItemModel.getName());
+        pizzaSizesPane.getChildren().clear();
+        pizzaSizesPane.setVisible(false);
+        pizzaItemsPane.setVisible(false);
+        pizzaItemsPane.setDisable(true);
+        pizzaSizesPane.setDisable(true);
+        tempButton.setMinHeight(60);
+        tempButton.setMaxHeight(60);
+        tempButton.setMaxWidth(140);
+        tempButton.setMinWidth(140);
+        tempButton.setWrapText(true);
+        tempButton.setAlignment(Pos.CENTER);
+        return tempButton;
+    }
+
+    private Button setUpPizzaButtons(FoodItemModel foodItemModel) {
+        final Button pizzaButton = new Button(foodItemModel.getName());
+        pizzaItemsPane.setDisable(false);
+        pizzaItemsPane.setVisible(true);
+        pizzaSizesPane.setDisable(false);
+        pizzaSizesPane.setVisible(true);
+        pizzaButton.setMinHeight(80);
+        pizzaButton.setMaxHeight(80);
+        pizzaButton.setMaxWidth(105);
+        pizzaButton.setMinWidth(105);
+        pizzaButton.setWrapText(true);
+        pizzaButton.setAlignment(Pos.CENTER);
+        return pizzaButton;
+    }
+
     private void tempButtonAction(final String selectedCategory, final HashMap<String, CategoryModel> categoryModelHashMap, final FoodItemModel foodItemModel, final Button tempButton) {
+
         tempButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 String selectedItem = tempButton.getText();
 
-                addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
-                itemsOnReceipt.add(foodItemModel);
+                if (selectedCategory.equals("Pizza")) {
 
-                if (selectedItem.equals("Small")) {
-
-                    FoodItemsService foodItemsService = new FoodItemsService();
-                    ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(selectedItem);
-
-                    for (FoodItemModel pizzaToppingsItemModel : foodItemModelArrayList) {
-
-                        final Button pizzaToppings = new Button(pizzaToppingsItemModel.getName());
-                        pizzaToppings.setMinHeight(60);
-                        pizzaToppings.setMaxHeight(60);
-                        pizzaToppings.setMaxWidth(100);
-                        pizzaToppings.setMinWidth(100);
-                        pizzaToppings.setWrapText(true);
-                        pizzaToppings.setAlignment(Pos.CENTER);
-
-                        pizzaItemsPane.getChildren().addAll(pizzaToppings);
-                    }
-
-
+                    pizzaItemsPane.getChildren().clear();
+                    getPizzaToppings(selectedItem, selectedCategory, categoryModelHashMap, foodItemModel);
+                } else {
+                    addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
+                    itemsOnReceipt.add(foodItemModel);
                 }
-
-//                    deleteButton.setDisable(false);
                 sendButton.setDisable(false);
             }
         });
+    }
+
+    private void getPizzaToppings(String selectedItem, String selectedCategory, HashMap<String, CategoryModel> categoryModelHashMap, FoodItemModel foodItemModel) {
+        FoodItemsService foodItemsService = new FoodItemsService();
+        ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(selectedItem);
+
+        for (FoodItemModel pizzaToppingsModel : foodItemModelArrayList) {
+            final Button pizzaToppings = new Button(pizzaToppingsModel.getName());
+            pizzaToppings.setMinHeight(60);
+            pizzaToppings.setMaxHeight(60);
+            pizzaToppings.setMaxWidth(100);
+            pizzaToppings.setMinWidth(100);
+            pizzaToppings.setWrapText(true);
+            pizzaToppings.setAlignment(Pos.CENTER);
+
+            pizzaItemsPane.getChildren().addAll(pizzaToppings);
+        }
+
     }
 
     private void addItemToReceipt(String selectedItem, String categoryName, HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -260,7 +261,6 @@ public class OrderInterfaceController implements Initializable {
     }
 
     private void removeItemFromReceipt() {
-
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -271,14 +271,12 @@ public class OrderInterfaceController implements Initializable {
                     itemCount = 0;
                     itemCounterField.setText(String.valueOf(itemCount));
                 } else {
-
-
                     itemCount--;
                     itemCounterField.setText(String.valueOf(itemCount));
 
                     FoodItemModel itemToRemove = receiptTableView.getSelectionModel().getSelectedItem();
                     receiptTableView.getItems().remove(itemToRemove);
-                    Double priceOfItemToRemove = Double.valueOf(itemToRemove.getPrice());
+                    Double priceOfItemToRemove = Double.valueOf(itemToRemove.getPrice()) * 0.08;
                     receipt.removeItem(priceOfItemToRemove);
                     displayTotalsOnReceipt();
                 }
