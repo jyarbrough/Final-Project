@@ -64,7 +64,7 @@ public class OpenOrdersController implements Initializable {
         HashMap<Integer, ReceiptModel> receipts = applicationContext.getReceipts();
         Collection<ReceiptModel> allReceipts = receipts.values();
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
-        setupTableColumns();
+
         ArrayList<ReceiptModel> tempReceiptsToDisplay = new ArrayList<>();
         loggedInTextField.setText(loggedInEmployee.getName());
         receiptsToDisplay.setAll(tempReceiptsToDisplay);
@@ -105,7 +105,9 @@ public class OpenOrdersController implements Initializable {
 
         }
 
-
+        receiptsToDisplay.setAll(tempReceiptsToDisplay);
+        openOrdersTable.setItems(receiptsToDisplay);
+        setupTableColumns();
         backButtonHandler();
         displayDateAndTime();
         logOutHandler();
