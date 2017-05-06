@@ -89,7 +89,7 @@
             </ImageView>
          </children></AnchorPane>
       <TableView fx:id="receiptTableView" layoutX="32.0" layoutY="152.0" prefHeight="334.0" prefWidth="411.0" />
-      <TilePane fx:id="pizzaSizesPane" disable="true" layoutX="677.0" layoutY="199.0" prefHeight="384.0" prefWidth="131.0" visible="false" />
-      <TilePane fx:id="pizzaItemsPane" disable="true" layoutX="832.0" layoutY="108.0" prefHeight="476.0" prefWidth="387.0" visible="false" />
+      <TilePane fx:id="pizzaSizesPane" disable="true" layoutX="677.0" layoutY="107.0" prefHeight="77.0" prefWidth="543.0" visible="false" />
+      <TilePane fx:id="pizzaItemsPane" disable="true" layoutX="720.0" layoutY="194.0" prefHeight="359.0" prefWidth="459.0" visible="false" />
    </children>
 </Pane>

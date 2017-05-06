@@ -163,27 +163,42 @@ public class OrderInterfaceController implements Initializable {
 
         for (FoodItemModel foodItemModel : foodItemModelArrayList) {
 
-            final Button tempButton = new Button(foodItemModel.getName());
-            tempButton.setMinHeight(60);
-            tempButton.setMaxHeight(60);
-            tempButton.setMaxWidth(140);
-            tempButton.setMinWidth(140);
-            tempButton.setWrapText(true);
-            tempButton.setAlignment(Pos.CENTER);
-
             if (selectedCategory.equals("Pizza")) {
+
+
                 pizzaItemsPane.setDisable(false);
                 pizzaItemsPane.setVisible(true);
                 pizzaSizesPane.setDisable(false);
                 pizzaSizesPane.setVisible(true);
-                pizzaSizesPane.getChildren().addAll(tempButton);
+
+                final Button pizzaButton = new Button(foodItemModel.getName());
+                pizzaButton.setMinHeight(60);
+                pizzaButton.setMaxHeight(60);
+                pizzaButton.setMaxWidth(100);
+                pizzaButton.setMinWidth(100);
+                pizzaButton.setWrapText(true);
+                pizzaButton.setAlignment(Pos.CENTER);
+
+                pizzaSizesPane.getChildren().addAll(pizzaButton);
+                tempButtonAction(selectedCategory, categoryModelHashMap, foodItemModel, pizzaButton);
             } else {
+                pizzaSizesPane.getChildren().clear();
+                pizzaSizesPane.setVisible(false);
+                pizzaItemsPane.setVisible(false);
+                pizzaItemsPane.setDisable(true);
+                pizzaSizesPane.setDisable(true);
+                final Button tempButton = new Button(foodItemModel.getName());
+                tempButton.setMinHeight(60);
+                tempButton.setMaxHeight(60);
+                tempButton.setMaxWidth(140);
+                tempButton.setMinWidth(140);
+                tempButton.setWrapText(true);
+                tempButton.setAlignment(Pos.CENTER);
 
                 foodItemPane.getChildren().addAll(tempButton);
+                tempButtonAction(selectedCategory, categoryModelHashMap, foodItemModel, tempButton);
             }
-            tempButtonAction(selectedCategory, categoryModelHashMap, foodItemModel, tempButton);
         }
-
     }
 
     private void tempButtonAction(final String selectedCategory, final HashMap<String, CategoryModel> categoryModelHashMap, final FoodItemModel foodItemModel, final Button tempButton) {
@@ -194,6 +209,28 @@ public class OrderInterfaceController implements Initializable {
 
                 addItemToReceipt(selectedItem, selectedCategory, categoryModelHashMap);
                 itemsOnReceipt.add(foodItemModel);
+
+                if (selectedItem.equals("Small")) {
+
+                    FoodItemsService foodItemsService = new FoodItemsService();
+                    ArrayList<FoodItemModel> foodItemModelArrayList = foodItemsService.get(selectedItem);
+
+                    for (FoodItemModel pizzaToppingsItemModel : foodItemModelArrayList) {
+
+                        final Button pizzaToppings = new Button(pizzaToppingsItemModel.getName());
+                        pizzaToppings.setMinHeight(60);
+                        pizzaToppings.setMaxHeight(60);
+                        pizzaToppings.setMaxWidth(100);
+                        pizzaToppings.setMinWidth(100);
+                        pizzaToppings.setWrapText(true);
+                        pizzaToppings.setAlignment(Pos.CENTER);
+
+                        pizzaItemsPane.getChildren().addAll(pizzaToppings);
+                    }
+
+
+                }
+
 //                    deleteButton.setDisable(false);
                 sendButton.setDisable(false);
             }
