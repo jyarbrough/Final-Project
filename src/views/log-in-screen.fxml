@@ -63,5 +63,24 @@
             </TextField>
          </children>
       </Pane>
+      <Pane fx:id="wrongPasswordPane" layoutX="241.0" layoutY="150.0" prefHeight="341.0" prefWidth="793.0" visible="false">
+         <children>
+            <Button fx:id="wrongPasswordButton" layoutX="310.0" layoutY="216.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="187.0" text="Wrong Password Try Again" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Text fx:id="wrongPasswordMessage" layoutX="350.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Oops!">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="325.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/alert-icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>

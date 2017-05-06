@@ -4,11 +4,11 @@ import enums.OperationMode;
 
 import java.util.ArrayList;
 
-public class ReceiptModel {
+public class OrderModel {
 
     private double subTotal = 0;
     private double tax = 0;
-    private double grandTotal;
+    private Double grandTotal;
     private double currentTaxRate = 0.08;
     private double coupon = 0;
     private OperationMode operationMode;
@@ -62,7 +62,7 @@ public class ReceiptModel {
         this.tax = tax;
     }
 
-    public double getGrandTotal() {
+    public Double getGrandTotal() {
         return grandTotal;
     }
 

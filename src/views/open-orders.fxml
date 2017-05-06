@@ -87,5 +87,12 @@
             </ImageView>
          </children>
       </Pane>
+      <Pane fx:id="checkoutAlertPane" layoutX="218.0" layoutY="155.0" prefHeight="341.0" prefWidth="793.0" style="-fx-background-color: #ffffff;" visible="false">
+         <children>
+            <TextField fx:id="amountReceived" layoutX="313.0" layoutY="95.0" />
+            <Label fx:id="amountDueLabel" layoutX="357.0" layoutY="31.0" prefHeight="29.0" prefWidth="81.0" />
+            <Label fx:id="changeDue" layoutX="346.0" layoutY="178.0" prefHeight="43.0" prefWidth="91.0" />
+            <Button fx:id="closeOrder" layoutX="627.0" layoutY="234.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="113.0" text="Close Order" />
+         </children></Pane>
    </children>
 </Pane>

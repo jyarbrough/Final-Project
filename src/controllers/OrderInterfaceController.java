@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -46,7 +47,7 @@ public class OrderInterfaceController implements Initializable {
 
     private Integer itemCount = 0;
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
-    private ReceiptModel receipt = new ReceiptModel();
+    private OrderModel receipt = new OrderModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
 
     @Override
@@ -126,29 +127,22 @@ public class OrderInterfaceController implements Initializable {
     }
 
     private void initializeCategoryPane(HashMap<String, CategoryModel> categoryModelHashMap) {
+        for (CategoryModel categoryModel : categoryModelHashMap.values()) {
+            final Button tempButton = new Button(categoryModel.getName());
+            tempButton.setMinHeight(69);
+            tempButton.setMinWidth(150);
 
-        categoryPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+            categoryPane.getChildren().addAll(tempButton);
+            tempButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    String selectedCategory = tempButton.getText();
 
-                for (CategoryModel categoryModel : categoryModelHashMap.values()) {
-                    final Button tempButton = new Button(categoryModel.getName());
-                    tempButton.setMinHeight(69);
-                    tempButton.setMinWidth(150);
-
-                    categoryPane.getChildren().addAll(tempButton);
-                    tempButton.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            String selectedCategory = tempButton.getText();
-
-                            foodItemPane.getChildren().clear();
-                            populateItemsInterface(selectedCategory, categoryModelHashMap);
-                        }
-                    });
+                    foodItemPane.getChildren().clear();
+                    populateItemsInterface(selectedCategory, categoryModelHashMap);
                 }
-            }
-        });
+            });
+        }
     }
 
     private void populateItemsInterface(String selectedCategory, HashMap<String, CategoryModel> categoryModelHashMap) {
@@ -160,8 +154,14 @@ public class OrderInterfaceController implements Initializable {
 
             final Button tempButton = new Button(foodItemModel.getName());
             tempButton.setMinHeight(60);
+            tempButton.setMaxHeight(60);
+            tempButton.setMaxWidth(140);
             tempButton.setMinWidth(140);
             tempButton.setWrapText(true);
+
+
+
+            tempButton.setAlignment(Pos.CENTER);
             foodItemPane.getChildren().addAll(tempButton);
 
             tempButton.setOnAction(new EventHandler<ActionEvent>() {

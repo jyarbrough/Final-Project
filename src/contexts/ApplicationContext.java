@@ -3,7 +3,7 @@ package contexts;
 import enums.OperationMode;
 import models.CustomerModel;
 import models.EmployeeModel;
-import models.ReceiptModel;
+import models.OrderModel;
 
 import java.util.HashMap;
 
@@ -16,17 +16,17 @@ public class ApplicationContext {
     private CustomerModel currentCustomer;
     private EmployeeModel loggedInEmployee;
     private OperationMode operationMode;
-    private HashMap<Integer, ReceiptModel> receipts;
+    private HashMap<Integer, OrderModel> receipts;
 
     private final static ApplicationContext instance = new ApplicationContext();
 
     public static ApplicationContext getInstance() { return instance; }
 
-    public HashMap<Integer, ReceiptModel> getReceipts() {
+    public HashMap<Integer, OrderModel> getReceipts() {
         return receipts;
     }
 
-    public void saveReceipt(ReceiptModel receipt) {
+    public void saveReceipt(OrderModel receipt) {
         Integer ticketNumber = receipt.getTicketNumber();
         receipts.put(ticketNumber, receipt);
     }
