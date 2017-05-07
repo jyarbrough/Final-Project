@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1294.0" stylesheets="@../stylesheets/generalStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrderInterfaceController">
    <children>
-      <AnchorPane layoutX="9.0" layoutY="5.0" prefHeight="688.0" prefWidth="457.0" style="-fx-background-color: #000000;">
+      <AnchorPane fx:id="mainPane1" layoutX="9.0" layoutY="5.0" prefHeight="688.0" prefWidth="457.0" style="-fx-background-color: #000000;">
          <children>
             <TextField fx:id="employeeIdField" alignment="CENTER" editable="false" layoutX="40.0" layoutY="56.0" pickOnBounds="false" prefHeight="27.0" prefWidth="85.0" promptText="id#" styleClass="blackTextFields" />
             <TextField fx:id="employeeNameField" alignment="CENTER" editable="false" layoutX="21.0" layoutY="27.0" prefHeight="28.0" prefWidth="130.0" promptText="employee" styleClass="blackTextFields">
@@ -52,7 +52,7 @@
             <Text layoutX="202.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: red;" text="Ticket #" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="485.0" layoutY="5.0" prefHeight="688.0" prefWidth="804.0" style="-fx-background-color: #386aff;">
+      <AnchorPane fx:id="mainPane2" layoutX="485.0" layoutY="5.0" prefHeight="688.0" prefWidth="804.0" style="-fx-background-color: #386aff;">
          <children>
             <Button fx:id="sendButton" alignment="CENTER" layoutX="576.0" layoutY="596.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="168.0" style="-fx-background-color: #99cc66;" text="Send">
                <font>
@@ -91,15 +91,31 @@
       <TableView fx:id="receiptTableView" layoutX="32.0" layoutY="152.0" prefHeight="334.0" prefWidth="411.0" />
       <TilePane fx:id="pizzaSizesPane" disable="true" layoutX="677.0" layoutY="199.0" prefHeight="384.0" prefWidth="131.0" visible="false" />
       <TilePane fx:id="pizzaItemsPane" disable="true" layoutX="832.0" layoutY="108.0" prefHeight="476.0" prefWidth="387.0" visible="false" />
-      <Pane fx:id="sendAlert" layoutX="278.0" layoutY="165.0" prefHeight="293.0" prefWidth="738.0" style="-fx-background-color: #808080;" visible="false">
+      <Pane fx:id="sendAlertPane" layoutX="278.0" layoutY="165.0" prefHeight="293.0" prefWidth="738.0" style="-fx-background-color: #808080;" visible="false">
          <children>
             <ImageView fx:id="alertIcon" fitHeight="150.0" fitWidth="200.0" layoutX="295.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/purchase-512.png" />
                </image>
             </ImageView>
-            <Button fx:id="stayButton" layoutX="184.0" layoutY="187.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page." />
-            <Button fx:id="yesButton" layoutX="422.0" layoutY="185.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, send the order." />
+            <Button fx:id="dontSendButton" layoutX="184.0" layoutY="187.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page." />
+            <Button fx:id="yesSendButton" layoutX="422.0" layoutY="185.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, send the order." />
+            <Text layoutX="257.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure?">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="alertPane" layoutX="278.0" layoutY="175.0" prefHeight="293.0" prefWidth="738.0" styleClass="gradientBackground" visible="false">
+         <children>
+            <ImageView fx:id="alertIcon1" fitHeight="150.0" fitWidth="200.0" layoutX="295.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/alert-icon.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="noButton" layoutX="184.0" layoutY="187.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page." />
+            <Button fx:id="yesButton" layoutX="422.0" layoutY="185.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, Go back." />
             <Text fx:id="alertTitleMessage" layoutX="257.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure?">
                <font>
                   <Font size="36.0" />

@@ -12,6 +12,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import models.*;
 import services.CategoriesService;
@@ -47,6 +49,14 @@ public class OrderInterfaceController implements Initializable {
 
     public TilePane pizzaSizesPane;
     public TilePane pizzaItemsPane;
+    public Button dontSendButton;
+    public Button yesSendButton;
+    public Pane sendAlertPane;
+    public AnchorPane mainPane1;
+    public AnchorPane mainPane2;
+    public Pane alertPane;
+    public Button noButton;
+    public Button yesButton;
 
     private Integer itemCount = 0;
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
@@ -57,7 +67,6 @@ public class OrderInterfaceController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         CategoriesService categoriesService = new CategoriesService();
 
         HashMap<String, CategoryModel> categoryModelHashMap = categoriesService.get();
@@ -75,10 +84,10 @@ public class OrderInterfaceController implements Initializable {
         receipt.setOperationMode(ApplicationContext.getInstance().getOperationMode());
 
         displayDateAndTime();
+        initializeBackButton();
     }
 
     private void initializeTicketNumber() {
-
         if (receipt.getTicketNumber() == null) {
             ApplicationContext applicationContext = ApplicationContext.getInstance();
             int ticketNumber = applicationContext.getReceipts().size() + 1;
@@ -265,9 +274,53 @@ public class OrderInterfaceController implements Initializable {
         sendButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                receipt.setFoodItems(itemsOnReceipt);
-                applicationContext.saveReceipt(receipt);
-                setAllStages.stageByButton(sendButton, "home-screen");
+                orderAlertMessage();
+            }
+        });
+    }
+
+    private void orderAlertMessage() {
+        sendAlertPane.setVisible(true);
+
+        receiptTableView.setOpacity(0.30);
+        mainPane1.setOpacity(0.30);
+        mainPane2.setOpacity(0.30);
+        receiptTableView.setDisable(true);
+        mainPane1.setDisable(true);
+        mainPane2.setDisable(true);
+
+
+//        receipt.setFoodItems(itemsOnReceipt);
+//        applicationContext.saveReceipt(receipt);
+//        setAllStages.stageByButton(sendButton, "home-screen");
+    }
+
+    private void initializeBackButton() {
+        backButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                goBackAlertMessage();
+            }
+        });
+    }
+
+    private void goBackAlertMessage() {
+        alertPane.setVisible(true);
+        mainPane1.setOpacity(0.30);
+        mainPane2.setOpacity(0.30);
+        yesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setAllStages.stageByButton(yesButton, "customer-info");
+            }
+        });
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mainPane1.setOpacity(1);
+                mainPane2.setOpacity(1);
+                alertPane.setVisible(false);
             }
         });
     }
