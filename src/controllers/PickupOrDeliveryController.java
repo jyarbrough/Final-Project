@@ -18,6 +18,7 @@ import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class PickupOrDeliveryController implements Initializable {
 
@@ -40,6 +41,8 @@ public class PickupOrDeliveryController implements Initializable {
     public Pane mainPane;
     public Button noButton;
     public Button yesButton;
+
+    SetAllStages setAllStages = new SetAllStages();
 
 
     @Override
@@ -67,127 +70,67 @@ public class PickupOrDeliveryController implements Initializable {
 
     private void iconClickHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {
 
-        deliveryIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> customerInfoStage = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.DELIVERY);
                 setAllStages.stageByButton(deliveryButton, "customer-info");
             }
-        });
+        };
 
-        deliveryIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        deliveryIconTitle.setOnMouseClicked(customerInfoStage);
+        deliveryIcon.setOnMouseClicked(customerInfoStage);
+        pickupIcon.setOnMouseClicked(customerInfoStage);
+        pickupIconTitle.setOnMouseClicked(customerInfoStage);
+
+        EventHandler<MouseEvent> homeScreenStage = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.DELIVERY);
-                setAllStages.stageByButton(deliveryButton, "customer-info");
-            }
-        });
-
-        pickupIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.PICKUP);
-                setAllStages.stageByButton(pickupButton, "customer-info");
-            }
-        });
-
-        pickupIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.PICKUP);
-                setAllStages.stageByButton(pickupButton, "customer-info");
-            }
-        });
-
-        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
             }
-        });
+        };
 
-        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        goBackIcon.setOnMouseClicked(homeScreenStage);
+        goBackIconTitle.setOnMouseClicked(homeScreenStage);
 
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.NONE);
-                setAllStages.stageByButton(backButton, "home-screen");
-            }
-        });
     }
 
     private void logOutHandler() {
 
-        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+        EventHandler<MouseEvent> value = new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-
-                alertPane.setVisible(true);
-//                mainPane.setOpacity(40);
-//                yesButton.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        SetAllStages setAllStages = new SetAllStages();
-//                        setAllStages.stageByButton(logOutButton, "log-in-screen");
-//                    }
-//                });
-
-                noButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        alertPane.setVisible(false);
-
-                    }
-                });
-
-
+            public void handle(MouseEvent event) {
+                logOutAlertMessage();
             }
-        });
+        };
 
-        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        logOutButton.setOnMouseClicked(value);
+        logOutIcon.setOnMouseClicked(value);
+    }
+
+    private void logOutAlertMessage() {
+
+        alertPane.setVisible(true);
+        mainPane.setOpacity(0.30);
+
+        yesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
-                alertPane.setVisible(true);
-//                mainPane.setOpacity(40);
-//                yesButton.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        SetAllStages setAllStages = new SetAllStages();
-//                        setAllStages.stageByButton(logOutButton, "log-in-screen");
-//                    }
-//                });
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
 
-                noButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        alertPane.setVisible(false);
-//                        mainPane.setOpacity(0);
-                    }
-                });
-
-
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mainPane.setOpacity(1);
+                alertPane.setVisible(false);
             }
         });
     }
 
-    private void logOutAlertHandler() {
-
-
-
-    }
 
     private void buttonHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {
 

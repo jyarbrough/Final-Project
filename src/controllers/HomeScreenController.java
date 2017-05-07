@@ -34,6 +34,7 @@ public class HomeScreenController implements Initializable {
     public Button logOutButton;
 
     public ImageView logOutIcon;
+    SetAllStages setAllStages = new SetAllStages();
 
 
     @Override
@@ -100,7 +101,7 @@ public class HomeScreenController implements Initializable {
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
+
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
             }
         });

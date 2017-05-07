@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.CustomerModel;
 import models.EmployeeModel;
@@ -47,6 +49,10 @@ public class CustomerInfoController implements Initializable {
     public ImageView takeOrderIcon;
     public Text goBackIconTitle;
     public Text takeOrderIconTitle;
+    public Pane alertPane;
+    public Button noButton;
+    public Button yesButton;
+    public AnchorPane mainPane;
 
     SetAllStages setAllStages = new SetAllStages();
     ApplicationContext applicationContext = ApplicationContext.getInstance();
@@ -61,6 +67,7 @@ public class CustomerInfoController implements Initializable {
         placeOrderActionHandler();
         backButtonAction();
         iconClickHandlers();
+        logOutHandler();
     }
 
     private void iconClickHandlers() {
@@ -77,30 +84,6 @@ public class CustomerInfoController implements Initializable {
             public void handle(MouseEvent event) {
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
-            }
-        });
-
-        logOutButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-            }
-        });
-
-//        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                setAllStages.stageByButton(logOutButton, "log-in-screen");
-//            }
-//        });
-
-        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-
             }
         });
     }
@@ -172,22 +155,6 @@ public class CustomerInfoController implements Initializable {
                 mainInterfaceStage.stage(placeOrderButton);
             }
         });
-
-//        takeOrderIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                SetAllStages setAllStages = new SetAllStages();
-//                setAllStages.stageByButton(placeOrderButton, "main-interface");
-//            }
-//        });
-//
-//        takeOrderIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                MainInterfaceStage mainInterfaceStage = new MainInterfaceStage();
-//                mainInterfaceStage.stage(placeOrderButton);
-//            }
-//        });
     }
 
     private void backButtonAction() {
@@ -320,4 +287,80 @@ public class CustomerInfoController implements Initializable {
                 }
         );
     }
+
+
+    private void logOutHandler() {
+
+        EventHandler<MouseEvent> value = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                logOutAlertMessage();
+            }
+        };
+
+        logOutButton.setOnMouseClicked(value);
+        logOutIcon.setOnMouseClicked(value);
+    }
+
+    private void logOutAlertMessage() {
+
+        alertPane.setVisible(true);
+        mainPane.setOpacity(0.30);
+
+        yesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mainPane.setOpacity(1);
+                alertPane.setVisible(false);
+            }
+        });
+    }
+
+
+//
+//
+//
+//
+//            logOutButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//        @Override
+//        public void handle(MouseEvent event) {
+//            setAllStages.stageByButton(logOutButton, "log-in-screen");
+//        }
+//    });
+//
+////        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+////            @Override
+////            public void handle(ActionEvent event) {
+////                setAllStages.stageByButton(logOutButton, "log-in-screen");
+////            }
+////        });
+//
+//        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//        @Override
+//        public void handle(MouseEvent event) {
+//
+//            SetAllStages setAllStages = new SetAllStages();
+//            setAllStages.stageByButton(logOutButton, "log-in-screen");
+//
+//        }
+//    });
+//
+//
+//
+
+
+
+
+
+
+
+
 }
