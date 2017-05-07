@@ -55,9 +55,9 @@ public class PickupOrDeliveryController implements Initializable {
         idTextField.setText(loggedInEmployee.getId());
 
         displayDateAndTime();
+        logOutHandler();
         iconClickHandlers(setAllStages, applicationContext);
         buttonHandlers(setAllStages, applicationContext);
-        logOutHandler();
 
     }
 

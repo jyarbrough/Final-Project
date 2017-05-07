@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import models.EmployeeModel;
 import models.TimeModel;
 import stages.OpenOrdersStage;
@@ -34,61 +37,63 @@ public class HomeScreenController implements Initializable {
     public Button logOutButton;
 
     public ImageView logOutIcon;
+    public Text openOrdersTitleText;
+    public Text newOrderTitleText;
+    public ImageView openOrdersIcon;
+    public ImageView customerPickupIcon;
+    public Text customerPickupTitleText;
+    public ImageView newOrderIcon;
+    public Pane alertPane;
+    public Button noButton;
+    public Button yesButton;
+    public AnchorPane mainPane;
+    public ImageView deliveryIcon;
+    public Text deliveriesTitleText;
+    public ImageView registerIcon;
+    public Text registerText;
     SetAllStages setAllStages = new SetAllStages();
+    ApplicationContext applicationContext = ApplicationContext.getInstance();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
+
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
 
         displayDateAndTime();
-
-//        if (loggedInEmployee == null) {
-//            throw new RuntimeException("null employee was set");
-//        }
-
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
+        logOutHandler();
+        initializeButtons();
+    }
 
-        newOrderButton.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-            @Override
-            public void handle(javafx.scene.input.MouseEvent event) {
-                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
-                pickupDeliveryStage.stage(newOrderButton);
-            }
-        });
+    private void initializeButtons() {
+        newOrderHandler();
+        openOrdersHandler();
+        pickupHandler();
+        deliveryHandler();
+        reviseHandler();
+        registerHandler();
+    }
 
-        openOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ApplicationContext.getInstance().setOperationMode(OperationMode.NONE);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(openOrdersButton);
-            }
-        });
+    private void registerHandler() {
+        openRegisterButton.setOnMouseClicked(getMouseEventEventHandler(openRegisterButton,"cash-register"));
+        registerIcon.setOnMouseClicked(getMouseEventEventHandler(openRegisterButton,"cash-register"));
+        registerText.setOnMouseClicked(getMouseEventEventHandler(openRegisterButton,"cash-register"));
+    }
 
-        pickupButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ApplicationContext.getInstance().setOperationMode(OperationMode.PICKUP);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(pickupButton);
-            }
-        });
+    private void newOrderHandler() {
+        newOrderButton.setOnMouseClicked(getMouseEventEventHandler(newOrderButton,"pickup-delivery"));
+        newOrderIcon.setOnMouseClicked(getMouseEventEventHandler(newOrderButton,"pickup-delivery"));
+        newOrderTitleText.setOnMouseClicked(getMouseEventEventHandler(newOrderButton,"pickup-delivery"));
 
-        deliveryButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ApplicationContext.getInstance().setOperationMode(OperationMode.DELIVERY);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(deliveryButton);
-            }
-        });
+    }
 
+    private void reviseHandler() {
+        //NEED TO MIMIC THIS FOR THE MANAGER FUNCTIONS BUTTON
         reviseOrderButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -97,34 +102,43 @@ public class HomeScreenController implements Initializable {
                 openOrdersStage.stage(reviseOrderButton);
             }
         });
+    }
 
-        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+    private void deliveryHandler() {
+        //TOGGLE BUTTONS
+        deliveryButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-            }
-        });
-
-        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-
-            }
-        });
-
-        openRegisterButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(openRegisterButton, "cash-register");
+                ApplicationContext.getInstance().setOperationMode(OperationMode.DELIVERY);
+                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+                openOrdersStage.stage(deliveryButton);
             }
         });
     }
+
+    private void pickupHandler() {
+        pickupButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ApplicationContext.getInstance().setOperationMode(OperationMode.PICKUP);
+                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+                openOrdersStage.stage(pickupButton);
+            }
+        });
+    }
+
+    private void openOrdersHandler() {
+        openOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ApplicationContext.getInstance().setOperationMode(OperationMode.NONE);
+                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+                openOrdersStage.stage(openOrdersButton);
+            }
+        });
+    }
+
+
 
     private void displayDateAndTime() {
 
@@ -132,4 +146,97 @@ public class HomeScreenController implements Initializable {
         dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
         timeField.setText(timeModel.getCurrentTime());
     }
+
+    private EventHandler<MouseEvent> getMouseEventEventHandler(Button button ,String stagePath) {
+        return new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setAllStages.stageByButton(button,stagePath);
+            }
+        };
+    }
+
+    private void logOutHandler() {
+        EventHandler<MouseEvent> value = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                logOutAlertMessage();
+            }
+        };
+
+        logOutButton.setOnMouseClicked(value);
+        logOutIcon.setOnMouseClicked(value);
+    }
+
+    private void logOutAlertMessage() {
+        alertPane.setVisible(true);
+        mainPane.setOpacity(0.30);
+        yesButton.setOnMouseClicked(getMouseEventEventHandler(yesButton,"log-in-screen"));
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mainPane.setOpacity(1);
+                alertPane.setVisible(false);
+            }
+        });
+    }
 }
+
+
+
+
+
+
+
+
+//
+//
+//
+//
+//    private void reviseHandler() {
+//        //NEED TO MIMIC THIS FOR THE MANAGER FUNCTIONS BUTTON
+//        reviseOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                ApplicationContext.getInstance().setOperationMode(OperationMode.MANAGER);
+//                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+//                openOrdersStage.stage(reviseOrderButton);
+//            }
+//        });
+//    }
+//
+//    private void deliveryHandler() {
+//        //TOGGLE BUTTONS
+//        deliveryButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                ApplicationContext.getInstance().setOperationMode(OperationMode.DELIVERY);
+//                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+//                openOrdersStage.stage(deliveryButton);
+//            }
+//        });
+//    }
+//
+//    private void pickupHandler() {
+//        pickupButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                ApplicationContext.getInstance().setOperationMode(OperationMode.PICKUP);
+//                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+//                openOrdersStage.stage(pickupButton);
+//            }
+//        });
+//    }
+//
+//    private void openOrdersHandler() {
+//        openOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                ApplicationContext.getInstance().setOperationMode(OperationMode.NONE);
+//                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
+//                openOrdersStage.stage(openOrdersButton);
+//            }
+//        });
+//    }
+//

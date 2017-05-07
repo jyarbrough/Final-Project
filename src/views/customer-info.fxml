@@ -35,7 +35,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Button fx:id="placeOrderButton" layoutX="314.0" layoutY="436.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="158.0" />
+                        <Button fx:id="takeOrderButton" layoutX="314.0" layoutY="436.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="158.0" />
                         <Text fx:id="takeOrderIconTitle" layoutX="332.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Take-Order" wrappingWidth="94.022705078125">
                            <font>
                               <Font size="16.0" />

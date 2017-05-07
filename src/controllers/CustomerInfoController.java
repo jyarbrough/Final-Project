@@ -18,7 +18,6 @@ import models.CustomerModel;
 import models.EmployeeModel;
 import models.TimeModel;
 import stages.MainInterfaceStage;
-import stages.PickupDeliveryStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -40,10 +39,9 @@ public class CustomerInfoController implements Initializable {
     public TextField employeeNameField;
     public TextField timeField;
     public TextField dayOfTheWeekField;
-    public Button placeOrderButton;
+    public Button takeOrderButton;
     public Button backButton;
     public Button logOutButton;
-
     public ImageView goBackIcon;
     public ImageView logOutIcon;
     public ImageView takeOrderIcon;
@@ -62,52 +60,43 @@ public class CustomerInfoController implements Initializable {
 
         displayEmployeeName();
         displayDateAndTime();
-        limitPhoneFieldInput();
+        limitInputFields();
         displayPickupOrDelivery();
         placeOrderActionHandler();
-        backButtonAction();
-        iconClickHandlers();
+        initializeBackButton();
         logOutHandler();
     }
 
-    private void iconClickHandlers() {
-        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                applicationContext.setOperationMode(OperationMode.NONE);
-                setAllStages.stageByButton(backButton, "home-screen");
-            }
-        });
-
-        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                applicationContext.setOperationMode(OperationMode.NONE);
-                setAllStages.stageByButton(backButton, "home-screen");
-            }
-        });
-    }
-
     private void displayEmployeeName() {
-
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
         employeeNameField.setText(loggedInEmployee.getName());
     }
 
     private void displayDateAndTime() {
-
         TimeModel timeModel = new TimeModel();
         dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
         timeField.setText(timeModel.getCurrentTime());
     }
 
-    private void limitPhoneFieldInput() {
+    private void limitInputFields() {
         phoneNumberField.textProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue.length() > 10) phoneNumberField.setText(oldValue);
                 }
         );
+
+        zipCodeField.textProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue.length() > 6) zipCodeField.setText(oldValue);
+                }
+        );
+
+        stateField.textProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if (newValue.length() > 2) stateField.setText(oldValue);
+                }
+        );
+
     }
 
     private void displayPickupOrDelivery() {
@@ -132,12 +121,15 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void placeOrderActionHandler() {
+        takeOrderButton.setOnMouseClicked(storeCustomerProfile());
+        takeOrderIcon.setOnMouseClicked(storeCustomerProfile());
+        takeOrderIconTitle.setOnMouseClicked(storeCustomerProfile());
+    }
 
-        placeOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+    private EventHandler<MouseEvent> storeCustomerProfile() {
+        return new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                MainInterfaceStage mainInterfaceStage = new MainInterfaceStage();
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
+            public void handle(MouseEvent event) {
                 HashMap<String, CustomerModel> customerProfile = new HashMap<>();
 
                 String firstName = firstNameField.getText();
@@ -152,28 +144,12 @@ public class CustomerInfoController implements Initializable {
                 customerProfile.put(customerModel.getLastName(), customerModel);
 
                 applicationContext.setCurrentCustomer(customerModel);
-                mainInterfaceStage.stage(placeOrderButton);
+                setAllStages.stageByButton(takeOrderButton, "main-interface");
             }
-        });
-    }
-
-    private void backButtonAction() {
-
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.NONE);
-
-                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
-                pickupDeliveryStage.stage(backButton);
-            }
-        });
+        };
     }
 
     private void disableButtons(ApplicationContext applicationContext) {
-
         firstNameField.setFocusTraversable(true);
         lastNameField.setDisable(true);
         phoneNumberField.setDisable(true);
@@ -182,17 +158,15 @@ public class CustomerInfoController implements Initializable {
         cityField.setDisable(true);
         zipCodeField.setDisable(true);
         stateField.setDisable(true);
-        placeOrderButton.setDisable(true);
+        takeOrderButton.setDisable(true);
 
         if (applicationContext.getOperationMode() == OperationMode.PICKUP) {
-
             disableLastNameField();
             disablePhoneNumberField();
             sendPickup();
         }
 
         if (applicationContext.getOperationMode() == OperationMode.DELIVERY) {
-
             disableLastNameField();
             disablePhoneNumberField();
             disableBothAddressFields();
@@ -203,9 +177,7 @@ public class CustomerInfoController implements Initializable {
         }
     }
 
-
     private void disableLastNameField() {
-
         firstNameField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -215,7 +187,6 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disablePhoneNumberField() {
-
         lastNameField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -225,7 +196,6 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disableBothAddressFields() {
-
         phoneNumberField.textProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue.length() == 10){
@@ -237,7 +207,6 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disableCityField() {
-
         addressOneField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -247,7 +216,6 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disableStateField() {
-
         cityField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -257,7 +225,6 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disableZipCodeField() {
-
         stateField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -267,30 +234,25 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void disableSendButtonWhenDelivery() {
-
         zipCodeField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                placeOrderButton.setDisable(false);
+                takeOrderButton.setDisable(false);
             }
         });
     }
 
-
     private void  sendPickup() {
-
         phoneNumberField.textProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue.length() == 10){
-                        placeOrderButton.setDisable(false);
+                        takeOrderButton.setDisable(false);
                     }
                 }
         );
     }
 
-
     private void logOutHandler() {
-
         EventHandler<MouseEvent> value = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -303,17 +265,9 @@ public class CustomerInfoController implements Initializable {
     }
 
     private void logOutAlertMessage() {
-
         alertPane.setVisible(true);
         mainPane.setOpacity(0.30);
-
-        yesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-            }
-        });
+        yesButton.setOnMouseClicked(getMouseEventEventHandler(yesButton,"log-in-screen"));
 
         noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -324,43 +278,29 @@ public class CustomerInfoController implements Initializable {
         });
     }
 
-
-//
-//
-//
-//
-//            logOutButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//        @Override
-//        public void handle(MouseEvent event) {
-//            setAllStages.stageByButton(logOutButton, "log-in-screen");
-//        }
-//    });
-//
-////        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
-////            @Override
-////            public void handle(ActionEvent event) {
-////                setAllStages.stageByButton(logOutButton, "log-in-screen");
-////            }
-////        });
-//
-//        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//        @Override
-//        public void handle(MouseEvent event) {
-//
-//            SetAllStages setAllStages = new SetAllStages();
-//            setAllStages.stageByButton(logOutButton, "log-in-screen");
-//
-//        }
-//    });
-//
-//
-//
+    private void initializeBackButton() {
+        goBackIcon.setOnMouseClicked(getMouseEventEventHandler(backButton,"pickup-delivery"));
+        goBackIconTitle.setOnMouseClicked(getMouseEventEventHandler(backButton,"pickup-delivery"));
+        backButton.setOnMouseClicked(getMouseEventEventHandler(backButton, "pickup-delivery"));
+    }
 
 
+    private EventHandler<MouseEvent> getMouseEventEventHandler(Button button ,String stagePath) {
+        return new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setAllStages.stageByButton(button,stagePath);
+            }
+        };
+    }
 
-
-
-
-
-
+//    private EventHandler<MouseEvent> getMouseEventEventHandler(OperationMode operationMode,Button button ,String stagePath) {
+//        return new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent event) {
+//                    applicationContext.setOperationMode(operationMode);
+//                    setAllStages.stageByButton(button,stagePath);
+//                }
+//            };
+//    }
 }
