@@ -60,12 +60,13 @@ public class OpenOrdersController implements Initializable {
 
     @FXML
     TableView<OrderModel> openOrdersTable = new TableView<>();
+    SetAllStages setAllStages = new SetAllStages();
+    ApplicationContext applicationContext = ApplicationContext.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         loggedInTextField.setText(ApplicationContext.getInstance().getLoggedInEmployee().getName());
-
         openOrdersTable.setItems(fetchLatestOpenOrders());
 
         setupTableColumns();
@@ -76,7 +77,6 @@ public class OpenOrdersController implements Initializable {
     }
 
     private ObservableList<OrderModel> fetchLatestOpenOrders() {
-        ApplicationContext applicationContext = ApplicationContext.getInstance();
         Collection<OrderModel> allReceipts = applicationContext.getReceipts().values();
         ArrayList<OrderModel> tempReceiptsToDisplay = new ArrayList<>();
 
@@ -122,11 +122,9 @@ public class OpenOrdersController implements Initializable {
 
 
     private void logOutHandler() {
-
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 logOutAlertMessage();
             }
         });
@@ -134,9 +132,7 @@ public class OpenOrdersController implements Initializable {
         logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
                 logOutAlertMessage();
-
             }
         });
     }
@@ -148,7 +144,6 @@ public class OpenOrdersController implements Initializable {
         yesButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
             }
         });
@@ -156,7 +151,6 @@ public class OpenOrdersController implements Initializable {
         noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
                 setAllStages.stageByButton(logOutButton, "open-orders");
             }
         });
@@ -205,7 +199,6 @@ public class OpenOrdersController implements Initializable {
 
 
     private void displayDateAndTime() {
-
         TimeModel timeModel = new TimeModel();
         dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
         timeField.setText(timeModel.getCurrentTime());
@@ -214,47 +207,40 @@ public class OpenOrdersController implements Initializable {
 
     private void backButtonHandler() {
 
-        SetAllStages setAllStages = new SetAllStages();
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                HomeScreenStage homeScreenStage = new HomeScreenStage();
-                homeScreenStage.stage(backButton);
-            }
-        });
-
-        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> value = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
             }
-        });
-
-        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.NONE);
-                setAllStages.stageByButton(backButton, "home-screen");
-            }
-        });
+        };
+        backButton.setOnMouseClicked(value);
+        goBackIcon.setOnMouseClicked(value);
+        goBackIconTitle.setOnMouseClicked(value);
     }
 
     private void setupTableColumns() {
 
         TableColumn ticketNumberColumn = new TableColumn("Ticket #");
         ticketNumberColumn.setMinWidth(75);
-        ticketNumberColumn.setCellValueFactory(
-                new PropertyValueFactory<OrderModel, String>("ticketNumber"));
+        ticketNumberColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                                   @Override
+                                                   public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                       OrderModel receipt = (OrderModel) r.getValue();
+                                                       return new SimpleStringProperty(receipt.getTicketNumber().toString());
+                                                   }
+                                               }
+        );
 
         TableColumn orderTypeColumn = new TableColumn("Order Type");
         orderTypeColumn.setMinWidth(141);
-        orderTypeColumn.setCellValueFactory(
-                new PropertyValueFactory<OrderModel, String>("type"));
+        orderTypeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                                @Override
+                                                public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                    OrderModel receipt = (OrderModel) r.getValue();
+                                                    return new SimpleStringProperty(receipt.getOperationMode().toString());
+                                                }
+                                            }
+        );
 
         TableColumn customerNameColumn = new TableColumn("Customer Name");
         customerNameColumn.setMinWidth(314);
@@ -269,9 +255,15 @@ public class OpenOrdersController implements Initializable {
 
         TableColumn totalColumn = new TableColumn("Total");
         totalColumn.setMinWidth(101);
-        totalColumn.setCellValueFactory(
-                new PropertyValueFactory<OrderModel, StringJoiner>("total"));
+        totalColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                            @Override
+                                            public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                OrderModel receipt = (OrderModel) r.getValue();
+                                                return new SimpleStringProperty(receipt.getGrandTotal().toString());
+                                            }
+                                        }
+        );
 
-        openOrdersTable.getColumns().addAll(ticketNumberColumn, orderTypeColumn, customerNameColumn);
+        openOrdersTable.getColumns().addAll(ticketNumberColumn, orderTypeColumn, customerNameColumn, totalColumn);
     }
 }

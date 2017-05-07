@@ -48,6 +48,9 @@ public class CustomerInfoController implements Initializable {
     public Text goBackIconTitle;
     public Text takeOrderIconTitle;
 
+    SetAllStages setAllStages = new SetAllStages();
+    ApplicationContext applicationContext = ApplicationContext.getInstance();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -57,17 +60,13 @@ public class CustomerInfoController implements Initializable {
         displayPickupOrDelivery();
         placeOrderActionHandler();
         backButtonAction();
-
-        SetAllStages setAllStages = new SetAllStages();
-        iconClickHandlers(setAllStages);
+        iconClickHandlers();
     }
 
-    private void iconClickHandlers(final SetAllStages setAllStages) {
+    private void iconClickHandlers() {
         goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
             }
@@ -76,20 +75,24 @@ public class CustomerInfoController implements Initializable {
         goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
             }
         });
 
-        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+        logOutButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
+            public void handle(MouseEvent event) {
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
             }
         });
+
+//        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                setAllStages.stageByButton(logOutButton, "log-in-screen");
+//            }
+//        });
 
         logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
