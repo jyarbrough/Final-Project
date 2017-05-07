@@ -271,7 +271,7 @@ public class OrderInterfaceController implements Initializable {
 
                     FoodItemModel itemToRemove = receiptTableView.getSelectionModel().getSelectedItem();
                     receiptTableView.getItems().remove(itemToRemove);
-                    Double priceOfItemToRemove = Double.valueOf(itemToRemove.getPrice()) * 0.08;
+                    Double priceOfItemToRemove = Double.valueOf(itemToRemove.getPrice());
                     receipt.removeItem(priceOfItemToRemove);
                     displayTotalsOnReceipt();
                 }
