@@ -16,7 +16,7 @@ import javafx.scene.layout.TilePane;
 import models.*;
 import services.CategoriesService;
 import services.FoodItemsService;
-import stages.HomeScreenStage;
+import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,6 +52,7 @@ public class OrderInterfaceController implements Initializable {
     private ArrayList<FoodItemModel> itemsOnReceipt = new ArrayList<>();
     private OrderModel receipt = new OrderModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
+    SetAllStages setAllStages = new SetAllStages();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -265,14 +266,10 @@ public class OrderInterfaceController implements Initializable {
         sendButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 receipt.setFoodItems(itemsOnReceipt);
-
                 ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.saveReceipt(receipt);
-
-                HomeScreenStage homeScreenStage = new HomeScreenStage();
-                homeScreenStage.stage(sendButton);
+                setAllStages.stageByButton(sendButton, "home-screen");
             }
         });
     }

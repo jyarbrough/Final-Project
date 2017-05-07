@@ -24,7 +24,6 @@ import javafx.util.Callback;
 import models.EmployeeModel;
 import models.OrderModel;
 import models.TimeModel;
-import stages.HomeScreenStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -75,6 +74,11 @@ public class OpenOrdersController implements Initializable {
         logOutHandler();
         checkOutButtonHandler();
     }
+    private void displayDateAndTime() {
+        TimeModel timeModel = new TimeModel();
+        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
+        timeField.setText(timeModel.getCurrentTime());
+    }
 
     private ObservableList<OrderModel> fetchLatestOpenOrders() {
         Collection<OrderModel> allReceipts = applicationContext.getReceipts().values();
@@ -122,28 +126,26 @@ public class OpenOrdersController implements Initializable {
 
 
     private void logOutHandler() {
-        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                logOutAlertMessage();
-            }
-        });
 
-        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> value = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 logOutAlertMessage();
             }
-        });
+        };
+
+        logOutButton.setOnMouseClicked(value);
+        logOutIcon.setOnMouseClicked(value);
     }
 
     private void logOutAlertMessage() {
+
         alertBackground.setVisible(true);
         mainPage.setOpacity(0.30);
 
-        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+        yesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(MouseEvent event) {
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
             }
         });
@@ -151,13 +153,15 @@ public class OpenOrdersController implements Initializable {
         noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setAllStages.stageByButton(logOutButton, "open-orders");
+                mainPage.setOpacity(1);
+                alertBackground.setVisible(false);
             }
         });
     }
 
 
     private void checkOutButtonHandler() {
+
         checkOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -196,14 +200,6 @@ public class OpenOrdersController implements Initializable {
             }
         });
     }
-
-
-    private void displayDateAndTime() {
-        TimeModel timeModel = new TimeModel();
-        dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
-        timeField.setText(timeModel.getCurrentTime());
-    }
-
 
     private void backButtonHandler() {
 

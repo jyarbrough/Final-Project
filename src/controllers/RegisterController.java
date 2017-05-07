@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.OrderModel;
-import stages.HomeScreenStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -31,6 +30,9 @@ public class RegisterController implements Initializable {
     public Pane alertBackground;
     public Button yesButton;
     public Button noButton;
+
+    SetAllStages setAllStages = new SetAllStages();
+    ApplicationContext applicationContext = ApplicationContext.getInstance();
 
 
     @Override
@@ -57,21 +59,16 @@ public class RegisterController implements Initializable {
     }
 
     private void backButtonHandler() {
-
-        SetAllStages setAllStages = new SetAllStages();
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                HomeScreenStage homeScreenStage = new HomeScreenStage();
-                homeScreenStage.stage(backButton);
+                setAllStages.stageByButton(backButton, "home-screen");
             }
         });
 
         goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
             }
