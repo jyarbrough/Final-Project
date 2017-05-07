@@ -9,10 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import models.EmployeeModel;
 import models.TimeModel;
-import stages.OpenOrdersStage;
-import stages.PickupDeliveryStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -34,6 +34,10 @@ public class HomeScreenController implements Initializable {
     public Button logOutButton;
 
     public ImageView logOutIcon;
+    public Pane alertBackground;
+    public Button yesButton;
+    public Button noButton;
+    public AnchorPane homeScreenAnchor;
 
 
     @Override
@@ -41,10 +45,12 @@ public class HomeScreenController implements Initializable {
 
         ApplicationContext applicationContext = ApplicationContext.getInstance();
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        SetAllStages setAllStages = new SetAllStages();
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
 
         displayDateAndTime();
+        logOutHandler();
 
 //        if (loggedInEmployee == null) {
 //            throw new RuntimeException("null employee was set");
@@ -56,17 +62,17 @@ public class HomeScreenController implements Initializable {
         newOrderButton.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
-                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
-                pickupDeliveryStage.stage(newOrderButton);
+
+                setAllStages.stageByButton(newOrderButton, "pickup-delivery");
             }
         });
 
         openOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 ApplicationContext.getInstance().setOperationMode(OperationMode.NONE);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(openOrdersButton);
+                setAllStages.stageByButton(openRegisterButton, "open-orders");
             }
         });
 
@@ -74,8 +80,7 @@ public class HomeScreenController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 ApplicationContext.getInstance().setOperationMode(OperationMode.PICKUP);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(pickupButton);
+                setAllStages.stageByButton(pickupButton, "open-orders");
             }
         });
 
@@ -83,37 +88,36 @@ public class HomeScreenController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 ApplicationContext.getInstance().setOperationMode(OperationMode.DELIVERY);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(deliveryButton);
+                setAllStages.stageByButton(deliveryButton, "open-orders");
+
             }
         });
 
         reviseOrderButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 ApplicationContext.getInstance().setOperationMode(OperationMode.MANAGER);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(reviseOrderButton);
+                setAllStages.stageByButton(reviseOrderButton, "open-orders");
             }
         });
 
-        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-            }
-        });
-
-        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "log-in-screen");
-
-            }
-        });
+//        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//            }
+//        });
+//
+//        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//
+//                SetAllStages setAllStages = new SetAllStages();
+//                setAllStages.stageByButton(logOutButton, "log-in-screen");
+//
+//            }
+//        });
 
         openRegisterButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -121,6 +125,47 @@ public class HomeScreenController implements Initializable {
 
                 SetAllStages setAllStages = new SetAllStages();
                 setAllStages.stageByButton(openRegisterButton, "cash-register");
+            }
+        });
+    }
+
+    private void logOutHandler() {
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                logOutAlertMessage();
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                logOutAlertMessage();
+
+            }
+        });
+    }
+
+    private void logOutAlertMessage() {
+        alertBackground.setVisible(true);
+        homeScreenAnchor.setOpacity(0.30);
+
+        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                homeScreenAnchor.setOpacity(1);
+                alertBackground.setVisible(false);
             }
         });
     }

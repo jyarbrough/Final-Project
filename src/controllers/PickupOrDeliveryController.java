@@ -40,6 +40,8 @@ public class PickupOrDeliveryController implements Initializable {
     public Pane mainPane;
     public Button noButton;
     public Button yesButton;
+    public Pane alertBackground;
+    public AnchorPane pickupDeliveryAnchor;
 
 
     @Override
@@ -127,32 +129,13 @@ public class PickupOrDeliveryController implements Initializable {
             }
         });
     }
-
     private void logOutHandler() {
 
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                alertPane.setVisible(true);
-//                mainPane.setOpacity(40);
-//                yesButton.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        SetAllStages setAllStages = new SetAllStages();
-//                        setAllStages.stageByButton(logOutButton, "log-in-screen");
-//                    }
-//                });
-
-                noButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        alertPane.setVisible(false);
-
-                    }
-                });
-
-
+                logOutAlertMessage();
             }
         });
 
@@ -160,33 +143,31 @@ public class PickupOrDeliveryController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
 
-                alertPane.setVisible(true);
-//                mainPane.setOpacity(40);
-//                yesButton.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        SetAllStages setAllStages = new SetAllStages();
-//                        setAllStages.stageByButton(logOutButton, "log-in-screen");
-//                    }
-//                });
-
-                noButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        alertPane.setVisible(false);
-//                        mainPane.setOpacity(0);
-                    }
-                });
-
+                logOutAlertMessage();
 
             }
         });
     }
 
-    private void logOutAlertHandler() {
+    private void logOutAlertMessage() {
+        alertBackground.setVisible(true);
+        pickupDeliveryAnchor.setOpacity(0.30);
 
+        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
 
-
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pickupDeliveryAnchor.setOpacity(1);
+                alertBackground.setVisible(false);
+            }
+        });
     }
 
     private void buttonHandlers(final SetAllStages setAllStages, final ApplicationContext applicationContext) {

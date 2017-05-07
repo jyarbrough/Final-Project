@@ -11,12 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.CustomerModel;
 import models.EmployeeModel;
 import models.TimeModel;
-import stages.MainInterfaceStage;
-import stages.PickupDeliveryStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -47,7 +47,12 @@ public class CustomerInfoController implements Initializable {
     public ImageView takeOrderIcon;
     public Text goBackIconTitle;
     public Text takeOrderIconTitle;
+    public AnchorPane customerInfoAnchor;
+    public Pane alertBackground;
+    public Button yesButton;
+    public Button noButton;
 
+    SetAllStages setAllStages = new SetAllStages();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -60,6 +65,48 @@ public class CustomerInfoController implements Initializable {
 
         SetAllStages setAllStages = new SetAllStages();
         iconClickHandlers(setAllStages);
+        logOutHandler();
+    }
+
+    private void logOutHandler() {
+
+        logOutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                logOutAlertMessage();
+            }
+        });
+
+        logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                logOutAlertMessage();
+
+            }
+        });
+    }
+
+    private void logOutAlertMessage() {
+        alertBackground.setVisible(true);
+        customerInfoAnchor.setOpacity(0.30);
+
+        yesButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+//                SetAllStages setAllStages = new SetAllStages();
+                setAllStages.stageByButton(logOutButton, "log-in-screen");
+            }
+        });
+
+        noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+               customerInfoAnchor.setOpacity(1);
+               alertBackground.setVisible(false);
+            }
+        });
     }
 
     private void iconClickHandlers(final SetAllStages setAllStages) {
@@ -86,7 +133,7 @@ public class CustomerInfoController implements Initializable {
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
+//                SetAllStages setAllStages = new SetAllStages();
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
             }
         });
@@ -95,7 +142,7 @@ public class CustomerInfoController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
 
-                SetAllStages setAllStages = new SetAllStages();
+//                SetAllStages setAllStages = new SetAllStages();
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
 
             }
@@ -147,10 +194,11 @@ public class CustomerInfoController implements Initializable {
 
     private void placeOrderActionHandler() {
 
+//        SetAllStages setAllStages = new SetAllStages();
+
         placeOrderButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                MainInterfaceStage mainInterfaceStage = new MainInterfaceStage();
                 ApplicationContext applicationContext = ApplicationContext.getInstance();
                 HashMap<String, CustomerModel> customerProfile = new HashMap<>();
 
@@ -166,7 +214,8 @@ public class CustomerInfoController implements Initializable {
                 customerProfile.put(customerModel.getLastName(), customerModel);
 
                 applicationContext.setCurrentCustomer(customerModel);
-                mainInterfaceStage.stage(placeOrderButton);
+
+                setAllStages.stageByButton(placeOrderButton, "main-interface");
             }
         });
 
@@ -196,8 +245,8 @@ public class CustomerInfoController implements Initializable {
                 ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
 
-                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
-                pickupDeliveryStage.stage(backButton);
+                setAllStages.stageByButton(placeOrderButton, "pickup-delivery");
+
             }
         });
     }
@@ -232,7 +281,6 @@ public class CustomerInfoController implements Initializable {
             disableSendButtonWhenDelivery();
         }
     }
-
 
     private void disableLastNameField() {
 
