@@ -17,7 +17,7 @@ import javafx.util.converter.DoubleStringConverter;
 import models.EmployeeModel;
 import models.TimeModel;
 import services.EmployeeService;
-import stages.HomeScreenStage;
+import stages.SetAllStages;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -178,6 +178,8 @@ public class LogInController implements Initializable {
 
     private void verifyEmployee() {
 
+        SetAllStages setAllStages = new SetAllStages();
+
         logInButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -197,8 +199,7 @@ public class LogInController implements Initializable {
                     welcomeButton.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            HomeScreenStage homeScreenStage = new HomeScreenStage();
-                            homeScreenStage.stage(welcomeButton);
+                            setAllStages.stageByButton(welcomeButton, "home-screen");
                         }
                     });
                 } else {

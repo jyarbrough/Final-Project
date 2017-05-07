@@ -22,9 +22,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import models.EmployeeModel;
+import models.FoodItemModel;
 import models.OrderModel;
 import models.TimeModel;
-import stages.HomeScreenStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -48,20 +48,23 @@ public class OpenOrdersController implements Initializable {
     public Button noButton;
     public Pane alertBackground;
     public AnchorPane mainPage;
+
     public TextField amountReceived;
     public Label amountDueLabel;
     public Label changeDue;
     public Pane checkoutAlertPane;
     public Button closeOrder;
+    SetAllStages setAllStages = new SetAllStages();
+    ApplicationContext applicationContext = ApplicationContext.getInstance();
 
     @FXML
     TableView<OrderModel> openOrdersTable = new TableView<>();
+    @FXML
+    TableView checkoutReceiptTable = new TableView<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         loggedInTextField.setText(ApplicationContext.getInstance().getLoggedInEmployee().getName());
-
         openOrdersTable.setItems(fetchLatestOpenOrders());
 
         setupTableColumns();
@@ -69,6 +72,7 @@ public class OpenOrdersController implements Initializable {
         displayDateAndTime();
         logOutHandler();
         checkOutButtonHandler();
+        checkoutAlertPane.setVisible(false);
     }
 
     private ObservableList<OrderModel> fetchLatestOpenOrders() {
@@ -118,11 +122,9 @@ public class OpenOrdersController implements Initializable {
 
 
     private void logOutHandler() {
-
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 logOutAlertMessage();
             }
         });
@@ -130,9 +132,7 @@ public class OpenOrdersController implements Initializable {
         logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
                 logOutAlertMessage();
-
             }
         });
     }
@@ -144,7 +144,6 @@ public class OpenOrdersController implements Initializable {
         yesButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
                 setAllStages.stageByButton(logOutButton, "log-in-screen");
             }
         });
@@ -152,8 +151,8 @@ public class OpenOrdersController implements Initializable {
         noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "open-orders");
+                mainPage.setOpacity(1);
+                alertBackground.setVisible(false);
             }
         });
     }
@@ -163,12 +162,22 @@ public class OpenOrdersController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
+                setupCheckoutColumns();
                 OrderModel selectedItem = openOrdersTable.getSelectionModel().getSelectedItem();
 
                 Double grandTotal = selectedItem.getGrandTotal();
                 amountDueLabel.setText(grandTotal.toString());
 
                 checkoutAlertPane.setVisible(true);
+
+//                ArrayList<OrderModel> tempReceiptToDisplay = new ArrayList<>();
+//                ArrayList<FoodItemModel> foodItems = selectedItem.getFoodItems();
+//                for (FoodItemModel foodItem : foodItems) {
+//                    String name = foodItem.getName();
+//                    tempReceiptToDisplay.add();
+//                }
+//                ObservableList<OrderModel> receiptsToDisplay = FXCollections.observableArrayList(tempReceiptToDisplay);
+//                checkoutReceiptTable.setItems(receiptsToDisplay);
             }
         });
 
@@ -198,7 +207,6 @@ public class OpenOrdersController implements Initializable {
     }
 
     private void displayDateAndTime() {
-
         TimeModel timeModel = new TimeModel();
         dayOfTheWeekField.setText(timeModel.getDayOfTheWeek());
         timeField.setText(timeModel.getCurrentTime());
@@ -206,34 +214,23 @@ public class OpenOrdersController implements Initializable {
 
     private void backButtonHandler() {
 
-        SetAllStages setAllStages = new SetAllStages();
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                HomeScreenStage homeScreenStage = new HomeScreenStage();
-                homeScreenStage.stage(backButton);
-            }
-        });
-
-        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
             }
         });
 
-        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> value = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.setOperationMode(OperationMode.NONE);
                 setAllStages.stageByButton(backButton, "home-screen");
             }
-        });
+        };
+        goBackIcon.setOnMouseClicked(value);
+        goBackIconTitle.setOnMouseClicked(value);
     }
 
     private void setupTableColumns() {
@@ -283,5 +280,45 @@ public class OpenOrdersController implements Initializable {
         );
 
         openOrdersTable.getColumns().addAll(ticketNumberColumn, orderTypeColumn, customerNameColumn, totalColumn);
+    }
+
+    private void setupCheckoutColumns() {
+
+        TableColumn ticketNumberColumn = new TableColumn("Ticket #");
+        ticketNumberColumn.setMinWidth(75);
+        ticketNumberColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                                   @Override
+                                                   public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                       OrderModel receipt = (OrderModel) r.getValue();
+                                                       return new SimpleStringProperty(receipt.getTicketNumber().toString());
+                                                   }
+                                               }
+        );
+
+        TableColumn customerNameColumn = new TableColumn("Items");
+        customerNameColumn.setMinWidth(155);
+        customerNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                                   @Override
+                                                   public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                       OrderModel receipt = (OrderModel) r.getValue();
+                                                       return new SimpleStringProperty(receipt.getFoodItems().toString());
+                                                   }
+                                               }
+        );
+
+        TableColumn totalColumn = new TableColumn("Total");
+        totalColumn.setMinWidth(108);
+        totalColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                                            @Override
+                                            public ObservableValue call(TableColumn.CellDataFeatures r) {
+                                                OrderModel receipt = (OrderModel) r.getValue();
+                                                return new SimpleStringProperty(receipt.getGrandTotal().toString());
+                                            }
+                                        }
+        );
+
+
+        checkoutReceiptTable.getColumns().addAll(ticketNumberColumn, customerNameColumn, totalColumn);
+
     }
 }

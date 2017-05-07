@@ -13,8 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import models.EmployeeModel;
 import models.TimeModel;
-import stages.OpenOrdersStage;
-import stages.PickupDeliveryStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -47,6 +45,7 @@ public class HomeScreenController implements Initializable {
 
         ApplicationContext applicationContext = ApplicationContext.getInstance();
         EmployeeModel loggedInEmployee = applicationContext.getLoggedInEmployee();
+        SetAllStages setAllStages = new SetAllStages();
         loggedInTextField.setText(loggedInEmployee.getName());
         idTextField.setText(loggedInEmployee.getId());
 
@@ -63,17 +62,17 @@ public class HomeScreenController implements Initializable {
         newOrderButton.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
-                PickupDeliveryStage pickupDeliveryStage = new PickupDeliveryStage();
-                pickupDeliveryStage.stage(newOrderButton);
+
+                setAllStages.stageByButton(newOrderButton, "pickup-delivery");
             }
         });
 
         openOrdersButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 ApplicationContext.getInstance().setOperationMode(OperationMode.NONE);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(openOrdersButton);
+                setAllStages.stageByButton(openRegisterButton, "open-orders");
             }
         });
 
@@ -81,8 +80,7 @@ public class HomeScreenController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 ApplicationContext.getInstance().setOperationMode(OperationMode.PICKUP);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(pickupButton);
+                setAllStages.stageByButton(pickupButton, "open-orders");
             }
         });
 
@@ -90,17 +88,17 @@ public class HomeScreenController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 ApplicationContext.getInstance().setOperationMode(OperationMode.DELIVERY);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(deliveryButton);
+                setAllStages.stageByButton(deliveryButton, "open-orders");
+
             }
         });
 
         reviseOrderButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 ApplicationContext.getInstance().setOperationMode(OperationMode.MANAGER);
-                OpenOrdersStage openOrdersStage = new OpenOrdersStage();
-                openOrdersStage.stage(reviseOrderButton);
+                setAllStages.stageByButton(reviseOrderButton, "open-orders");
             }
         });
 
@@ -166,8 +164,8 @@ public class HomeScreenController implements Initializable {
         noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "home-screen");
+                homeScreenAnchor.setOpacity(1);
+                alertBackground.setVisible(false);
             }
         });
     }

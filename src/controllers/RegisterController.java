@@ -13,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.OrderModel;
-import stages.HomeScreenStage;
 import stages.SetAllStages;
 
 import java.net.URL;
@@ -34,7 +33,6 @@ public class RegisterController implements Initializable {
     public Button noButton;
     public AnchorPane mainPage;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -45,59 +43,20 @@ public class RegisterController implements Initializable {
         double totalToDisplay = 0;
 
         for (OrderModel orderModel : receipts.values()) {
-
-
             double grandTotal = orderModel.getGrandTotal();
 
             totalToDisplay += grandTotal;
         }
-
         totalField.setText(String.valueOf(totalToDisplay));
-
         logOutHandler();
-
         backButtonHandler();
 
     }
 
-    private void backButtonHandler() {
-
-        SetAllStages setAllStages = new SetAllStages();
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                HomeScreenStage homeScreenStage = new HomeScreenStage();
-                homeScreenStage.stage(backButton);
-            }
-        });
-
-        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.NONE);
-                setAllStages.stageByButton(backButton, "home-screen");
-            }
-        });
-
-        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
-                applicationContext.setOperationMode(OperationMode.NONE);
-                setAllStages.stageByButton(backButton, "home-screen");
-            }
-        });
-    }
-
     private void logOutHandler() {
-
         logOutButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
                 logOutAlertMessage();
             }
         });
@@ -105,9 +64,7 @@ public class RegisterController implements Initializable {
         logOutIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
                 logOutAlertMessage();
-
             }
         });
     }
@@ -127,10 +84,39 @@ public class RegisterController implements Initializable {
         noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "cash-register");
+                mainPage.setOpacity(1);
+                alertBackground.setVisible(false);
             }
         });
     }
 
+    private void backButtonHandler() {
+
+        ApplicationContext applicationContext = ApplicationContext.getInstance();
+        SetAllStages setAllStages = new SetAllStages();
+
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+
+        goBackIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+
+        goBackIconTitle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                applicationContext.setOperationMode(OperationMode.NONE);
+                setAllStages.stageByButton(backButton, "home-screen");
+            }
+        });
+    }
 }

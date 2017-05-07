@@ -88,7 +88,7 @@
          </children>
       </Pane>
 
-      <Pane fx:id="checkoutAlertPane" layoutX="207.0" layoutY="93.0" prefHeight="523.0" prefWidth="861.0" styleClass="gradientBackground" visible="false">
+      <Pane fx:id="checkoutAlertPane" layoutX="207.0" layoutY="93.0" prefHeight="523.0" prefWidth="861.0" styleClass="gradientBackground">
          <children>
             <TextField fx:id="amountReceived" layoutX="618.0" layoutY="165.0" prefHeight="44.0" prefWidth="152.0">
                <font>
@@ -118,13 +118,7 @@
             </font>
             </Text>
             <Button fx:id="cancelButton" layoutX="510.0" layoutY="438.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="113.0" text="Cancel" />
-            <TableView fx:id="checkoutReceiptListing" layoutX="39.0" layoutY="120.0" prefHeight="346.0" prefWidth="339.0">
-            <columns>
-            <TableColumn prefWidth="75.0" text="#" />
-            <TableColumn prefWidth="155.76620483398438" text="Items" />
-            <TableColumn prefWidth="107.2337646484375" text="Price" />
-            </columns>
-            </TableView>
+            <TableView fx:id="checkoutReceiptTable" layoutX="39.0" layoutY="120.0" prefHeight="346.0" prefWidth="339.0" />
             <Label fx:id="checkoutTicketNumber" layoutX="249.0" layoutY="12.0" prefHeight="51.0" prefWidth="64.0">
             <font>
             <Font size="14.0" />

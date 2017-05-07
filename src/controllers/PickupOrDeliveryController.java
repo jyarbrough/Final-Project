@@ -164,8 +164,8 @@ public class PickupOrDeliveryController implements Initializable {
         noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                SetAllStages setAllStages = new SetAllStages();
-                setAllStages.stageByButton(logOutButton, "pickup-delivery");
+                pickupDeliveryAnchor.setOpacity(1);
+                alertBackground.setVisible(false);
             }
         });
     }
