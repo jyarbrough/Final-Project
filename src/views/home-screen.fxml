@@ -134,5 +134,21 @@
                </children>
             </AnchorPane>
          </children></AnchorPane>
+      <Pane fx:id="alertPane" layoutX="268.0" layoutY="165.0" prefHeight="293.0" prefWidth="738.0" styleClass="gradientBackground" visible="false">
+         <children>
+            <ImageView fx:id="alertIcon" fitHeight="150.0" fitWidth="200.0" layoutX="295.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/alert-icon.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="noButton" layoutX="184.0" layoutY="187.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page" />
+            <Button fx:id="yesButton" layoutX="422.0" layoutY="185.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, Log me out." />
+            <Text fx:id="alertTitleMessage" layoutX="257.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure?">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
 </Pane>

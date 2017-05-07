@@ -53,6 +53,7 @@ public class OrderInterfaceController implements Initializable {
     private OrderModel receipt = new OrderModel();
     private ObservableList<FoodItemModel> selectedFoodItemsToDisplay = FXCollections.observableArrayList();
     SetAllStages setAllStages = new SetAllStages();
+    ApplicationContext applicationContext = ApplicationContext.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -235,8 +236,6 @@ public class OrderInterfaceController implements Initializable {
                     itemCount = 0;
                     itemCounterField.setText(String.valueOf(itemCount));
                 } else {
-
-
                     itemCount--;
                     itemCounterField.setText(String.valueOf(itemCount));
 
@@ -267,7 +266,6 @@ public class OrderInterfaceController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 receipt.setFoodItems(itemsOnReceipt);
-                ApplicationContext applicationContext = ApplicationContext.getInstance();
                 applicationContext.saveReceipt(receipt);
                 setAllStages.stageByButton(sendButton, "home-screen");
             }

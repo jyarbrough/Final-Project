@@ -91,5 +91,21 @@
       <TableView fx:id="receiptTableView" layoutX="32.0" layoutY="152.0" prefHeight="334.0" prefWidth="411.0" />
       <TilePane fx:id="pizzaSizesPane" disable="true" layoutX="677.0" layoutY="199.0" prefHeight="384.0" prefWidth="131.0" visible="false" />
       <TilePane fx:id="pizzaItemsPane" disable="true" layoutX="832.0" layoutY="108.0" prefHeight="476.0" prefWidth="387.0" visible="false" />
+      <Pane fx:id="sendAlert" layoutX="278.0" layoutY="165.0" prefHeight="293.0" prefWidth="738.0" style="-fx-background-color: #808080;" visible="false">
+         <children>
+            <ImageView fx:id="alertIcon" fitHeight="150.0" fitWidth="200.0" layoutX="295.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/purchase-512.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="stayButton" layoutX="184.0" layoutY="187.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #99ff99;" text="No!  Stay on page." />
+            <Button fx:id="yesButton" layoutX="422.0" layoutY="185.0" mnemonicParsing="false" prefHeight="95.0" prefWidth="135.0" style="-fx-background-color: #ff5050;" text="Yes, send the order." />
+            <Text fx:id="alertTitleMessage" layoutX="257.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure?">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
 </Pane>
